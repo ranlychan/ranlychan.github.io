@@ -1,0 +1,200 @@
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+        <div class="content-container">
+          
+          <div class="tags-container">
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">计算机网络</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/r_sTFUvatgw/">SDN</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/NTziyA3aS4a/">P4</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/tLna1FCbHDe/">Middlebox</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/iy0qND6CBCj/">ChatGPT</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/UwEHVwWVqvl/">强化学习</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/9XC-yzjfAh6/">网络配置</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/Mbmi_jGlthi/">Transformer</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/IakMM5eRHfm/">网络管理</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/GTCfNHFL-Cd/">边缘计算</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/4IW92cXri3X/">边缘推理优化</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/0tsva9Y8kME/">视频分析</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/rn8wGu6jp_z/">DNN</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/iPvRnsINsNg/">论文笔记</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/1UDQKSJcmSC/">考研</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/CRuobGcuyyO/">Typecho</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/MyY69e23JERj/">RSSHub</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/9cjCcltMX8DJ/">Python</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/flxM7STJbMY6/">爬虫</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/p9gC82KJCvTZ/">开发日志</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/DsgCfl_pN8cn/">交换机</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/hptW3aNPnxD0/">VLAN</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/4_RwRpLS61ca/">Windows</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/R7I6ZP_mcxFN/">机械硬盘</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">Android</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">物联网</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/jyg4qik2Q5kn/">树莓派</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/iKfpkD2sIJ1P/">算法</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/x0buR3NIuPEZ/">Socket</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/9hBcqs2qqn4d/">编译原理</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">APP</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">安卓开发</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/pEf2yJ2Fw44j/">感知器</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/Iz1dJXoi1VVx/">美食菜谱</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/wGC4h1n8P3NN/">摄影</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/CppV-gR4FYnK/">开发模式</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/kzvW4YadVstD/">WearOS</a>
+            
+              <a class="tag" href="https://ranlychan.github.io/tag/JNclEz5g6Typ/">快递查询</a>
+            
+          </div>
+
+        </div>
+
+        <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+      </div>
+      <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+    </div>
+  </body>
+</html>

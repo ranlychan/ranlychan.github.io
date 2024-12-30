@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Typecho | 博客程序、主题及插件安装常见问题汇总 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Typecho | 博客程序、主题及插件安装常见问题汇总</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-20</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p><img src="https://ranlychan.top/usr/uploads/2021/06/68282043.png" alt="" loading="lazy"><br>
+正好最近在装Typecho的时候不管是整个网站程序也好还是主题插件都遇到了挺多问题，就在这篇里总结一下。</p>
+<p>##<strong>目录</strong>##</p>
+<!--index-menu-->
+<p>##<strong>汇总</strong>##<br>
+###<strong>插件启用错误 500 Server Error</strong>###<br>
+**问题插件：**KaTeX4Typecho 0.0.1<br>
+<strong>错误表现：<strong>将插件文件夹放入网站/usr/plugins后在后台点击启用，出现500服务器错误，如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/2284709132.png" alt="KaTeX4Typecho 0.0.1插件启用后出现错误 500 Server Error" loading="lazy"><br>
+<strong>错误原因：</strong>[info]找了一番原因，原来是KaTeX4Typecho插件</strong>文件夹命名</strong>有问题，传到服务器的文件夹名字是KaTeX4Typecho-master，需要改为KaTeX4Typecho才能正常启用。其它的插件也是如此，一般需要改为插件管理界面显示的名称，或插件说明文档中所要求的名称。[/info]<br>
+**参考内容：**https://dxoca.cn/skill/21.html</p>
+<hr>
+<p>###<strong>插件启用错误 Call to a member function fetchAll() on resource</strong>###<br>
+**问题插件：**SmmsForTypecho 4.4<br>
+**错误表现：**点击启用，提示：</p>
+<pre><code class="language-php">Call to a member function fetchAll() on resource
+Error: Call to a member function fetchAll() on resource in /home/vol18_2/xlphp.net/xl_28926095/htdocs/usr/plugins/SmmsForTypecho/smms.function.php:46
+Stack trace:
+#0 /home/vol18_2/xlphp.net/xl_28926095/htdocs/usr/plugins/SmmsForTypecho/Plugin.php(60): plugin_activation_cretable()
+#1 /home/vol18_2/xlphp.net/xl_28926095/htdocs/var/Widget/Plugins/Edit.php(102): SmmsForTypecho_Plugin::activate()
+#2 /home/vol18_2/xlphp.net/xl_28926095/htdocs/var/Widget/Plugins/Edit.php(308): Widget_Plugins_Edit-&gt;activate('SmmsForTypecho')
+#3 /home/vol18_2/xlphp.net/xl_28926095/htdocs/var/Widget/Do.php(82): Widget_Plugins_Edit-&gt;action()
+#4 /home/vol18_2/xlphp.net/xl_28926095/htdocs/var/Typecho/Widget.php(221): Widget_Do-&gt;execute()
+#5 /home/vol18_2/xlphp.net/xl_28926095/htdocs/var/Typecho/Router.php(135): Typecho_Widget::widget('Widget_Do', NULL, Array)
+#6 /home/vol18_2/xlphp.net/xl_28926095/htdocs/index.php(23): Typecho_Router::dispatch()
+#7 {main}
+</code></pre>
+<p><strong>错误原因：</strong><br>
+[warning]未知[/warning]<br>
+<strong>参考内容：</strong></p>
+<hr>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/128/">
+              <h3 class="post-title">
+                下一篇：VLOG | 新年记录 | 除夕夜小雪却格外温暖呢
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

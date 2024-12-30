@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Mining policies from enterprise network configuration | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Mining policies from enterprise network configuration</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-11</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/iPvRnsINsNg/">
+                    论文笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] T. Benson, A. Akella, and D. A. Maltz, “Mining policies from enterprise network configuration,” in Proceedings of the 9th ACM SIGCOMM conference on Internet measurement, Chicago Illinois USA: ACM, Nov. 2009, pp. 136–142. doi: 10.1145/1644893.1644909. [/info]</p>
+<!--more-->
+<h1 id="11-阅读笔记">1.1 阅读笔记</h1>
+<p>本文研究企业网络的可达性策略。可达性策略限制了企业网络中不同主机之间的点到点通信，它们通常隐含在各种网络设备的配置中。目前还没有对企业网络可达性策略进行系统研究。</p>
+<p>本文的贡献主要是提出“策略单元”的概念。策略单元是对网络将端点分成不同策略组的抽象表示。每个策略单元包含一组端点，这些端点受到可达性限制的对待完全相同。</p>
+<p>文章还给出了从网络配置提取策略单元的方法。作者在5个生产网络中应用该方法，结果表明：</p>
+<ul>
+<li>策略单元数量少于子网数量，可以高度概括网络策略；</li>
+<li>策略单元数量与网络规模无关；</li>
+<li>大多数主机属于少数策略单元，策略不是均匀应用的；</li>
+<li>不同网络可达性策略复杂程度差异很大。这些发现验证了策略单元的有效性，提供了对网络策略新的观察视角。</li>
+</ul>
+<p>此外，文章还讨论了策略单元在网络管理中的应用，包括：</p>
+<ul>
+<li>评估配置变更对策略的影响；</li>
+<li>检查网络策略演变趋势，判断是否可以用更简单机制实现。<br>
+总而言之，本文通过策略单元的概念，开创了分析和理解存在网络配置的可达性策略的新方法，对网络设计和管理都提供了见解。</li>
+</ul>
+<h1 id="12-个人思考">1.2 个人思考</h1>
+<ul>
+<li>网络的可达性策略是网络管理中重要的一环，本文提出的策略单元概念具有很好的创新性，使得复杂策略可以被更容易地分析，这对于网络管理大有裨益。因此在考虑Transformer解决网络配置问题时，可以尝试使策略单元作为多模态输入中的一种输入形式，或考虑使模型理解如何提取策略单元，使其嵌入模型语义空间，从而使模型更容易理解复杂的可达性策略。</li>
+<li>文章提到其先前工作开发了可达性分析工具，可以建模模拟控制平面和数据平面机制的影响，这也许可以为使用强化学习帮助模型训练提供环境。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/630/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Unraveling the Complexity of Network Management
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

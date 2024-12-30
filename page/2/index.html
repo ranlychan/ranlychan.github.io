@@ -1,0 +1,469 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/661/">
+        <h2 class="post-title">OpenCloudOS | yum源配置</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="opencloudos-86版本yum源配置">OpenCloudOS 8.6版本yum源配置</h1>
+<p>在<code>/etc/yum.repos.d/</code>下的两个配置文件移动到别处备份后修改：</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-10-30</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/9XC-yzjfAh6/">
+                网络配置
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/659/">
+        <h2 class="post-title">阅读笔记｜P4: programming protocol-independent packet processors</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info]  Bosshart, Pat, Dan Daly, Glen Gibb, Martin Izzard, Nick McKeown, Jennifer Rexford, Cole Schlesinger, et al. “P4: Programming Protocol-Independent Packet Processors.” ACM SIGCOMM Computer Communication Review 44, no. 3 (July 28, 2014): 87–95. https://doi.org/10.1145/2656877.2656890.<br>
+[/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>OpenFlow采用了固定的包解析方式，只识别预定义的协议标头和固定字段。</li>
+<li>为了支持更多协议，OpenFlow不得不持续扩展支持的字段列表。</li>
+<li>字段数量的增加导致了OpenFlow规范的复杂性持续上升。</li>
+<li>但扩展现有规范仍然无法提供足够的灵活性,无法支持新增的自定义头格式。运营商往往需要采用软交换机来实现新功能。</li>
+<li>OpenFlow对标头的假设限制了其扩展性。控制器无法表达新的包头应该如何被处理。</li>
+<li>固定标头机制与SDN控制交换机转发的初衷不符。控制器应该能定义包的解析方式和处理流程。</li>
+<li>作者认为，未来OpenFlow应该提供灵活的包解析机制，而不是继续扩展固定的字段列表。控制器应通过通用开放接口使用这些能力。</li>
+</ul>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-10-26</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                网络管理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/657/">
+        <h2 class="post-title">阅读笔记｜SIMPLE-fying Middlebox Policy Enforcement Using SDN</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] Qazi, Zafar Ayyub, Rui Miao, Cheng-Chun Tu, Vyas Sekar, Luis Chiang, and Minlan Yu. “SIMPLE-Fying Middlebox Policy Enforcement Using SDN,” n.d. [/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>
+<p>中间设备(middleboxes)在企业网络中起着关键的性能、安全和政策合规性的作用。但是手工设置中间设备的部署拓扑和路由非常复杂和容易出错。</p>
+</li>
+<li>
+<p>SDN为中间设备策略实施提供了一个有前景的替代方案。但是中间设备也为SDN带来了新的挑战,例如政策组合、资源管理、数据包修改等,这些都超出了SDN目前支持的传统二层/三层功能。</p>
+</li>
+</ul>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-10-15</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/GTCfNHFL-Cd/">
+                边缘计算
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/4IW92cXri3X/">
+                边缘推理优化
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/656/">
+        <h2 class="post-title">阅读笔记｜Life on the Edge: Unraveling Policies into Configurations</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] W. X. Zhao et al., “A Survey of Large Language Models.” arXiv, Sep. 11, 2023. Accessed: Sep. 18, 2023. [Online]. Available: http://arxiv.org/abs/2303.18223 [/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>
+<p>现有的SDN网络编程框架假设网络由同质设备组成，可以快速重新配置以响应不断变化的策略和网络条件。但这些假设与现实网络的情况不符,现实网络由于历史遗留设备、功能异构、性能限制等导致只能慢速配置。</p>
+</li>
+<li>
+<p>网络服务商需要在为用户提供灵活性和维护核心网络的完整性和可靠性之间做出平衡。</p>
+</li>
+</ul>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-10-12</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                网络管理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/649/">
+        <h2 class="post-title">阅读笔记｜A Survey of Large Language Models</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] W. X. Zhao et al., “A Survey of Large Language Models.” arXiv, Sep. 11, 2023. Accessed: Sep. 18, 2023. [Online]. Available: http://arxiv.org/abs/2303.18223 [/info]</p>
+<h1 id="阅读笔记">阅读笔记</h1>
+<p><strong>模型选择</strong>：是否一定要选择参数量巨大的模型？如果需要更好的泛化能力，用于处理非单一的任务，例如对话，则可用选更大的模型；而对于单一明确的任务，则不一定越大越好，参数小一些的模型也能调教得很好。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-10-02</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                网络管理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/648/">
+        <h2 class="post-title">阅读笔记｜Language Models are Few-Shot Learners</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] T. B. Brown et al., “Language Models are Few-Shot Learners,” 2020, doi: 10.48550/ARXIV.2005.14165.</p>
+<p>A. Radford, K. Narasimhan, T. Salimans, I. Sutskever, and others, “Improving language understanding by generative pre-training,” 2018.</p>
+<p>A. Radford et al., “Language models are unsupervised multitask learners,” OpenAI blog, vol. 1, no. 8, p. 9, 2019.</p>
+<p>[/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-09-08</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/647/">
+        <h2 class="post-title">阅读笔记｜Reinforcement Learning with Feedback from Multiple Humans with Diverse Skills</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] T. Benson, A. Akella, and D. A. Maltz, “Mining policies from enterprise network configuration,” in Proceedings of the 9th ACM SIGCOMM conference on Internet measurement, Chicago Illinois USA: ACM, Nov. 2009, pp. 136–142. doi: 10.1145/1644893.1644909. [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-08-31</span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/646/">
+        <h2 class="post-title">阅读笔记｜Attention Is All You Need</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] A. Vaswani et al., “Attention Is All You Need,” 2017, doi: 10.48550/ARXIV.1706.03762. [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-08-29</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/641/">
+        <h2 class="post-title">阅读笔记｜Verifying and Monitoring IoTs Network Behavior Using MUD Profiles</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info]  A. Hamza, D. Ranathunga, H. H. Gharakheili, T. A. Benson, M. Roughan, and V. Sivaraman, “Verifying and Monitoring IoTs Network Behavior Using MUD Profiles,” IEEE Trans. Dependable and Secure Comput., vol. 19, no. 1, pp. 1–18, Jan. 2022, doi: 10.1109/TDSC.2020.2997898. [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-08-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/640/">
+        <h2 class="post-title">阅读笔记｜Efficient and Safe Network Updates with Suffix Causal Consistency</h2>
+      </a>
+      <div class="post-abstract">
+        <p>[info] S. Liu, T. A. Benson, and M. K. Reiter, “Efficient and Safe Network Updates with Suffix Causal Consistency,” in Proceedings of the Fourteenth EuroSys Conference 2019, Dresden Germany: ACM, Mar. 2019, pp. 1–15. doi: 10.1145/3302424.3303965. [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ranlychan.github.io/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://ranlychan.github.io/page/3/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

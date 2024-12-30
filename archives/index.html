@@ -1,0 +1,886 @@
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+        <div class="content-container">
+          
+          
+
+<div class="archives-container">
+  
+    <h2 class="year">2024</h2>
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/688/">
+            <h2 class="post-title">
+              笔记 | Ubuntu下NTFS分区read-only状态清除修复
+              <small>2024-07-21</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/685/">
+            <h2 class="post-title">
+              笔记 | Python环境下的GUI编程常用包
+              <small>2024-07-19</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/683/">
+            <h2 class="post-title">
+              Linux | Ubuntu通过USB访问Redmi K40存储出现xxx was not providedby any .service files错误
+              <small>2024-02-18</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/676/">
+            <h2 class="post-title">
+              强化学习Double DQN方法玩雅达利Breakout游戏完整实现代码与评估pytorch
+              <small>2024-01-09</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/674/">
+            <h2 class="post-title">
+              强化学习在生成式预训练语言模型中的研究现状简单调研
+              <small>2024-01-09</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+    <h2 class="year">2023</h2>
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/672/">
+            <h2 class="post-title">
+              论文复现 | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy
+              <small>2023-12-23</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/671/">
+            <h2 class="post-title">
+              讲座思考 | 周志华教授：新型机器学习神经元模型的探索
+              <small>2023-12-23</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/670/">
+            <h2 class="post-title">
+              讲座思考 |  颠覆传统摄像方式乃至计算机视觉的“脉冲视觉”
+              <small>2023-12-09</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/667/">
+            <h2 class="post-title">
+              阅读笔记 | Privacy vs. Efficiency: Achieving Both Through Adaptive Hierarchical Federated Learning
+              <small>2023-11-28</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/663/">
+            <h2 class="post-title">
+              杂记 ｜ greedy与soft-greedy策略
+              <small>2023-11-12</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/661/">
+            <h2 class="post-title">
+              OpenCloudOS | yum源配置
+              <small>2023-10-30</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/659/">
+            <h2 class="post-title">
+              阅读笔记｜P4: programming protocol-independent packet processors
+              <small>2023-10-26</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/657/">
+            <h2 class="post-title">
+              阅读笔记｜SIMPLE-fying Middlebox Policy Enforcement Using SDN
+              <small>2023-10-15</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/656/">
+            <h2 class="post-title">
+              阅读笔记｜Life on the Edge: Unraveling Policies into Configurations
+              <small>2023-10-12</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/649/">
+            <h2 class="post-title">
+              阅读笔记｜A Survey of Large Language Models
+              <small>2023-10-02</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/648/">
+            <h2 class="post-title">
+              阅读笔记｜Language Models are Few-Shot Learners
+              <small>2023-09-08</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/647/">
+            <h2 class="post-title">
+              阅读笔记｜Reinforcement Learning with Feedback from Multiple Humans with Diverse Skills
+              <small>2023-08-31</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/646/">
+            <h2 class="post-title">
+              阅读笔记｜Attention Is All You Need
+              <small>2023-08-29</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/641/">
+            <h2 class="post-title">
+              阅读笔记｜Verifying and Monitoring IoTs Network Behavior Using MUD Profiles
+              <small>2023-08-24</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/640/">
+            <h2 class="post-title">
+              阅读笔记｜Efficient and Safe Network Updates with Suffix Causal Consistency
+              <small>2023-08-22</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/639/">
+            <h2 class="post-title">
+              阅读笔记｜Demystifying configuration challenges and trade-offs in network-based ISP services
+              <small>2023-08-18</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/638/">
+            <h2 class="post-title">
+              阅读笔记｜DeepConfig: Automating Data Center Network Topologies Management with Machine Learning
+              <small>2023-08-16</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/635/">
+            <h2 class="post-title">
+              阅读笔记｜The evolution of network configuration: a tale of two campuses
+              <small>2023-08-14</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/631/">
+            <h2 class="post-title">
+              阅读笔记｜Mining policies from enterprise network configuration
+              <small>2023-08-11</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/630/">
+            <h2 class="post-title">
+              阅读笔记｜Unraveling the Complexity of Network Management
+              <small>2023-08-11</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/633/">
+            <h2 class="post-title">
+              阅读笔记｜Random sketch learning for deep neural networks in edge computing
+              <small>2023-08-03</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/627/">
+            <h2 class="post-title">
+              阅读笔记｜Towards Edge Computing Using Early-Exit Convolutional Neural Networks
+              <small>2023-08-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/626/">
+            <h2 class="post-title">
+              阅读笔记 |  Edge-Cloud Polarization and Collaboration: A Comprehensive Survey for AI
+              <small>2023-08-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/625/">
+            <h2 class="post-title">
+              阅读笔记 | Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing
+              <small>2023-08-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/623/">
+            <h2 class="post-title">
+              阅读笔记 | Distributed Inference with Deep Learning Models across Heterogeneous Edge Devices
+              <small>2023-08-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/622/">
+            <h2 class="post-title">
+              阅读笔记 | A Brief Introduction to Edge Computing and Deep Learning
+              <small>2023-08-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/620/">
+            <h2 class="post-title">
+              阅读笔记 | Chameleon: scalable adaptation of video analytics
+              <small>2023-07-13</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/614/">
+            <h2 class="post-title">
+              阅读笔记 | Neural Network Meets DCN: Traffic-driven Topology Adaptation with Deep Learning
+              <small>2023-07-11</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/609/">
+            <h2 class="post-title">
+              阅读笔记 | CODA: Toward Automatically Identifying and Scheduling COflows in the DArk
+              <small>2023-07-10</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/605/">
+            <h2 class="post-title">
+              阅读笔记 | AuTO: scaling deep reinforcement learning for datacenter-scale automatic traffic optimization
+              <small>2023-07-10</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/593/">
+            <h2 class="post-title">
+              阅读笔记 | Interpreting Deep Learning-Based Networking Systems
+              <small>2023-07-05</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/591/">
+            <h2 class="post-title">
+              阅读笔记 | Design Guidelines for Robust Internet Protocols
+              <small>2023-06-29</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/590/">
+            <h2 class="post-title">
+              笔记 | 关于分布式系统的失效/故障/failure
+              <small>2023-06-26</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/589/">
+            <h2 class="post-title">
+              阅读笔记 | The Design Philosophy of the DARPA Internet Protocols
+              <small>2023-06-26</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/587/">
+            <h2 class="post-title">
+              阅读笔记 | End-To-End Arguments in System Design
+              <small>2023-06-26</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/586/">
+            <h2 class="post-title">
+              阅读笔记 | An Introduction to Network Architectures and Protocols
+              <small>2023-06-26</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/573/">
+            <h2 class="post-title">
+              iOS设备自动登录汕大校园网认证 一次设置永久免登录
+              <small>2023-03-15</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/560/">
+            <h2 class="post-title">
+              考研 | 竞赛和大创也算科研经历？对考研复试有多大帮助？
+              <small>2023-03-05</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/559/">
+            <h2 class="post-title">
+              Typecho | 博客结构与插件开发笔记：插件行为触发器拦截
+              <small>2023-03-03</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/552/">
+            <h2 class="post-title">
+              Typecho | smms图床插件：NewSmmsForTypecho发布
+              <small>2023-03-03</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/539/">
+            <h2 class="post-title">
+              Typecho | 博客结构与插件开发笔记：附件及扩展方法
+              <small>2023-03-01</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/538/">
+            <h2 class="post-title">
+              Typecho | ImgGuard：多图床文章图片管理备份插件开发日志1
+              <small>2023-02-28</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/521/">
+            <h2 class="post-title">
+              腾讯云社区与自媒体分享计划
+              <small>2023-02-17</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+    
+      
+    
+  
+    <h2 class="year">2022</h2>
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/518/">
+            <h2 class="post-title">
+              笔记 | SwitchHosts自动刷新DNS缓存和重启nscd服务[Ubuntu]
+              <small>2022-10-19</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="https://ranlychan.github.io/post/481/">
+            <h2 class="post-title">
+              计网 | 腾讯视频点播流量抓包分析与可视化Wireshark
+              <small>2022-10-18</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+  
+</div>
+
+
+        </div>
+
+        <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+      </div>
+      <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>物联网项目 | LeanCloud+树莓派+安卓实现住宅环境异常告警系统 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">物联网项目 | LeanCloud+树莓派+安卓实现住宅环境异常告警系统</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-07-06</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="前言">前言</h2>
+<p>本系统监测的条件限于温湿度、火焰、烟雾或有毒气体，<s>以及登记授权人员人脸信息，（人脸检测和识别老早写了，懒得再接入了有时间再说吧）</s> 😐出现异常时可及时记录和向用户APP推送消息告警。<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/350204538.jpg" alt="完成后的树莓派和传感器" loading="lazy"></p>
+<!--more-->
+<h2 id="目录">目录</h2>
+<!--index-menu-->
+<h2 id="物料清单">物料清单</h2>
+<table>
+<thead>
+<tr>
+<th>配件名称</th>
+<th>数量</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raspberry Pi 4B</td>
+<td>1</td>
+<td>主机</td>
+</tr>
+<tr>
+<td>闪迪Micro SD 16GB</td>
+<td>1</td>
+<td>为树莓派烧录系统</td>
+</tr>
+<tr>
+<td>树莓派专用电源适配器及电源线</td>
+<td>1</td>
+<td>为树莓派供电</td>
+</tr>
+<tr>
+<td>安卓手机</td>
+<td>1</td>
+<td>控制和查看系统运行情况</td>
+</tr>
+<tr>
+<td>MQ-2烟雾传感器</td>
+<td>1</td>
+<td>检测燃烧产生烟雾及有害气体</td>
+</tr>
+<tr>
+<td>火焰传感器</td>
+<td>1</td>
+<td>检测一定线性范围的火焰</td>
+</tr>
+<tr>
+<td>DHT11温湿度传感器</td>
+<td>1</td>
+<td>检测室内温度和相对湿度</td>
+</tr>
+<tr>
+<td>杜邦线</td>
+<td>9</td>
+<td>连接传感器和树莓派电脑</td>
+</tr>
+</tbody>
+</table>
+<h2 id="软件架构">软件架构</h2>
+<h3 id="室内环境条件监控模块">室内环境条件监控模块</h3>
+<p>系统同时使用多个传感器感知和上传所处环境的温湿度、烟雾和火焰触发数据，<strong>同时使用烟雾传感器、温度传感器和火焰传感器进行判断火情</strong>。</p>
+<ul>
+<li>若只有烟雾传感器或火焰传感器被触发或温度高于45.0摄氏度，向用户发送普通告警；</li>
+<li>其中两个条件满足，向用户发送中级告警；</li>
+<li>若三者均满足，向用户发送紧急告警信息。</li>
+</ul>
+<p>推送消息被用户点击后，会跳转到APP主界面让用户查看详细传感器数据。</p>
+<h3 id="手机监视app模块">手机监视APP模块</h3>
+<p>接受消息推送和查看传感器上传的数据。</p>
+<h2 id="硬件模块使用">硬件模块使用</h2>
+<h3 id="dht11温湿度传感器">DHT11温湿度传感器</h3>
+<p>1.连接VCC，GND，其中DATA接到GPIO 4，树莓派4B引脚如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/854720491.png" alt="树莓派4B引脚图，由树莓派实验室绘制" loading="lazy"><br>
+2.安装python依赖Adafruit_DHT。<br>
+在控制台中输入命令<code>pip install Adafruit_Python_DHT</code>进行安装。安装成功后，编写测试程序：</p>
+<pre><code class="language-python">import time
+import sys
+import Adafruit_DHT
+DHT_chanel = 18 #BCM编码引脚口
+while true
+	time.sleep(1)
+	hum,temp = Adafruit_DHT.read_retry(11,DHT_chanel)
+</code></pre>
+<p>3.运行正常，结果如图：(以humidity表示相对湿度)<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/274080997.png" alt="在树莓派上测试DHT11正常输出温湿度值" loading="lazy"></p>
+<h3 id="mq-2烟雾传感器">MQ-2烟雾传感器</h3>
+<p>1.连接VCC，GND，其中DO为TTL高低电平输出口，接GPIO 0<br>
+2.安装python依赖PRi.GPIO。在控制台中输入命令<code>pip install PRi.GPIO</code>进行安装。<br>
+3.编写测试程序如下，高电平时正常：</p>
+<pre><code class="language-python">import RPi.GPIO as GPIO 
+import time
+
+CHANNEL=7 # GPIO引脚口
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(CHANNEL,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
+
+try:
+    while True: # 执行一个while死循环
+        status=GPIO.input(CHANNEL) # 检测7号引脚口的输入高低电平状态
+        print(status) # 实时打印此时的电平状态
+        if status == True: # 如果为高电平，说明MQ-2正常，并打印“OK”
+            print ( ' OK ' )
+        else:    # 如果为低电平，说明MQ-2检测到有害气体，并打印“dangerous”
+            print ( ' high toxic gas level ! ! ! ' )
+        time.sleep(5) 
+except KeyboardInterrupt: # 异常处理，当检测按下键盘的Ctrl+C，就会退出这个&gt;脚本
+GPIO.cleanup()
+
+</code></pre>
+<p>4.运行正常，结果如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/3509455972.png" alt="MQ-2正常工作，TTL口输出高电平表示正常" loading="lazy"></p>
+<h2 id="云后端接入与使用">云后端接入与使用</h2>
+<p><strong>云后端的作用就是充当手机APP和物联网硬件之间的桥梁</strong>，也就是我们的树莓派和安卓APP之间用于推送消息以及保存传感器数据的中间人。经过上一轮的测试，<code>Bmob云后端</code>虽然提供了比较完善的免费云后端服务，但在Android SDK接入时有难以解决的错误，故采用同样具有数据服务和消息推送的免费云后端服务<code>LeanCloud</code>。</p>
+<h3 id="为安卓用户端接入leancloud数据及消息推送sdk">为安卓用户端接入LeanCloud数据及消息推送SDK</h3>
+<p>按照官方文档中对于Java SDK的说明，在Android Studio中使用Gradle引入LeanCloud的数据存储和消息推送的Java SDK，即在module级Gradle配置文件的相应位置中加入如下引入：</p>
+<pre><code class="language-xml">implementation 'cn.leancloud:storage-android:8.0.1'
+implementation 'cn.leancloud:realtime-android:8.0.1'
+implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+</code></pre>
+<p>然后再进行Gradle项目同步即可。</p>
+<h4 id="leancloud安卓sdk初始化">LeanCloud安卓SDK初始化</h4>
+<p>在Android项目的Application类的onCreate()方法内进行如下操作：</p>
+<pre><code class="language-java">public class MyLeanCloudApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // 提供 this、App ID、App Key、Server Host 作为参数
+        // 注意这里千万不要调用 cn.leancloud.core.LeanCloud 的 initialize 方法，否则会出现 NetworkOnMainThread 等错误。
+        LeanCloud.initialize(this,
+ &quot;t8dmUAOAX4NptIX4oziNpYPc-gzGzoHsz&quot;,
+ &quot;pDuJ1si51y5RGGdWyqReM8Ff&quot;,
+ &quot;https://please-replace-with-your-customized.domain.com&quot;);//这里填入LeanCloud上提供或是自己绑定的域名，本项目使用官方提供的免费域名
+PushService.setDefaultChannelId(this, &quot;android&quot;);#配置默认消息通道
+#订阅消息通道
+PushService.subscribe(this, &quot;public&quot;, MainActivity.class); 
+        PushService.subscribe(this, &quot;android&quot;, MainActivity.class);
+		#使用SharePreferences存储安装信息，是否为第一次安装以及安装得到的installationId
+        SharedPreferences sp = getSharedPreferences(&quot;installation&quot;, MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        boolean isInstalled = sp.getBoolean(&quot;isInstalled&quot;, false);
+        if(!isInstalled){
+            //LCInstallation.getCurrentInstallation().saveInBackground();
+            LCInstallation.getCurrentInstallation().saveInBackground().subscribe(new Observer&lt;LCObject&gt;() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                }
+                @Override
+                public void onNext(LCObject avObject) {
+                    // 关联 installationId 到用户表等操作。
+                    String installationId = LCInstallation.getCurrentInstallation().getInstallationId();
+                    edit.putString(&quot;installationId&quot;,installationId).commit();
+                    System.out.println(&quot;保存成功：&quot; + installationId );
+                }
+                @Override
+                public void onError(Throwable e) {
+                    System.out.println(&quot;保存失败，错误信息：&quot; + e.getMessage());
+                }
+                @Override
+                public void onComplete() {
+                }
+            });
+            edit.putBoolean(&quot;isInstalled&quot;, true);
+            edit.commit();
+    }
+}
+
+</code></pre>
+<p>完成后在AndroidManifest.xml声明此Application类，即在其中的&lt;application下添加</p>
+<p><code>android:name=&quot;.MyLeanCloudApp&quot; &gt;</code></p>
+<p>这里的MyLeanCloudApp替换成自己的Application类名称。</p>
+<h4 id="leancloud安卓消息推送服务初始化">LeanCloud安卓消息推送服务初始化</h4>
+<p>按照官方文档，在Android项目的AndroidManifest.xml的&lt;application下添加如下服务和消息接收器:</p>
+<pre><code class="language-xml">&lt;service android:name=&quot;cn.leancloud.push.PushService&quot; /&gt;
+        &lt;!--
+        &lt;receiver android:name=&quot;cn.leancloud.push.LCBroadcastReceiver&quot;&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.BOOT_COMPLETED&quot; /&gt;
+                &lt;action android:name=&quot;android.intent.action.USER_PRESENT&quot; /&gt;
+                &lt;action android:name=&quot;android.net.conn.CONNECTIVITY_CHANGE&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/receiver&gt;
+        --&gt;
+        &lt;receiver
+            android:name=&quot;.MyCustomReceiver&quot;
+            android:exported=&quot;false&quot;&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.BOOT_COMPLETED&quot; /&gt;
+                &lt;action android:name=&quot;android.intent.action.USER_PRESENT&quot; /&gt;
+                &lt;action android:name=&quot;android.net.conn.CONNECTIVITY_CHANGE&quot; /&gt;
+                &lt;action android:name=&quot;com.avos.UPDATE_STATUS&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/receiver&gt;
+
+</code></pre>
+<p>其中<code>MyCustomReceiver</code>是一个自定义类，继承<code>BroadcastReceiver</code>，代码如下：</p>
+<pre><code class="language-java">public class MyCustomReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // 获取推送消息数据
+        String message = intent.getStringExtra(&quot;com.avoscloud.Data&quot;);
+        String channel = intent.getStringExtra(&quot;com.avoscloud.Channel&quot;);
+        System.out.println(&quot;push message&quot;);
+        System.out.println(&quot;message=&quot; + message + &quot;, channel=&quot; + channel);
+    }
+}
+
+</code></pre>
+<h4 id="leancloud安卓消息推送服务接入完成测试">LeanCloud安卓消息推送服务接入完成测试</h4>
+<p>在LeanCloud的后台-推送-在线发送中，填写JSON推送内容如下：</p>
+<pre><code class="language-JSON">{
+	&quot;alert&quot;: &quot;test content&quot;,
+	&quot;title&quot;: &quot;WARNING！ Your house's condition is in danger!&quot;,
+	&quot;silent&quot;: false
+}
+</code></pre>
+<p>点击发送，Android端成功接到推送消息：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/2824347528.png" alt="Android端成功接到LeanCloud管理后台推送的消息" loading="lazy"><br>
+但我们要求的是由树莓派来主动触发消息推送，所以接下来为树莓派配置SDK。</p>
+<h3 id="为用户端监测硬件-树莓派接入leancloud-python-sdk">为用户端监测硬件 —— 树莓派接入LeanCloud Python SDK</h3>
+<p>按照LeanCloud的官方文档，使用包依赖管理工具进行便捷的安装，即，在控制台中输入sudo pip install leancloud进行依赖包安装。</p>
+<p>依赖包安装完成，在需要使用到LeanCloud服务的程序里先使用import leancloud导入，再使用命令leancloud.init(&quot;App ID &quot;, &quot; App Key &quot;)初始化LeanCloud服务。</p>
+<p>按照LeanCloud文档，使用Python在新增结构化数据的代码如下：</p>
+<pre><code class="language-python"># 构建数据操作对象
+    StateObject = leancloud.Object.extend('State')# 'State'为表名
+    state_object = StateObject()
+    state_object.set('temperature', temp)# 'temperature' 为列名
+    state_object.set('relativeHumidity', hum)# 'relativeHumidity'为列名
+    state_object.set('isFireOK', isFireOK)# 'isFireOK'为列名
+    state_object.set('isSmokeOK', isMQ2OK)# 'isSmokeOK'为列名
+    state_object.set('recordDate', recordDate)# 'recordDate'为列名
+state_object.save()#传入的各列数据类型需要一一对应，参照官方文档的数据类型
+
+# 测试向Android端推送消息
+content=&quot;temperature lower than 45.0, it’s just a test&quot;
+title=&quot;nothing&quot;
+data = json.loads(json.dumps({'alert': content, 'title': title}))
+if(len(title)!=0 and len(content)!=0):
+	leancloud.push.sned(data,
+					  channels=['android','public'],
+                      push_time=None,
+                      expiration_time=None,
+                      expiration_interval=None,
+                      where=None,cql=None,
+                      flow_control=None,
+                      prod=None)
+</code></pre>
+<p>在安卓端SDK和消息推送服务配置正常以后，可以正常收到如下推送：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/2329614395.png" alt="在安卓实机上收到的来自树莓派的推送消息" loading="lazy"></p>
+<h2 id="传感器数据实体">传感器数据实体</h2>
+<p>传感器记录数据在云后端数据库中的实体如表所示：</p>
+<p><code>State表</code></p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>recordDate</td>
+<td>DATE</td>
+<td>数据采集时间</td>
+</tr>
+<tr>
+<td>temperature</td>
+<td>NUMBER</td>
+<td>温度传感器数据</td>
+</tr>
+<tr>
+<td>relativeHumidity</td>
+<td>NUMBER</td>
+<td>相对湿度传感器数据</td>
+</tr>
+<tr>
+<td>isFireOK</td>
+<td>BOOLEN</td>
+<td>火焰传感器数据是否超阈值</td>
+</tr>
+<tr>
+<td>isSmokeOK</td>
+<td>BOOLEN</td>
+<td>烟雾传感器数据是否超阈值</td>
+</tr>
+<tr>
+<td>IsException</td>
+<td>BOOLEN</td>
+<td>是否有任一数据超过阈值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="android-app编写和打包测试">Android APP编写和打包测试</h2>
+<h3 id="android项目和集成开发环境">Android项目和集成开发环境</h3>
+<p>本项目使用基于intellJ IDEA社区版的Android Studio进行开发测试，新建Android项目并进行相应配置，使用Redmi Note 8 Pro 实体机进行测试。</p>
+<h3 id="app详细设计">App详细设计</h3>
+<p>为了减少项目复杂度，本项目采用最简单的安卓开发模式：<code>MVC</code>。一个<code>MainActivity</code>和对应界面即可。</p>
+<p>App打开后自动进入到主界面MainActivity，并异步加载服务器记录的传感器数据。数据的展示采用<code>RecyclerView + BaseRecyclerViewadapter</code>的模式。在MainActivity的<code>layout</code>中，使用<code>SwipeRefreshLayout</code>包裹RecyclerView以实现下拉加载的功能。</p>
+<p>在MainActivity中为SwipeRefreshLayout添加下拉监听，下拉动作发生时执行服务器数据拉取动作。</p>
+<p>点击右上角感叹号图标可以筛选有数据超过阈值的记录，再次下拉刷新可以取消筛选。完成后测试获得服务器数据如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/1366463811.png" alt="APP主页展示的传感器数据" loading="lazy"></p>
+<h2 id="参考资料">参考资料</h2>
+<p>[1]	PyPI. Adafruit_Python_DHT [EB/OL]. (2021-07-06). https://pypi.org/project/Adafruit_Python_DHT/<br>
+[2]	埃勒里灬波洛. 树莓派DHT22读Adafruit_DHT报错 can not import Beaglebone_Black_Driver的解决办法 [EB/OL]. (2020-09-09). https://blog.csdn.net/elleryer/article/details/108482087<br>
+[3]	weixin_34112030. 基于树莓派（Raspberry Pi）平台的MQ-2烟雾报警系统实现（一） [EB/OL]. (2018-03-16). https://blog.csdn.net/weixin_34112030/article/details/92237494<br>
+[4]	LeanCloud. LeanCloud文档 [EB/OL]. (2021-07-06). https://leancloud.cn/docs</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/239/">
+              <h3 class="post-title">
+                下一篇：美食菜谱 | 萝卜玉米猪骨汤制作攻略
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

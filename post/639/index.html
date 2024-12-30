@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Demystifying configuration challenges and trade-offs in network-based ISP services | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Demystifying configuration challenges and trade-offs in network-based ISP services</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-18</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/0tsva9Y8kME/">
+                    视频分析
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/rn8wGu6jp_z/">
+                    DNN
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] T. Benson, A. Akella, and A. Shaikh, “Demystifying configuration challenges and trade-offs in network-based ISP services,” in Proceedings of the ACM SIGCOMM 2011 conference, Toronto Ontario Canada: ACM, Aug. 2011, pp. 302–313. doi: 10.1145/2018436.2018471. [/info]</p>
+<!--more-->
+<h2 id="11-背景">1.1 背景</h2>
+<p>随着对网络服务需求的增长，ISP正在大规模提供各种网络服务如VPN、VPLS等。这些网络服务对ISP的网络基础设施提出了新的要求。然而，目前还缺乏对ISP提供这些网络服务时面临的设计和配置挑战的系统性研究。</p>
+<h2 id="12-研究问题">1.2 研究问题</h2>
+<p>ISP网络中的网络服务的设计和配置中存在哪些复杂性，这些复杂性从何而来，以及如何处理这些复杂性。论文采用配置模型和数据驱动的方法，通过分析一个大型ISP网络中的五种不同网络服务的配置数据，深入研究了网络服务的设计和配置复杂性。</p>
+<h2 id="13-主要贡献">1.3 主要贡献</h2>
+<p>(1) 发现网络服务的设计和配置日益复杂，主要源自客户配置的差异性和控制平面配置<br>
+(2) 发现服务边缘的配置复杂性会随时间增加，从而影响服务的管理<br>
+(3) 发现不同服务之间在设计和配置的复杂性上存在差异，需要服务特定的方法来管理<br>
+(4) 探讨了选择供应商和资源限制等因素对配置复杂性的影响，以及如何通过权衡来降低部分复杂性</p>
+<h2 id="14-主要结论">1.4 主要结论</h2>
+<p>网络服务的设计和配置中存在的高复杂性可能会阻碍服务的增长和采用。未来需要更多关注如何管理网络服务的设计和配置复杂性，以及研究支持网络服务的新型网络体系结构。</p>
+<h2 id="15-个人思考">1.5 个人思考</h2>
+<ul>
+<li>文章中提到BGP配置常常出错，很大程度是其配置语言设计的原因。针对这一问题，可以延续上次思考所提到的思路，也即使用“配置纠错”，来对网络管理员编写好的BGP配置在语义上进行检查并尝试纠错。</li>
+<li>文章指出，企业网络和ISP网络的配置复杂性来源不同，前者主要来自网络核心部分对VLAN、路由再分发命令和网络安全与过滤策略的使用，后者则来自于ISP网络边缘的客户虚拟网络配置。两者相比较下企业网络的复杂度主要来自策略复杂，而ISP网络的复杂主要来自客户配置的差异。相比之下似乎ISP网络的高层需求更容易建模。</li>
+<li>从最初的、高层的、抽象的用户需求，到最后最底层的、具体的网络配置，存在映射关系，这种映射关系我想可以进行拆分，加入一些有计算机网络特色的中间表示，具体如下：
+<ul>
+<li>用户需求：指用户要表达的业务需求。对于用户需求的建模，可以使用自然语言描述、更结构化的描述（提供包括服务类型、拓扑需求和QoS级别等预定义schema，再让用户描述）</li>
+<li>策略语义：指为了实现用户需求而需要配置的各种抽象网络策略（例如ACL规则、QoS策略）。</li>
+<li>网络语义：指网络中用来实现策略语义的具体技术方案（如配置哪些VRF、隧道等）。</li>
+<li>系统映射：指最终为了实现网络语义而根据具体设备和能力进行配置。</li>
+</ul>
+</li>
+<li>上述拆分可以与先前所思考的深度学习方法进行结合。例如强化学习可以用于全程的闭环优化，而网络拓扑信息如果不好提取还可以考虑图卷积神经网络的方案。此外，序列生成模型生成配置文本的训练中，可以考虑加入知识图谱来融入业务知识。最后，对于不同的用户，可以采用模型迁移学习来学习新用户的意图理解。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/638/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜DeepConfig: Automating Data Center Network Topologies Management with Machine Learning
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

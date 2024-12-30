@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Flask手写数字识别画板网页+深度神经网络 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/03/13/oUELrBpeV8Mk43X.png')">
+            </div>
+          
+          <h2 class="post-title">Flask手写数字识别画板网页+深度神经网络</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-02-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">
+                    物联网
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <!-- ![](https://s2.loli.net/2023/03/13/oUELrBpeV8Mk43X.png) -->
+<h1 id="1-系统概要">1. 系统概要</h1>
+<p>手写数字识别画板系统，按照MVC原则开发，主要由两部分组成：交互界面（视图View）部分是传统的HTML +CSS+JS网页（这同样也是一种遵循MVC开发方式）；手写数字识别部分（模型Model）是使用Python开发的深度学习的模型；两者间通过基于Flask框架开发的Python Web服务连接（控制Control），具体而言，两者间手写数字识别部分功能的信息传输方式为：HTTP请求收发JSON格式的数据。</p>
+<blockquote>
+<p>项目Jupyter Noteook（阿里天池）<br>
+https://tianchi.aliyun.com/notebook-ai/detail?postId=469149</p>
+</blockquote>
+<blockquote>
+<p>项目Gitee地址<br>
+https://gitee.com/ranlychan/hand-writting-digit-rec-web-app</p>
+</blockquote>
+<blockquote>
+<p>项目Github地址<br>
+https://github.com/ranlychan/HandWrittingDigitRecWebApp</p>
+</blockquote>
+<!--more-->
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="2-界面设计">2. 界面设计</h1>
+<h2 id="21-移动界面设计准则">2.1 移动界面设计准则</h2>
+<p>相较于Web界面设计，移动界面有其特殊性，其设计需要从一般准则中针对移动场景做出更加细化的阐释，如下 ：</p>
+<p>(1)	内容优先：界面布局应以内容为核心，提供符合用户期望的内容。<br>
+(2)	为触摸而设计：界面的交互系统以自然手势为基础建构，符合人体工学并保持一致性。<br>
+(3)	转换输入方式：使用各种手机的设备特性和设计手段，减少在应用内的文字输入。<br>
+(4)	流畅性：保持应用交互的手指及手势的操作流、用户的注意流和界面反馈转场的流畅性。<br>
+(5)	多通道设计：发挥设备的多通道特性、协同的多通道界面和交互，让用户更有真实感和沉浸感。<br>
+(6)	易学性：保持界面架构简单、明了，导航设计清晰易理解，操作简单可见，通过界面元素的表意的和界面提供的线索就能让用户清楚地知道其操作方式。<br>
+(7)	为中断而设计：考虑应用的使用情境，确保在各个产出中断的情境下，让用户恢复之前的操作，保持用户的劳动付出。<br>
+(8)	智能有爱：给用户提供让他感到惊喜有趣的、智能高效的、贴心的设计。</p>
+<h2 id="22-数字手写板web界面设计">2.2 数字手写板Web界面设计</h2>
+<p><strong>界面基本要素</strong></p>
+<ul>
+<li>工具按钮：选择画笔、选择橡皮、撤回操作、全屏清除、识别数字</li>
+<li>颜色按钮：黑白红蓝等预先选择好的颜色按钮，用于选择画笔颜色</li>
+<li>粗细调节：画笔/橡皮粗细范围调节</li>
+</ul>
+<p><strong>交互操作说明</strong><br>
+如下为进入页面后的工作区域图：<br>
+<img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713099903511741677130999282.png" alt="图2.1 页面宽度大于768px时的手写数字画板主界面" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713095391670711677130954137.png" alt="图2.2 页面宽度小于768px时的手写数字画板主界面" loading="lazy"></figure>
+<p>其中，单击工具栏最左端的“画笔”图标，可切换画笔工具在画布上绘制线条；画布区域为页面除了工具图标、颜色选择器、粗细调节器等覆盖区域外的白色区域；</p>
+<p>单击下方工具栏左数第二的“橡皮”图标可切换橡皮工具，将画布上的画笔痕迹擦除；单击下方工具栏左数第三的“垃圾桶”图标可将画布全部清空；</p>
+<p>单击下方工具栏左数第四的“回撤”图标可将回撤到上一步操作（可回撤使用画笔、橡皮或清空画布的三个操作）；</p>
+<p>单击下方工具栏最右端的“扫描”图标可尝试对当前画布内容进行手写数字识别，识别的结果将以文字和图片形式弹窗显示。其中图片形式即在画布内容基础上，框选出识别到的手写数字，并将识别数字附在框的左上角（如图2.3）。</p>
+<figure data-type="image" tabindex="2"><img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713104344832101677131043912.png" alt="图2.3 返回识别结果" loading="lazy"></figure>
+<p>调节画笔和橡皮粗细的工具在页面最右侧，页面宽度小于768px时自适应到页面最左侧。上滑可调粗，下滑调细。对于画笔粗细的调节如2.4所示。<br>
+<img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713107022494951677131070767.png" alt="图2.4 调节画笔粗细示意图" loading="lazy"></p>
+<p>调节画笔颜色的工具在页面最左侧，页面宽度小于768px时自适应到页面最下方。单击即可选择对应颜色，效果如图2.5所示。<br>
+<img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713109286574811677131093303.png" alt="图2.5 不同颜色画笔效果" loading="lazy"></p>
+<h1 id="3-web服务">3. Web服务</h1>
+<p>根据W3C的定义，Web服务应当是一个软件系统，用以支持网络间不同机器的互动操作。网路服务通常是许多应用程序接口所组成的，它们通过网络，例如国际互联网的远程服务器，执行客户所提交服务的请求。</p>
+<h2 id="31-web应用程序框架概述">3.1 Web应用程序框架概述</h2>
+<p>Web服务的开发如今越来越依赖于Web应用程序框架（Web Application Framework），其允许用户可以集中精力编写业务程序，而无需过多关注底层协议和线程管理等细节。由于后续将使用Python编写深度学习的模型，所以在此对比介绍并考虑采用基于Python的Web应用程序框架。</p>
+<p>不难发现，手写数字识别系统的需求并不复杂，暂时未涉及数据库，是一个基本的B/S应用程序。故而考虑使用精简易用，同时教程丰富的Flask作为开发框架。</p>
+<h2 id="32-web服务搭建">3.2 Web服务搭建</h2>
+<h3 id="321-开发与运行环境">3.2.1 开发与运行环境</h3>
+<p>Flask支持Python 3.6及以上的版本。同时推荐使用虚拟的Python环境构建器作为其环境支持，一般选择virtualenv（可选）。</p>
+<p>在Python环境的配置完成后，确保pip正确安装的情况下，可直接使用<code>pip install flask</code>自动安装Flask及其相关依赖。当安装 Flask 时，以下配套软件会被自动安装 ：</p>
+<p>a)	Werkzeug 用于实现WSGI ，即应用和服务之间的标准Python接口。<br>
+b)	Jinja 用于渲染页面的模板语言。<br>
+c)	MarkupSafe 与 Jinja 共用，在渲染页面时用于避免不可信的输入，防止注入攻击。<br>
+d)	ItsDangerous 保证数据完整性的安全标志数据，用于保护 Flask 的 session cookie.<br>
+e)	Click 是一个命令行应用的框架。用于提供 flask 命令，并允许添加自定义管理命令。</p>
+<p>表3.1 项目所使用的开发与运行环境一览</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>名称</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>Windows</td>
+<td>10家庭中文版21H1 (x64)</td>
+</tr>
+<tr>
+<td>集成开发环境</td>
+<td>PyCharm</td>
+<td>2019.3 (x64)</td>
+</tr>
+<tr>
+<td>编译器</td>
+<td>Python</td>
+<td>3.8</td>
+</tr>
+<tr>
+<td>Web Application Framework</td>
+<td>Flask</td>
+<td>2.0.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="422-开始使用flask">4.2.2 开始使用Flask</h3>
+<p>通过Pycharm新建一个Flask项目，项目根目录下会自动生成static、templates文件夹以及app.py主程序。在static文件夹下一般存放css样式、js脚本和其它静态资源。在templates文件夹下存放html网页，称网页文件为模板。主程序app.py中默认代码如下：</p>
+<pre><code class="language-python">from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+<p>其中最为重要的部分就是“路由-函数”映射关系的建立。“路由-函数”关系映射指URL访问路径与Python函数间的关系映射。经典的映射关系建立方式为：在被映射的函数function上方使用<code>@app.route('url_path')</code>注解，这样在访问url_path时就会调用function并以http报文返回function函数的return结果。<br>
+其次需要对静态文件夹和模板文件夹进行配置，在应用实例化时进行如下配置：</p>
+<pre><code class="language-python">app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static',
+            static_url_path='/static')
+</code></pre>
+<p>有了如上基础，就可以开始着手于手写数字识别的Web服务搭建了。首先明确需要一个可供用户访问和使用的网页来实现画板的功能，其次需要一个POST接口传输用户的手写字体图片内容和程序识别后的内容。</p>
+<p>对于手写数字画板网页，需要建立一个<code>canva.html</code>文件于<code>templates</code>文件夹下，并在<code>app.py</code>中建立映射：</p>
+<pre><code class="language-python">@app.route('/')
+def hello():
+    return render_template('canva.html')
+</code></pre>
+<p>使得根路径被访问时显示该主界面。主界面所需的css样式共两个：<code>canvas_style.css</code>及<code>pop_window.css</code>一并存于static/css文件夹下，两个文件分别是画板样式表和识别结果的弹出窗口样式表。<br>
+同时，主页面的程序逻辑在main.js中实现，其保存在static/js文件夹下。由于需要使用到js库JQuery，故需要将<code>jquery-3.4.0.min.js</code>下载并存入static/js文件夹。<br>
+在html中，调用css样式表一般写在<head>标签内，如下：</p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/css/canvas_style.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/css/pop_window.css&quot;&gt;
+</code></pre>
+<p>调用js脚本一般写在<code>&lt;/body&gt;</code>之后，<code>&lt;/html&gt;</code>之前，如下：</p>
+<pre><code class="language-html">&lt;script src=&quot;/static/js/jquery-3.4.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/static/js/main.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>值得一提的是，页面的编写由于需要使用到许多图标，如果将图标素材一个个存入本地，逐个编写样式引用的话会比较麻烦，所以这里使用了阿里旗下的iconfont矢量图标库的服务 。只需在iconfont上建立项目，并将挑选的图标归入项目中，就可为项目自动生成一个图标调用css文件，在html中引用了该css文件后，在需要使用图标的位置只需使用 <code>&lt;i class=&quot;iconfont&quot;&gt;&amp;#x33;&lt;/i&gt;</code> 这样简单的<code>&lt;i&gt;</code>标签和图标编号即可实现调用。</p>
+<h3 id="324手写数字识别接口开发">3.2.4手写数字识别接口开发</h3>
+<p>接口同样是在app.py中通过路由映射的方式建立，详情如表3.3。</p>
+<p>表3.3 手写数字识别接口详情</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>路径</td>
+<td>/digit_rec</td>
+<td>/</td>
+<td>/</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>POST</td>
+<td>/</td>
+<td>请求体和返回值均为JSON格式</td>
+</tr>
+<tr>
+<td>请求参数</td>
+<td>token</td>
+<td>String</td>
+<td>校验码，用于身份认证</td>
+</tr>
+<tr>
+<td></td>
+<td>img</td>
+<td>String</td>
+<td>使用Base64编码的手写数字图片</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>code</td>
+<td>String</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td></td>
+<td>message</td>
+<td>String</td>
+<td>附带消息</td>
+</tr>
+<tr>
+<td></td>
+<td>result</td>
+<td>JSONObject</td>
+<td>返回结果，含识别结果数字数组和标记后的传入图片</td>
+</tr>
+<tr>
+<td></td>
+<td>result. numbers</td>
+<td>Array</td>
+<td>识别结果数字数组</td>
+</tr>
+<tr>
+<td></td>
+<td>result. marked_img</td>
+<td>String</td>
+<td>标记后的传入图片，使用Base64编码</td>
+</tr>
+</tbody>
+</table>
+<p>接口实现代码如下：</p>
+<pre><code class="language-python"># post方式http请求与js交互
+@app.route('/digit_rec',methods=[&quot;POST&quot;])
+def digit_rec():
+    # 默认返回内容
+    return_dict = {'code': '200', 'message': '处理成功', 'result': False}
+    # 错误处理
+    if request.get_data() is None:
+        return_dict['code'] = '5002'
+        return_dict['message'] = '请求参数为空'
+        return json.dumps(return_dict, ensure_ascii=False)
+
+    # 获取传入的参数
+    get_data = request.get_json()
+
+    # 使用简单的token校验
+    token = get_data.get(&quot;token&quot;)
+    if token != DEFAULT_TOKEN:
+        return_dict['code'] = '5001'
+        return_dict['message'] = 'TOKEN错误'
+        return json.dumps(return_dict, ensure_ascii=False)
+
+    img_base64 = get_data.get(&quot;img&quot;)
+    # 调用模型识别
+    result_dict = mnist_digit_rec(img_base64) 
+
+    # 结果打包为JSON格式并返回
+    json_encode_result = json.dumps(result_dict, cls=NpEncoder) 
+    return_dict['result'] = json_encode_result
+    return_str = json.dumps(return_dict, ensure_ascii=False)
+    return return_str
+</code></pre>
+<h3 id="325-手写画板页面开发">3.2.5 手写画板页面开发</h3>
+<p>基于Github开源项目<code>drawingborad</code> 进行开发，以快速适应需求。经过分析，决定在工具栏加入识别按钮，用于触发手写数字识别的任务，并移除工具栏保存图片按钮。结果的展示可由弹窗进行显示。</p>
+<p>[info]drawingborad<br>
+https://github.com/zhoushuozh/drawingborad<br>
+[/info]</p>
+<p>工具栏识别按钮单击事件监听在<code>main.js</code>中进行，主要代码如下：</p>
+<pre><code class="language-javascript">
+scan.onclick = function () {
+    //无正在进行的请求
+    if (!isRequesting) {
+	//控制识别按钮点击后不可重复调用接口
+        isRequesting = true
+	//将识别按钮图标替换为正在加载效果
+        var loadingImgObj = new loadingImg()
+        loadingImgObj.show()
+
+        let imgUrl = canvas.toDataURL(&quot;image/png&quot;);
+        console.log(imgUrl)
+        var data = {
+            &quot;img&quot;: imgUrl,
+            &quot;token&quot;: &quot;THISISAFUCKINGTOKEN&quot;
+        }
+	//通过JQuery发送ajax异步http请求
+        $.ajax({
+            type: 'post',
+            url: '/digit_rec',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'json', success: function (data) {
+                if (data.code == &quot;200&quot;) {
+                    var rootObj = JSON.parse(data.result)
+			//弹窗显示识别后的文字结果和图片结果 
+                    showResult(rootObj.numbers, rootObj.marked_img) 
+                } else {
+                    alert('请求错误:'+data.code+&quot; &quot;+data.message)
+                }
+		//正在加载效果隐藏，恢复识别按钮
+                loadingImgObj.hide()
+                scan.innerHTML = &quot;&lt;i class=\&quot;iconfont icon-canvas-ranlysaoma\&quot;&gt;&lt;/i&gt;&quot;
+		//控制识别按钮点击后可再次调用接口
+                isRequesting = false
+            }, error: function (xhr, type, xxx) {
+                alert('请求错误：未知错误')
+                loadingImgObj.hide()
+                scan.innerHTML = &quot;&lt;i class=\&quot;iconfont icon-canvas-ranlysaoma\&quot;&gt;&lt;/i&gt;&quot;
+                isRequesting = false
+            }
+        });
+    } else {
+	//点击识别按钮，但上次识别任务还未结束，提示等待
+        alert(&quot;正在识别中，请等待&quot;);
+    }
+}
+</code></pre>
+<h1 id="4-基于深度学习的手写数字识别">4. 基于深度学习的手写数字识别</h1>
+<p>目前在计算机视觉领域，神经网络是一种主流的图像特征提取方式。深度学习更是使得计算机视觉领域取得重大突破。本项目中由于采用了接口方式将前端隔离，将精力集中于手写数字识别的开发成为可能。本项目的手写数字识别模型可在遵照输入输出的标准下进行方便的更换。本项目将使用图像分类经典入门数据集MNIST手写数字数据集用于模型训练，并使用简单易于实现的多层感知器作为分类任务模型。</p>
+<h2 id="41-多层感知器">4.1 多层感知器</h2>
+<p>由期中的单层感知器作业可以知道单层感知器通过激活函数可以学习简单的线性函数。但其无法学习非线性函数，也就无法完成复杂功能，需要多个神经元共同协调组成深度神经网络（DNN）才能完成复杂任务。多层感知器就是DNN中前馈神经网络的一种形式，其通常由输入层、输出层和至少一个隐藏层组成，通过隐藏层和激活函数可以学习非线性的函数。<br>
+多层感知器误差反向传播算法分为以下三步 ：</p>
+<ol>
+<li>前向计算每一层的净输入和输出，直到最后一层，得到预测值。</li>
+<li>反向传播计算网络在每一层上的损失项，第m层损失项是通过第m+1层的损失项计算得到的。</li>
+<li>计算每一层参数的偏导数，在神经网络中就是指该张量的梯度，并沿着梯度的反方向更新参数。<br>
+多层感知器优点明显，结构简单，易于实现。但其缺点也不可小视，由于是全连接的神经网络，其参数数量较大，倘若增加隐藏层数量，不仅时间耗费会增大，且容易产生梯度消失问题。<br>
+对于本项目中的多层感知器，将选择常用于图像分类任务的交叉熵损失函数配合Adam优化算法，同时使用mini-batch的方法进行训练。其中Adam是一个优于传统的随机梯度下降（SGD）的算法，可以自适应调节学习率，适用于大多数情况下的优化任务。而mini-batch是一种样本处理方式，其思想为将原本一次Epoch一次梯度下降的方式（full-batch）改为一个Epoch遍历样本的多个子集（Batch），每个Batch做一次梯度下降，可以大大加快训练速度。</li>
+</ol>
+<h2 id="42-卷积神经网络">4.2 卷积神经网络</h2>
+<p>感知器作为一种全连接的前馈神经网络，常常产生参数过多导致的训练效率下降和过拟合问题，同时全连接的特性使其很难提取局部特征。卷积神经网络（Convolutional Neural Network, CNN）则在多层感知器的基础上发展而来，可以有效解决上述问题。CNN一般是由卷积层、采样层（池化层）、全连接层相互堆叠构成的神经网络 。其可以说是针对图像数据而设计的，具有出色的特征提取能力。CNN分类器在MNIST数据集上准确率可以达到99.77% ，相比于MLP分类器的97.2%准确率 要高。因而本项目的神经网络模型可以考虑转用CNN实现。</p>
+<h2 id="43-多个手写数字的识别">4.3 多个手写数字的识别</h2>
+<p>对于第3节所提到的手写画板，其最终输出的是一张尺寸不定，含有数字字符数量不定的RGB彩色图像的Base64编码字符串。而对于使用MNIST训练的神经网络模型来说，其要求的输入是单张只有一个数字字符的28*28像素的灰度图的矩阵。这两者间的转换首先需要用到Base64编码与图像矩阵转换。其次需要使用到光学字符识别（Optical Character Recognition, OCR）中的技术，对原始图像进行字符定位和切割。最后需要对切割后的图像进行特定的预处理，使其可以被MLP分类器处理和高效分类。</p>
+<h3 id="431-图像字符定位和分割">4.3.1 图像字符定位和分割</h3>
+<p>参考Github开源项目<code>HandwrittenDigitRecognition</code> ，使用开源计算机视觉库OpenCV库在Python上的库cv2实现字符定位与分割任务。</p>
+<blockquote>
+<p>HandwrittenDigitRecognition<br>
+https://github.com/Wangzg123/HandwrittenDigitRecognition</p>
+</blockquote>
+<p>其中字符定位主要使用OpenCV中的findContours()函数进行。该函数可以通过轮廓检测来实现字符定位，并返回一个数组，数组中每个元素都是图像中的一个轮廓。其次再通过OpenCV的boundingRect()函数得到字符矩形边框，其返回值为边框的四个参数：x,y,w,h. 其分别代表字符左上角在整张图片中的x轴坐标、y轴坐标、字符宽度、字符高度。这样便简单完成了字符的定位。<br>
+简化的分割任务是基于以上的字符定位结果的，得到框选字符的矩形的左上角和右下角坐标后，直接在原图的矩阵中取子集便可得到单个字符，易于实现。但这样的坏处是，若多个字符间虽然没有连接，但若有字符的一部分或整体有侵入其它字符的矩形区域的话，会使得被侵入的字符分割后带有其它字符的部分，使得分割产生瑕疵，这是一个值得考虑的改进点。</p>
+<h3 id="432-字符图像数据预处理">4.3.2 字符图像数据预处理</h3>
+<p>经过以上识别和分割后的单个字符的图像是一个大小不定的图像矩阵数据，参考MNIST手写数字数据集中的单个数字字符形式，对字符图像进行灰度化和二值化处理，使得图像的形状和轮廓更为清晰。接着根据图像最长边扩展像素，最长边方向扩展7个像素，短边方向长度等于扩展后的长边。得到一个正方形的手写数字的图像，矩阵变换一下得到28<em>28</em>1的三维矩阵，其中前两维为像素位置，第三维为灰度值（0到255）。</p>
+<p>以下为使用画板中粗细为10的黑色画笔绘制的几个数字，经过上述处理后的灰度图。<br>
+<img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713112317279871677131123681.png" alt="图5.1 处理后的字符灰度图（上方）与MNIST中的字符图像灰度图（下方）" loading="lazy"></p>
+<h2 id="44-不同超参数配置策略探究最优参数">4.4 不同超参数配置策略探究最优参数</h2>
+<p>至此，系统构建，特别是模型的构建已经告一段落。现对模型训练中的可调节超参数进行控制变量的渐进式调节实验，以探究不同超参数对于分类准确率的影响。探究实验中所使用的训练、测试数据集仍然为MNIST手写数字数据集，其中测试集大小为10000。</p>
+<p>表4.1 MLP模型可调节超参数列表</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隐藏层数</td>
+</tr>
+<tr>
+<td>EPOCH</td>
+</tr>
+<tr>
+<td>Batch大小</td>
+</tr>
+<tr>
+<td>初始学习率</td>
+</tr>
+</tbody>
+</table>
+<p>首先对隐藏层数进行初步探究，以下为隐藏层数作为变量，其它超参数不变的情况下的探究策略表，其中三次训练准确率指使用同一组超参数重复三次的准确率平均值。</p>
+<p>表4.2对最优隐藏层数的探究实验策略</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>参数值[隐藏层数,EPOCH, Batch大小,初始学习率]</th>
+<th>准确率</th>
+<th>训练用时（秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[100,5,100,0.001]</td>
+<td>96.98%</td>
+<td>33.3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[300,5,100,0.001]</td>
+<td>97.79%</td>
+<td>36.7</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[400,5,100,0.001]</td>
+<td>97.83%</td>
+<td>41.7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[500,5,100,0.001]</td>
+<td>97.91%</td>
+<td>44.0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[600,5,100,0.001]</td>
+<td>97.86 %</td>
+<td>46.0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[700,5,100,0.001]</td>
+<td>97.98 %</td>
+<td>48.3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[800,5,100,0.001]</td>
+<td>98.12 %</td>
+<td>50.0</td>
+</tr>
+</tbody>
+</table>
+<p>可见大致上准确率随隐藏层数增加而增加，但幅度极小，同时训练时间也随隐藏层数增加而增加。</p>
+<p>表4.2对最优学习率的探究实验策略</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>参数值[隐藏层数,EPOCH, Batch大小,初始学习率]</th>
+<th>准确率</th>
+<th>训练用时（秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[500,5,100,0.0001]</td>
+<td>94.67 %</td>
+<td>43</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[500,5,100,0.0005]</td>
+<td>97.63 %</td>
+<td>43.33</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[500,5,100,0.001]</td>
+<td>97.86 %</td>
+<td>44</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[500,5,100, 0.005]</td>
+<td>97.61 %</td>
+<td>44</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[500,5,100,0.01]</td>
+<td>96.69 %</td>
+<td>46.33</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[500,5,100,0.05]</td>
+<td>93.22 %</td>
+<td>49.67</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[500,5,100,0.1]</td>
+<td>77.03 %</td>
+<td>49.33</td>
+</tr>
+</tbody>
+</table>
+<p>可见学习率在值为0.001时模型效率最高。</p>
+<p>表4.3对最优Batch大小的探究实验策略</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>参数值[隐藏层数,EPOCH, Batch大小,初始学习率]</th>
+<th>准确率</th>
+<th>训练用时（秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[100,5,10,0.001]</td>
+<td>97.75</td>
+<td>168.33</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[100,5,50,0.001]</td>
+<td>97.93 %</td>
+<td>57.67</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[100,5,100,0.001]</td>
+<td>97.90 %</td>
+<td>44.33</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[100,5,150,0.001]</td>
+<td>97.66 %</td>
+<td>40.33</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[100,5,200,0.001]</td>
+<td>97.70 %</td>
+<td>38.33</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[100,5,300,0.001]</td>
+<td>97.55 %</td>
+<td>36.00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[100,5,600,0.001]</td>
+<td>96.86 %</td>
+<td>34.33</td>
+</tr>
+</tbody>
+</table>
+<p>可见Batch大小为50时准确率最高，但综合耗时来看，Batch大小为100时的耗时要少十秒以上，且准确率仅低0.03个百分点。因此最优Batch大小应当为100。</p>
+<p>如下对EPOCH次数进行探究，在保持隐藏层数为500，Batch大小为100，初始学习率为0.001的情况下，对不同EPOCH记录准确率，并作EPOCH-Acc关系图如下：</p>
+<figure data-type="image" tabindex="3"><img src="https://tianchi-public.oss-cn-hangzhou.aliyuncs.com/public/files/forum/167713114734625171677131147873.png" alt="图5.2 EPOCH-Acc关系图" loading="lazy"></figure>
+<p>经过简单的探究，可以发现隐藏层神经元数在100到800间变化时对准确率影响不大，对训练时间影响呈正相关；而学习率在0.0001到0.1间变化时对准确率和训练时间都有较为明显的影响，学习率为0.001时准确率最高，且训练时间也相对较短；Batch大小对于训练数据的影响较为显著，特别是Batch比较小的时候训练时间约是最短训练时间的5倍。综合认为最优Batch大小为100；由EPOCH-Acc关系图可知模型在5次EPOCH时收敛。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/415/">
+              <h3 class="post-title">
+                下一篇：Python爬虫 | 美国特斯拉充电桩位置信息（含经纬度）爬取
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

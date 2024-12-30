@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Life on the Edge: Unraveling Policies into Configurations | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Life on the Edge: Unraveling Policies into Configurations</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-10-12</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                    网络管理
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] W. X. Zhao et al., “A Survey of Large Language Models.” arXiv, Sep. 11, 2023. Accessed: Sep. 18, 2023. [Online]. Available: http://arxiv.org/abs/2303.18223 [/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>
+<p>现有的SDN网络编程框架假设网络由同质设备组成，可以快速重新配置以响应不断变化的策略和网络条件。但这些假设与现实网络的情况不符,现实网络由于历史遗留设备、功能异构、性能限制等导致只能慢速配置。</p>
+</li>
+<li>
+<p>网络服务商需要在为用户提供灵活性和维护核心网络的完整性和可靠性之间做出平衡。</p>
+</li>
+</ul>
+<!--more-->
+<h2 id="主要问题">主要问题</h2>
+<ul>
+<li>
+<p>如何在情况复杂（特别是光交换与电路交换混合的网络）的现实情况下<strong>实现高级策略</strong>?</p>
+</li>
+<li>
+<p>如何兼顾灵活性的同时保持稳定性和完整性？</p>
+</li>
+</ul>
+<h2 id="文章主要方法">文章主要方法</h2>
+<ul>
+<li>
+<p>将网络分为边缘设备(SDN交换机)和核心设备(光路)，使策略变更只影响边缘，且受到一定约束。</p>
+</li>
+<li>
+<p>使用NetKAT语言表达高层策略和核心转发功能。</p>
+</li>
+<li>
+<p>NetKAT编译器生成转发决策图(FDD)，每个FDD路径产生一个dyad对(过滤条件和动作)。</p>
+</li>
+<li>
+<p>分析策略和核心的dyad，寻找核心提供的连接匹配策略需要的端点。</p>
+</li>
+<li>
+<p>生成入口和出口NetKAT程序，在边缘设备实现策略。</p>
+</li>
+</ul>
+<h2 id="评估实验">评估实验</h2>
+<ul>
+<li>
+<p>在60节点的真实光网络拓扑上测试。</p>
+</li>
+<li>
+<p>评估了dyad生成、匹配问题生成、解决和生成边缘程序等模块的可扩展性。</p>
+</li>
+<li>
+<p>支持路径约束后解决时间有明显增加，但对中间节点数量升高影响不大。</p>
+</li>
+</ul>
+<h2 id="结论">结论</h2>
+<ul>
+<li>
+<p>提出了在异构网络实现高层策略的可行框架，使用NetKAT语言和编译器将策略编译为仅在边缘设备上的等效配置。</p>
+</li>
+<li>
+<p>探索了刚性核心与柔性可编程边缘结合网络的策略实施，使网络运营商在提供用户灵活性和保持网络稳定可靠性间取得平衡。</p>
+</li>
+<li>
+<p>为网络编程社区提供一个可行的<strong>管理异构网络</strong>的思路。</p>
+</li>
+</ul>
+<h2 id="个人思考">个人思考</h2>
+<ul>
+<li>
+<p>文章方法主要针对以光交换为核心的网络，但其管理异构网络的思路值得借鉴，即采用高层策略描述工具，如NetKAT对策略和结构进行形式化描述，最后转化为线性规划问题和具体的边缘网络配置。但是依旧存在的限制是，边缘设备被假设为支持SDN的设备。</p>
+</li>
+<li>
+<p>本文中的网络策略主要侧重于转发策略，因此对于实现更多的高层策略来说只是一块小的拼图，可以用于在考虑高层策略到具体配置的转化过程中进行参考。</p>
+</li>
+<li>
+<p>从Intent-Based Network (IBN) 的角度出发进行考虑，我认为这篇论文涵盖了IBN的四大环节中的两环，即意图解析和意图实现。剩余未考虑的两环为意图转译和意图保证。具体而言，文章中的人类意图是以NetKAT语言描述的，而非自然语言，因此略去了转译过程，但这也提示我可以考虑在转译环节中以类似NetKAT的语言作为意图转译产物。而在Fdds和LP问题求解等环节则对策略进行了校验检测，以便于最终实现意图。IBN是一个非常有意思的范式，后续我会进一步研读学习如下参考：</p>
+</li>
+</ul>
+<p>[1]A. Leivadeas and M. Falkner, “A Survey on Intent-Based Networking,” IEEE Commun. Surv. Tutorials, vol. 25, no. 1, pp. 625–655, 2023, doi: 10.1109/COMST.2022.3215919.<br>
+[2]L. Pang, C. Yang, D. Chen, Y. Song, and M. Guizani, “A Survey on Intent-Driven Networks,” IEEE Access, vol. 8, pp. 22862–22873, 2020, doi: 10.1109/ACCESS.2020.2969208.<br>
+[3]M. Gharbaoui, B. Martini, and P. Castoldi, “Intent-Based Networking: Current Advances, Open Challenges, and Future Directions,” in 2023 23rd International Conference on Transparent Optical Networks (ICTON), Bucharest, Romania: IEEE, Jul. 2023, pp. 1–5. doi: 10.1109/ICTON59386.2023.10207407.<br>
+[4]Y. Tsuzaki and Y. Okabe, “Reactive configuration updating for Intent-Based Networking,” in 2017 International Conference on Information Networking (ICOIN), Da Nang, Vietnam: IEEE, 2017, pp. 97–102. doi: 10.1109/ICOIN.2017.7899484.<br>
+[5]E. Zeydan and Y. Turk, “Recent Advances in Intent-Based Networking: A Survey,” in 2020 IEEE 91st Vehicular Technology Conference (VTC2020-Spring), Antwerp, Belgium: IEEE, May 2020, pp. 1–5. doi: 10.1109/VTC2020-Spring48590.2020.9128422.</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/649/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜A Survey of Large Language Models
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

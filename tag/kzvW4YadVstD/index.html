@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>WearOS | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> WearOS
+          </h2> 
+        </div>
+
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/36/">
+        <h2 class="post-title">我的项目 | 派查查 ：一个WearOS智能手表系统上的快递查询应用</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>​	在学习面向对象程序设计课程的时候，收获颇多，最后的课程报告选题选择了“Android开发”。但是安卓手机上好的应用数不胜数，自己不想重蹈覆辙做别人做过不知道多少遍的东西，就选择了当时相对Android手机软件开发比较小众的WearOS系统软件开发，做了TicWatch的问问商店里第一款腕上快递查询应用：派查查PieExpress。这也是我第一次做安卓开发，如有不足，还请海涵。</p>
+<hr>
+<h2 id="目录">目录</h2>
+<!-- index-menu -->
+<h2 id="项目概述">项目概述</h2>
+<p>**运行环境：**Google WearOS 国内版</p>
+<p>**软件类型：**快递查询工具</p>
+<p><strong>基本功能：</strong></p>
+<ul>
+<li>快递查询：在手表上输入快递运单号后，联网查询快递的运输信息，包括运输状态、到达时间和地点等。</li>
+<li>快递收藏：输入的运单号和查询的快递信息可以本地保存，方便下次查看，可以为运单号写备注，方便知道是哪个快递。</li>
+<li>语音录入：输入运单号或运单备注时可以语音输入（调用TicWatch语音接口实现，小米手表等可能无法使用）</li>
+</ul>
+<p>[info]**项目地址：**https://github.com/ranlychan/PieExpressTracking [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/kzvW4YadVstD/">
+                WearOS
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/JNclEz5g6Typ/">
+                快递查询
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

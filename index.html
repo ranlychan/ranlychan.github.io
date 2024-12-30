@@ -1,0 +1,493 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/688/">
+        <h2 class="post-title">笔记 | Ubuntu下NTFS分区read-only状态清除修复</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="问题描述">问题描述</h2>
+<p>Ubuntu 20.04的物理系统下，我的一个NTFS分区可能由于在Windows更新时进行了强制关机出现了错误，因此在Ubuntu下无法正常写入，出现了read-only状态。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-07-21</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/r_sTFUvatgw/">
+                SDN
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/NTziyA3aS4a/">
+                P4
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/685/">
+        <h2 class="post-title">笔记 | Python环境下的GUI编程常用包</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>Python的使用频率和范围越来越大，在一些开发工作中由于需要可视化的图形界面，常常需要进行图形用户界面（Graphic User Interface, GUI）开发。例如，目前最火热的大模型应用，常常是以一个网页界面进行操作和展示，从而免去了控制台或接口操作的复杂性。因此本文总结记录了我接触了解过的GUI开发相关工具和依赖库。</p>
+<p>本文将Python开发中的GUI分为了原生GUI和Web GUI两大类，前者指的是以Windows或Android系统程序窗口的形式展示的界面，其界面风格受具体系统影响；后者是基于Web技术展示的网页界面，具有跨平台一致性的好处。此外为了原生GUI能够方便地移植到其他用户的系统进行使用，本文还简单介绍了可执行程序打包工具。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-07-19</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/r_sTFUvatgw/">
+                SDN
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/tLna1FCbHDe/">
+                Middlebox
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/683/">
+        <h2 class="post-title">Linux | Ubuntu通过USB访问Redmi K40存储出现xxx was not providedby any .service files错误</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="问题描述">问题描述</h2>
+<p>通过USB Type-C数据线将Redmi K40手机连接至台式机Ubuntu 20.04后，手机切换至访问存储模式，Ubuntu上可以访问手机存储，并正常进行文件传输。标题所述问题的诱发原因可能是将Ubuntu上的文件传输到Redmi上的过程中，数据线松动导致传输意外中断，从而在Ubuntu上访问手机存储时出现如下错误消息并无法正常访问手机存储：</p>
+<pre><code class="language-bash">Unhandled error message: The name:1.153 was not provided by any .service files
+</code></pre>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-02-18</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/676/">
+        <h2 class="post-title">强化学习Double DQN方法玩雅达利Breakout游戏完整实现代码与评估pytorch</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="1-实验环境">1. 实验环境</h1>
+<h2 id="11-硬件配置">1.1 硬件配置</h2>
+<ul>
+<li>处理器：2*AMD EPYC 7773X 64-Core</li>
+<li>内存：1.5TB</li>
+<li>显卡：8*NVIDIA GeForce RTX 3090 24GB</li>
+</ul>
+<h2 id="12-工具环境">1.2 工具环境</h2>
+<ul>
+<li>Python：3.10.12</li>
+<li>Anaconda：23.7.4</li>
+<li>系统：Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)</li>
+<li>IDE：VS Code 1.85.1</li>
+<li>gym：0.26.2</li>
+<li>Pytorch：2.1.2</li>
+</ul>
+<h1 id="2-实现">2. 实现</h1>
+<h2 id="21-breakout-for-atari-2600">2.1 Breakout for Atari 2600</h2>
+<p><img src="https://s2.loli.net/2024/01/14/J3GY5zZcH8OuRnj.gif" alt="模型评估效果" loading="lazy"><br>
+Breakout是一款经典的雅达利游戏，也就是我们所熟知的“打砖块”。玩家需要左右移动在屏幕下方的短平板子将一颗不断弹跳的小球反弹回屏幕上方，使其将一块块矩形砖块组成的六行砖块墙面打碎，并防止小球从屏幕底部掉落。在Atari 2600版本的Breakout中，玩家共有5次小球掉落机会，一旦用完就标志游戏结束，每打掉一块砖块得1分，全部打掉则游戏胜利结束。</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2024/01/14/1705215012.png" alt="图2-1 Breakout for Atari 2600游戏示意图" loading="lazy"></figure>
+<center>图2-1 Breakout for Atari 2600游戏示意图</center>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-01-09</span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/674/">
+        <h2 class="post-title">强化学习在生成式预训练语言模型中的研究现状简单调研</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="1-绪论">1. 绪论</h1>
+<p>本文旨在深入探讨强化学习在生成式预训练语言模型中的应用，特别是在对齐优化、提示词优化和经验记忆增强提示词等方面的具体实践。通过对现有研究的综述，我们将揭示强化学习在提高生成式语言模型性能和人类对话交互的关键作用。虽然这些应用展示了巨大的潜力，但也将讨论现有方法的挑战和可能的未来发展方向。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-01-09</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/iy0qND6CBCj/">
+                ChatGPT
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/672/">
+        <h2 class="post-title">论文复现 | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="0-intro">0. Intro</h1>
+<h2 id="01-目录">0.1 目录</h2>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-12-23</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UwEHVwWVqvl/">
+                强化学习
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/671/">
+        <h2 class="post-title">讲座思考 | 周志华教授：新型机器学习神经元模型的探索</h2>
+      </a>
+      <div class="post-abstract">
+        <blockquote>
+<p>12月22日，有幸听了南京大学周志华教授题为“新型机器学习神经元模型的探索”的讲座。现场热闹非凡，大家像追星一样拿着“西瓜书”找周教授签名。周教授讲得依旧循循善诱，由浅入深，听得我很入迷，故作此记。</p>
+</blockquote>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-12-23</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/9XC-yzjfAh6/">
+                网络配置
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/670/">
+        <h2 class="post-title">讲座思考 |  颠覆传统摄像方式乃至计算机视觉的“脉冲视觉”</h2>
+      </a>
+      <div class="post-abstract">
+        <p>传统相机拍摄视频时其实是以一定帧率进行采样，视频其实还是一串图片的集合，因此低帧率时会觉得视频卡，拍摄高速运动物体时会有运动模糊等等问题。然而你能想象这一切都可以被“脉冲视觉”这一前沿技术改变吗？</p>
+<!-- ![](https://s2.loli.net/2023/12/09/q1RzjVv4cfJA6GO.png) -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-12-09</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/Mbmi_jGlthi/">
+                Transformer
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/670/">
+        <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/12/09/q1RzjVv4cfJA6GO.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/667/">
+        <h2 class="post-title">阅读笔记 | Privacy vs. Efficiency: Achieving Both Through Adaptive Hierarchical Federated Learning</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="summary">Summary</h2>
+<p>The paper argue that the efficiency and data privacy of Federated Learning are non-orthogonal from the perspective of model training, which means they are restricting each other. So that the paper strictly formulates the problem at first, and designs a cloud-edge-end hierarchical FL system with adaptive control algorithm embedding a two-level Differential Protection method to relieve both the resource and privacy concerns. The design follows the following ideas:</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-11-28</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                网络管理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/663/">
+        <h2 class="post-title">杂记 ｜ greedy与soft-greedy策略</h2>
+      </a>
+      <div class="post-abstract">
+        <!-- ![44.358730,11.593990; Generated by AI](https://s2.loli.net/2023/11/12/PCGnX8aeEMpjNcS.png)
+ -->
+<p>生活中，许多人似乎都在解决着自己的多目标优化问题。我们即想要这个，又想要那个，有时候目标间甚至相互矛盾，你存我亡。</p>
+<p>但其实我们没有严谨的公式和高速计算的能力，去把一个个问题形式化，然后一一求解。</p>
+<p>而贪心策略（Greedy Strategy），也就是选择当前最好的，作为一种符合直觉的方式，被广泛地应用到我们生活中，而且很多时候其实我们并不会意识到。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-11-12</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/9XC-yzjfAh6/">
+                网络配置
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                网络管理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/663/">
+        <div class="feature-container" style="background-image: url('https://ranlychan.github.io/post-images/663.png')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+    <a href="https://ranlychan.github.io/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

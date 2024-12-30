@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Python爬虫 | 美国特斯拉充电桩位置信息（含经纬度）爬取 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Python爬虫 | 美国特斯拉充电桩位置信息（含经纬度）爬取</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-02-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                    APP
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                    安卓开发
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="概要">概要</h1>
+<p>最近在搞美赛模拟，2018D题需要用到特斯拉在美国的两种充电桩（一种是Supercharger，另一种是Destination Charging）的位置数据。下面介绍如何用Python在Tesla官网爬取已经建立的充电桩所在州、县、详细地址、经纬度坐标以及FIPS等信息，以及即将建立的充电桩的大致位置和计划建造时间。 <img src="https://img.400511.net/2022/02/27/DMCuBn41.jpg" alt="" loading="lazy"></p>
+<!--more-->
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="详细">详细</h1>
+<h2 id="数据来源">数据来源</h2>
+<ul>
+<li>
+<p>Supercharger<br>
+https://www.tesla.com/findus/list/superchargers/United+States</p>
+</li>
+<li>
+<p>Destination Charging<br>
+https://www.tesla.com/findus/list/chargers/United+States</p>
+</li>
+</ul>
+<h2 id="数据结果">数据结果</h2>
+<p>tesla_charger_us.xlsx<br>
+tesla_supercharger_us.xlsx<br>
+下载：https://cowtransfer.com/s/7c7a8523a76945</p>
+<h2 id="程序实现">程序实现</h2>
+<h3 id="环境">环境</h3>
+<p><strong>Python</strong> 3.9.7<br>
+<strong>Jupyter</strong> 1.0.0<br>
+<strong>Packages</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lxml</td>
+<td>4.6.3</td>
+<td>|</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>1.20.3</td>
+<td>|</td>
+</tr>
+<tr>
+<td>pandas</td>
+<td>1.3.4</td>
+<td>|</td>
+</tr>
+<tr>
+<td>requests</td>
+<td>2.26.0</td>
+<td>|</td>
+</tr>
+<tr>
+<td>regex</td>
+<td>2021.8.3</td>
+<td>Python自带正则表达式模块</td>
+</tr>
+<tr>
+<td>progressbar2</td>
+<td>4.0.0</td>
+<td>用于在控制台显示进度条</td>
+</tr>
+</tbody>
+</table>
+<h3 id="代码">代码</h3>
+<p>由于两种充电桩的数据页面基本一样，所以以下代码可以抓取两类充电桩的数据。记得在 # 索引页面root下面的<code>requests.get()</code>里面修改source为数据来源里写的网页，并且在代码末尾修改保存csv的名称避免覆盖。</p>
+<pre><code class="language-python">#!/usr/bin/env python
+# coding: utf-8
+
+# # 2018-MCM-D
+# ## 数据爬取
+# ### 特斯拉Supercharger基本信息爬取
+
+import numpy as np
+import pandas as pd
+import requests
+from lxml import etree
+get_ipython().run_line_magic('matplotlib', 'inline')
+get_ipython().run_line_magic('config', &quot;InlineBackend.figure_format = 'svg'&quot;)
+
+# 内   容 ：美国特斯拉超级充电桩位置
+# Content: Tesla Superchargers' location in the US
+# Source : https://www.tesla.com/findus/list/superchargers/United+States
+data_col = ['name',
+           'common_name',
+           'street_address',
+           'extended_address',
+           'locality',
+           'google_navi',
+           'charging',
+           'coming',
+           'opening_date',
+           'detail_url']
+full_data = pd.DataFrame(columns=data_col) # 存放爬取到的数据
+
+# 索引页面root
+html = requests.get(&quot;https://www.tesla.com/findus/list/chargers/United+States&quot;)
+etree_html = etree.HTML(html.text)
+
+# 统计总共在多少个州有超级充电站
+states_content = etree_html.xpath('//*[@id=&quot;find-us-list-container&quot;]/div/section/div/h2')
+state_count = 0
+for each_state in states_content:
+    print(each_state.text)
+    state_count = state_count + 1
+print('-------------\n{} states in total'.format(state_count))
+# 57 states in total, in which ME and Maine are duplicated
+# 56 states in fact
+
+# 爬取每个充电站的详情页面url
+detail_url = etree_html.xpath('//*[@id=&quot;find-us-list-container&quot;]/div/section/div/div/address/a')
+
+root_data = pd.DataFrame(columns=['name','detail_url'])
+index = 0
+for each_url in detail_url:
+    print(each_url.text)
+    print(each_url.attrib)
+    full_url = &quot;https://www.tesla.com&quot;+each_url.attrib.get('href')
+    root_data.loc[index] = [each_url.text,full_url]
+    index = index + 1
+
+print(root_data)
+
+
+# ### 特斯拉Supercharger详细信息解析
+
+from lxml import html
+import re
+import progressbar
+
+p = progressbar.ProgressBar()
+p.start(len(root_data))
+# get further information through 'detail_url'
+for index,row in root_data.iterrows():
+    collected_row = {'name':'',
+           'common_name':'',
+           'street_address':'',
+           'extended_address':'',
+           'locality':'',
+           'google_navi':'',
+           'charging':'',
+           'coming':'',
+           'opening_date':'',
+           'detail_url':''}
+    response = requests.get(row['detail_url'])
+    etree_html = etree.HTML(response.text)
+    #print(row['detail_url'])
+    # contents
+    pattern0 = re.compile(r'&lt;address.*?class=\&quot;vcard\&quot;&gt;(.*?)&lt;/address&gt;',re.S)
+    root=re.findall(pattern0,response.text)
+    
+    pattern1 = re.compile(r'&lt;span.*?class=\&quot;common-name\&quot;&gt;(.*?)&lt;/span&gt;',re.S)
+    common_name = re.findall(pattern1,root[0])
+    
+    pattern2 = re.compile(r'&lt;span.*?class=\&quot;street-address\&quot;&gt;(.*?)&lt;/span&gt;',re.S)
+    street_address = re.findall(pattern2,root[0])
+    
+    pattern3 = re.compile(r'&lt;span.*?class=\&quot;extended_address\&quot;&gt;(.*?)&lt;/span&gt;',re.S)
+    extended_address = re.findall(pattern3,root[0])
+    
+    pattern4 = re.compile(r'&lt;span.*?class=\&quot;locality\&quot;&gt;(.*?)&lt;/span&gt;',re.S)
+    locality = re.findall(pattern4,root[0])
+    
+    pattern5 = re.compile(r'&lt;a.*?href=\&quot;(.*?)\&quot; target=\&quot;_blank\&quot;&gt;',re.S)
+    google_navi = re.findall(pattern5,root[0])
+    
+    pattern6 = re.compile(r'harging&lt;/strong&gt;.*?&gt;(.*?)&lt;/p&gt;',re.S)
+    charging = re.findall(pattern6,root[0])
+    
+    pattern7 = re.compile(r'&lt;span.*?class=\&quot;coming-soon\&quot;&gt;(.*?)&lt;/span&gt;',re.S)
+    coming = re.findall(pattern7,root[0])
+    
+    pattern8 = re.compile(r'&lt;p&gt;&lt;strong&gt;Target opening in (.*?)&lt;/strong&gt;&lt;/p&gt;',re.S)
+    opening_date = re.findall(pattern8,root[0])
+
+    if(len(common_name)&gt;0):
+        collected_row['common_name']=common_name[0]
+        #print(common_name[0])
+    if(len(street_address)&gt;0):
+        collected_row['street_address'] = street_address[0]
+        #print(street_address[0])
+    if(len(extended_address)&gt;0):
+        collected_row['extended_address'] = extended_address[0]
+        #print(extended_address[0])
+    if(len(locality)&gt;0):
+        collected_row['locality'] = locality[0]
+        #print(locality[0])
+    if(len(google_navi)&gt;0):
+        collected_row['google_navi'] = google_navi[0]
+        #print(google_navi[0])
+    if(len(charging)&gt;0):
+        collected_row['charging'] = charging[0]
+
+    if(len(coming)&gt;0):
+        collected_row['coming'] = coming[0]
+        #print(coming[0])
+    if(len(opening_date)&gt;0):
+        collected_row['opening_date'] = opening_date[0]
+        #print(opening_date[0])
+    
+    collected_row['name'] = row['name']
+    collected_row['detail_url'] = row['detail_url']
+    full_data.loc[index] = collected_row
+    
+    
+    p.update(index)
+p.finish()
+
+full_data.to_csv('data/tesla_charger_us.csv')
+
+print(full_data)
+
+</code></pre>
+<h1 id="参考">参考</h1>
+<p>https://blog.csdn.net/qq_32392597/article/details/96147620</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/408/">
+              <h3 class="post-title">
+                下一篇：Python | 鼠标右键一键打开Jupyter Notebook
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

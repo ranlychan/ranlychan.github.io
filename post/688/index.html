@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | Ubuntu下NTFS分区read-only状态清除修复 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | Ubuntu下NTFS分区read-only状态清除修复</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-07-21</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/r_sTFUvatgw/">
+                    SDN
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/NTziyA3aS4a/">
+                    P4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="问题描述">问题描述</h2>
+<p>Ubuntu 20.04的物理系统下，我的一个NTFS分区可能由于在Windows更新时进行了强制关机出现了错误，因此在Ubuntu下无法正常写入，出现了read-only状态。</p>
+<!-- more -->
+<h2 id="问题解决">问题解决</h2>
+<p>查找了一些修复方法，有针对ext2/ext3/ext4和NTFS两种文件系统的修复方法。</p>
+<p>我在<a href="https://linux.cn/article-2045-1.html">这里</a>找到了针对NTFS的修复指令：</p>
+<ul>
+<li>假设需要修复的分区挂载在<code>/dev/sdb1</code></li>
+<li>首先在文件管理器或使用命令解除分区挂载</li>
+</ul>
+<pre><code class="language-bash">sudo umount /dev/sdb1
+</code></pre>
+<ul>
+<li>然后使用<code>ntfsfix</code>命令尝试修复NTFS分区</li>
+</ul>
+<pre><code class="language-bash">sudo ntfsfix /dev/sdb1
+</code></pre>
+<ul>
+<li>成功后输出结果，分区可以正常写入</li>
+</ul>
+<pre><code class="language-bash">Mounting volume... The disk contains an unclean file system (0, 0).
+Metadata kept in Windows cache, refused to mount.
+FAILED
+Attempting to correct errors... 
+Processing $MFT and $MFTMirr...
+Reading $MFT... OK
+Reading $MFTMirr... OK
+Comparing $MFTMirr to $MFT... OK
+Processing of $MFT and $MFTMirr completed successfully.
+Setting required flags on partition... OK
+Going to empty the journal ($LogFile)... OK
+Checking the alternate boot sector... OK
+NTFS volume version is 3.1.
+NTFS partition /dev/sdb1 was processed successfully.
+</code></pre>
+<p>如果你的受损分区是EXT4的，还可以参照<a href="https://www.cnblogs.com/ranxf/p/8649736.html">这里</a>进行修复：</p>
+<ul>
+<li>假设需要修复的分区挂载在<code>/dev/sdb1</code></li>
+<li>首先在文件管理器或使用命令解除分区挂载</li>
+</ul>
+<pre><code class="language-bash">sudo umount /dev/sdb1
+</code></pre>
+<ul>
+<li>然后使用<code>fsck</code>命令尝试修复EXT4分区</li>
+</ul>
+<pre><code class="language-bash">sudo fsck.ext4 -y /dev/sdb1
+</code></pre>
+<p>修复时请选择对应的文件系统的修复指令。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/685/">
+              <h3 class="post-title">
+                下一篇：笔记 | Python环境下的GUI编程常用包
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

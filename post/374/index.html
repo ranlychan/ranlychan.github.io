@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>编译原理 | 期末复习笔记 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">编译原理 | 期末复习笔记</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-01-06</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/Iz1dJXoi1VVx/">
+                    美食菜谱
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="目录">目录</h1>
+<!--index-menu-->
+<!--more-->
+<h1 id="第一章-概论">第一章 概论</h1>
+<h2 id="1-1-编译过程及程序结构">1. 1 编译过程及程序结构</h2>
+<ul>
+<li><strong>编译程序</strong>：把一种高级语言等价地转换为另一种低级语言（汇编、机器码），共有六个阶段，八个部分。
+<ul>
+<li>阶段
+<ul>
+<li><strong>词法分析</strong>：对源程序从左到右逐字符读入，线性扫描和分解，识别出一个个单词</li>
+<li><strong>语法分析</strong>：根据语言的语法规则，确定整个输入串是否是语法上正确的程序</li>
+<li><strong>语义分析</strong>：审查源程序有无语义错误，为代码生成阶段手机类型信息</li>
+<li><strong>中间代码生成</strong>​</li>
+<li><strong>代码优化</strong>​</li>
+<li><strong>目标代码生成</strong></li>
+</ul>
+</li>
+<li>额外两个部分
+<ul>
+<li><strong>符号表管理程序</strong></li>
+<li><strong>出错处理程序</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>翻译程序</strong>：边解释边执行，不生成目标代码，仅有编译程序的前三个阶段：词法、语法、语义分析</li>
+</ul>
+<hr>
+<ul>
+<li>编译前后端：
+<ul>
+<li>编译前端：与源语言有关，如词法分析、语法分析、语义分析、与目标机无关的代码优化等与机器无关的事务</li>
+<li>编译前端：与目标机器有关，如目标代码生成、与目标机有关的代码优化</li>
+<li>好处：可组装、省力、有利于移植</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Java语言环境
+<ul>
+<li>BYTECODE（字节码）：需经由JVM才可在目标机器上运行</li>
+<li>两种二次处理
+<ul>
+<li>解释程序</li>
+<li>即时编译程序</li>
+</ul>
+</li>
+<li>运行流程</li>
+</ul>
+</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2022/01/06/1641469336.png" alt="" loading="lazy"></figure>
+<hr>
+<h1 id="第二章-文法和语言">第二章 文法和语言</h1>
+<ul>
+<li>文法：G[S] 定义为四元组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(V_N,V_T,P,S)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">)</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">V_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：非终结符集</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">V_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：终结符集</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>：产生式集</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>：开始符（识别符）</li>
+</ul>
+</li>
+<li>文法分类
+<ul>
+<li>0型文法（短语文法）</li>
+<li>1型文法（上下文有关文法）</li>
+<li><strong>2型文法（上下文无关文法）</strong>
+<ul>
+<li>形如$ \alpha \rightarrow \beta, \alpha \in V_N ;\beta \in (V_N \cup V_T)^* $，也即左部只能有一个非终结符</li>
+</ul>
+</li>
+<li><strong>3型文法（正规文法）</strong>
+<ul>
+<li><strong>形如</strong> $ A \rightarrow aB 、A \rightarrow a，A,B\in V_N;a \in V_T^* $</li>
+<li>左递归</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文法实用限制
+<ul>
+<li>多余规则：推导中无法用到的规则，有两种情况：
+<ul>
+<li>不可达：一个非终结符不在任何规则右部出现</li>
+<li>不可终止：一个非终结符不能推导出非终结符来</li>
+</ul>
+</li>
+<li>有害规则：存在例如$ U \rightarrow U $的产生式，对描述语言无必要，会引起文法的二义性</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="第三章-词法分析">第三章 词法分析</h1>
+<h2 id="31-正规式与正规文法">3.1 正规式与正规文法</h2>
+<p>例如：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>=</mo><mi>x</mi><mi>y</mi><mo>:</mo><mi>A</mi><mo>→</mo><mi>x</mi><mi>B</mi><mo separator="true">;</mo><mi>B</mi><mo>→</mo><mi>y</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>=</mo><msup><mi>x</mi><mo>∗</mo></msup><mi>y</mi><mo>:</mo><mi>A</mi><mo>→</mo><mi>x</mi><mi>A</mi><mi mathvariant="normal">∣</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">A=xy: A \rightarrow xB;B \rightarrow y \\ A=x^*y:A \rightarrow xA|y
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.933136em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault">A</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span></span></p>
+<p>其中冒号左边为正规式，右边为该正规式对应的正规文法</p>
+<h2 id="32-有穷自动机">3.2 有穷自动机</h2>
+<p>练习题</p>
+<ol>
+<li>构造下列正规式的DFA
+<ol>
+<li>1(0|1)*101</li>
+<li>1(1010* | 1(010)*1)*0</li>
+<li>a((a | b)* | ab*a)*b</li>
+<li>b((ab)* | bb)*ab</li>
+</ol>
+</li>
+<li>构造一个DFA，它接受$ \sum={0,1} $上所以满足如下条件的字符串：每个1都有0直接跟在右边。然后构造改语言的正规文法。</li>
+<li>将图3.17（a）和（b）中的NFA确定化</li>
+</ol>
+<hr>
+<h1 id="第四章-自顶向下的语法分析方法">第四章 自顶向下的语法分析方法</h1>
+<ul>
+<li>语法分析常用的两种方法：<strong>自顶向下</strong>和<strong>自底向上</strong>的语法分析方法</li>
+</ul>
+<h2 id="41-ll1文法判别">4.1 LL(1)文法判别</h2>
+<ul>
+<li>计算FIRST、FOLLOW集得到SELECT集，对于相同左部的产生式的SELECT集之间，若取交集不为空，则该文法不是LL(1)文法，反之则为LL(1)文法。</li>
+<li>形式化定义为：一个上下文无关文法是LL(1)文法的充分必要条件是，对每个非终结符A的两个不同产生式，A→α, A→β,满足SELECT(A→α)∩SELECT(A→β)=空集  其中α，β不同时能推导出ε。</li>
+</ul>
+<h3 id="411-select集计算">4.1.1 SELECT集计算</h3>
+<p><strong>定义</strong></p>
+<ul>
+<li>给定上下文无关文法的产生式A→α， A∈VN，α∈V*, 若α不能推导出ε，则SELECT(A→α)=FIRST(α)</li>
+<li>如果α能推导出ε则：SELECT(A→α)=（FIRST(α) –{ε}）∪ FOLLOW(A)</li>
+<li>需要注意的是，SELECT集是针对产生式而言的。</li>
+</ul>
+<h2 id="42-非ll1文法转换为ll1文法">4.2 非LL(1)文法转换为LL(1)文法</h2>
+<ul>
+<li>一个文法若含直接或间接左递归，或含有左公共因子，则该文法肯定不是LL(1)文法。</li>
+</ul>
+<p><strong>提取左公共因子</strong></p>
+<ul>
+<li>文法中含有$ A \rightarrow \alpha \beta| \alpha \gamma $的产生式时，需要进行等价变换为：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>→</mo><mi>α</mi><msup><mi>A</mi><mo mathvariant="normal">′</mo></msup><mspace linebreak="newline"></mspace><msup><mi>A</mi><mo mathvariant="normal">′</mo></msup><mo>→</mo><mi>β</mi><mi mathvariant="normal">∣</mi><mi>γ</mi></mrow><annotation encoding="application/x-tex">A \rightarrow \alpha A&#x27; \\ A&#x27; \rightarrow \beta | \gamma 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span></span></span></span></span></p>
+<hr>
+<h2 id="43-ll1分析的实现">4.3 LL(1)分析的实现</h2>
+<h3 id="431-递归下降子程序">4.3.1 递归下降子程序</h3>
+<p>一般遵照Pascal程序结构设计，例如：</p>
+<pre><code class="language-pascal">PROCEDURE S;
+BEGIN;
+	E;T;
+END;
+
+PROCEDURE E;
+BEGIN;
+	IF SYM='a' THEN
+		ADVANCE;
+	ELSE IF SYM=',' THEN
+		ADVANCE;
+	ELSE IF SYM='(' THEN
+		ADVANCE;
+		T;
+    IF SYM = ')' THEN
+    	ADVANCE;
+    ELSE
+    	ERROR;
+	ELSE
+		ERROR;
+END;
+  
+</code></pre>
+<h3 id="432-预测分析法">4.3.2 预测分析法</h3>
+<p><strong>构建预测分析表</strong></p>
+<ul>
+<li>对文法G[S]的每个产生式$ A \rightarrow \alpha $，执行：</li>
+</ul>
+<p>(1) 对每个$ a \in SELECT(A \rightarrow \alpha) <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">，</mi><mi mathvariant="normal">将</mi></mrow><annotation encoding="application/x-tex">，将</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">将</span></span></span></span> A \rightarrow \alpha $加入M[A,a]<br>
+(2) 所有无定义（完成第一步后空着的）M[A,a]标上出错标记</p>
+<p>例</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>a</th>
+<th>^</th>
+<th>(</th>
+<th>)</th>
+<th>,</th>
+<th>#</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>-&gt;a</td>
+<td>-&gt;^</td>
+<td>-&gt;(T)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>T</td>
+<td>-&gt;ST'</td>
+<td>-&gt;ST'</td>
+<td>-&gt;ST'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>T'</td>
+<td></td>
+<td></td>
+<td></td>
+<td>-&gt;ε</td>
+<td>-&gt;,ST'</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用预测分析表进行分析</strong></p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>分析栈</th>
+<th>剩余输入串</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>#S</td>
+<td>(a,a)#</td>
+<td>S-&gt;(T)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>#)T(</td>
+<td>(a,a)#</td>
+<td>'('匹配</td>
+</tr>
+<tr>
+<td>3</td>
+<td>#)T</td>
+<td>a,a)#</td>
+<td>T-&gt;ST'</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="第五章-自底向上优先分析">第五章 自底向上优先分析</h1>
+<ul>
+<li>自底向上的分析方法有两种：算符优先分析和LR分析法</li>
+</ul>
+<h2 id="51-移进-规约">5.1 移进-规约</h2>
+<p>例：有文法G[S]</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>a</mi><mi>A</mi><mi>c</mi><mi>B</mi><mi>e</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mi>b</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mi>A</mi><mi>b</mi><mspace linebreak="newline"></mspace><mi>B</mi><mo>→</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">S→  aAcBe \\ A →  b \\ A →  Ab \\B → d 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">A</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">e</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault">b</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span></span></p>
+<p>其分析过程如下：<br>
+<img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641454244938-915ad808-36ab-49f6-bac5-c0191b8f255d.png" alt="" loading="lazy"><br>
+<img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641454518259-1a18eedd-d3b1-4ae9-aa18-a32b69974a3e.png" alt="" loading="lazy"></p>
+<h2 id="52-算符优先分析">5.2 算符优先分析</h2>
+<h3 id="521-优先关系定义">5.2.1 优先关系定义</h3>
+<p>（1）当文法中存在产生式$ A\rightarrow ...ab... $ 或 $ A \rightarrow ...aBb... <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">，</mi><mi mathvariant="normal">则</mi><mi>a</mi><mi mathvariant="normal">和</mi><mi>b</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">优</mi><mi mathvariant="normal">先</mi><mi mathvariant="normal">级</mi><mi mathvariant="normal">相</mi><mi mathvariant="normal">等</mi><mi mathvariant="normal">（</mi><mn>2</mn><mi mathvariant="normal">）</mi><mi mathvariant="normal">当</mi><mi mathvariant="normal">文</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">中</mi><mi mathvariant="normal">存</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">产</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">式</mi></mrow><annotation encoding="application/x-tex">，则a和b的优先级相等
+（2）当文法中存在产生式</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">则</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">和</span><span class="mord mathdefault">b</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">优</span><span class="mord cjk_fallback">先</span><span class="mord cjk_fallback">级</span><span class="mord cjk_fallback">相</span><span class="mord cjk_fallback">等</span><span class="mord cjk_fallback">（</span><span class="mord">2</span><span class="mord cjk_fallback">）</span><span class="mord cjk_fallback">当</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">产</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">式</span></span></span></span> A \rightarrow ...aB... <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">，</mi><mi mathvariant="normal">则</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">每</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi></mrow><annotation encoding="application/x-tex">，则对每一个</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">则</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">每</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span></span></span></span> b\in FIRSTVT(B) <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">都</mi><mi mathvariant="normal">有</mi></mrow><annotation encoding="application/x-tex">都有</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">都</span><span class="mord cjk_fallback">有</span></span></span></span> a\lessdot b <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">（</mi><mn>3</mn><mi mathvariant="normal">）</mi><mi mathvariant="normal">当</mi><mi mathvariant="normal">文</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">中</mi><mi mathvariant="normal">存</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">产</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">式</mi></mrow><annotation encoding="application/x-tex">
+（3）当文法中存在产生式</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord cjk_fallback">（</span><span class="mord">3</span><span class="mord cjk_fallback">）</span><span class="mord cjk_fallback">当</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">产</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">式</span></span></span></span> A \rightarrow ...Bb... <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">，</mi><mi mathvariant="normal">则</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">每</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi></mrow><annotation encoding="application/x-tex">，则对每一个</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">则</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">每</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span></span></span></span> a \in LASTVT(B) <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">都</mi><mi mathvariant="normal">有</mi></mrow><annotation encoding="application/x-tex">都有</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">都</span><span class="mord cjk_fallback">有</span></span></span></span> a\gtrdot b $</p>
+<ul>
+<li>在算符优先文法中，优先关系仅在<strong>终结符</strong>之间。</li>
+</ul>
+<h3 id="522-算符优先关系表和分析">5.2.2 算符优先关系表和分析</h3>
+<ul>
+<li><strong>算符优先文法：<strong>文法G的任一产生式中</strong>不含相邻的非终结符</strong></li>
+<li>构造<strong>算符优先关系表</strong>，先扩展文法(S'-&gt;#S#)，接着需要先求FIRSTVT集合LASTVT集，可以看成是对于每个产生式右部，若同时有非终结符和终结符，则去除非终结符以后求FIRST或LAST集；若仅有非终结符串A，再考虑求FIRSTVT(A)或LASTVT(A)</li>
+<li>算符优先分析：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>符号栈</th>
+<th>优先关系</th>
+<th>当前符号</th>
+<th>剩余输入串</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>#</td>
+<td>$ \lessdot  $</td>
+<td>(</td>
+<td>a,a)#</td>
+<td>移进</td>
+</tr>
+<tr>
+<td>2</td>
+<td>#(</td>
+<td>$ \lessdot  $</td>
+<td>a</td>
+<td>,a)#</td>
+<td>移进</td>
+</tr>
+<tr>
+<td>3</td>
+<td>#(a</td>
+<td>$ \gtrdot  $</td>
+<td>,</td>
+<td>a)#</td>
+<td>规约 S-&gt;a</td>
+</tr>
+<tr>
+<td>4</td>
+<td>#(S</td>
+<td>$ \lessdot  $</td>
+<td>,</td>
+<td>a)#</td>
+<td>移进</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="第六章-lr分析">第六章 LR分析</h1>
+<h2 id="61-lr文法间的关系">6.1 LR文法间的关系</h2>
+<p>常用的LR文法有：LR(0)，SLR(1)、LALR(1)、LR(1)<br>
+其包含关系结构如图：<br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2022/01/06/1641469380.png" alt="" loading="lazy"><br>
+一个文法G[S]，若列出LR(0)项目集规范族C后，C中没有项目集中有<strong>移进-规约冲突</strong>，那么该文法G[S]就是LR(0)文法。<br>
+同时，一个LR(0)文法也是SLR(1)、LALR(1)和LR(1)文法，因为不会再产生新的移进-规约冲突。</p>
+<hr>
+<h2 id="62-lr文法的判定">6.2 LR文法的判定</h2>
+<h3 id="621-lr0">6.2.1 LR(0)</h3>
+<p>一个文法G[S]，若列出LR(0)<strong>项目集规范族</strong>C后，C中没有项目集中有<strong>移进-规约冲突</strong>，那么该文法G[S]就是LR(0)文法。<br>
+​</p>
+<h4 id="项目集和项目集规范族">项目集和项目集规范族</h4>
+<p>项目集是一个包含一个或多个<strong>项目</strong>的集合。LR(0)项目形如：$ I_k={S \rightarrow ·\alpha} $</p>
+<p>特别地，对文法G[S]的拓宽文法G[S']：<br>
+$ I_0={S' \rightarrow ·S,...} <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">若</mi><mi>G</mi><mo>[</mo><mi>S</mi><mo>]</mo><mi mathvariant="normal">中</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">产</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">式</mi></mrow><annotation encoding="application/x-tex">
+若G[S]中有产生式</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">若</span><span class="mord mathdefault">G</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mclose">]</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">产</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">式</span></span></span></span> A \rightarrow\varepsilon $ 那么这个产生式对应的项目只有$ A \rightarrow· $<br>
+这种情况直接对应动作为<strong>规约</strong><br>
+<strong>​</strong></p>
+<p><strong>一个例子</strong><br>
+有文法G[S]如下：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>A</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mi>ε</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mi>a</mi><mi>A</mi><mi mathvariant="normal">∣</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">S \rightarrow AS | \varepsilon \\ A \rightarrow aA|b
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord">∣</span><span class="mord mathdefault">ε</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">A</span><span class="mord">∣</span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p>则其拓宽文法G[S']为</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>S</mi><mo mathvariant="normal">′</mo></msup><mo>→</mo><mi>S</mi><mspace linebreak="newline"></mspace><mi>S</mi><mo>→</mo><mi>A</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mi>ε</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mi>a</mi><mi>A</mi><mi mathvariant="normal">∣</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">S&#x27; \rightarrow S \\ S \rightarrow AS | \varepsilon \\ A \rightarrow aA|b
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord">∣</span><span class="mord mathdefault">ε</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">A</span><span class="mord">∣</span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p>其项目集有</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mn>0</mn></msub><mo>:</mo><mspace linebreak="newline"></mspace><msup><mi>S</mi><mo mathvariant="normal">′</mo></msup><mo>→</mo><mo separator="true">⋅</mo><mi>S</mi><mspace linebreak="newline"></mspace><mi>S</mi><mo>→</mo><mo separator="true">⋅</mo><mi>A</mi><mi>S</mi><mspace linebreak="newline"></mspace><mi>S</mi><mo>→</mo><mo separator="true">⋅</mo><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mo separator="true">⋅</mo><mi>a</mi><mi>A</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mo separator="true">⋅</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">I_0: \\ S&#x27; \rightarrow ·S \\ S \rightarrow ·AS \\ S \rightarrow · \\ A \rightarrow ·aA \\ A \rightarrow ·b 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">A</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mn>1</mn></msub><mi mathvariant="normal">：</mi><mspace linebreak="newline"></mspace><msup><mi>S</mi><mo mathvariant="normal">′</mo></msup><mo>→</mo><mi>S</mi><mo separator="true">⋅</mo></mrow><annotation encoding="application/x-tex">I_1：\\ S&#x27; \rightarrow S·
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">：</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mpunct">⋅</span></span></span></span></span></p>
+<p>等等</p>
+<h4 id="移进-规约冲突">移进-规约冲突</h4>
+<p>如上例所示<br>
+其项目集I0中有移进-规约冲突：$$ S \rightarrow · \ A \rightarrow ·aA \ A \rightarrow ·b $$<br>
+对于$ S \rightarrow· $ 应当规约r2；<br>
+对于$ A \rightarrow ·aA <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">和</mi></mrow><annotation encoding="application/x-tex">和</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">和</span></span></span></span> A \rightarrow ·b $ 均应当移进。</p>
+<hr>
+<h3 id="622-slr1">6.2.2 SLR(1)</h3>
+<p>这里千万别考。</p>
+<hr>
+<h3 id="623-lalr1">6.2.3 LALR(1)</h3>
+<p>LALR(1)的项目集族是建立在LR(1)基础上，合并<strong>同心项</strong>后不含冲突的新项目集族。<br>
+​</p>
+<h4 id="同心集">同心集</h4>
+<p>同心集是一种LR(1)中项目集与项目集之间的关系，一般是两个一组互为同心集。同为一组的同心集中的各个<strong>项目集中</strong>，各个<strong>项目一一对应相同</strong>，只有项目后的<strong>搜索符</strong>不同。<br>
+​</p>
+<p><strong>一个例子</strong><br>
+例如：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mn>4</mn></msub><mo>:</mo><mi>B</mi><mo>→</mo><mi>b</mi><mo separator="true">⋅</mo><mo separator="true">,</mo><mi>a</mi><mi mathvariant="normal">/</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">I_4: B \rightarrow b·,a/b 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord">/</span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mn>7</mn></msub><mo>:</mo><mi>B</mi><mo>→</mo><mi>b</mi><mo separator="true">⋅</mo><mo separator="true">,</mo><mi mathvariant="normal">#</mi></mrow><annotation encoding="application/x-tex">I_7: B \rightarrow b·,\# 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">b</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">#</span></span></span></span></span></p>
+<p>就是一对同心集<br>
+​</p>
+<h4 id="合并同心集">合并同心集</h4>
+<p>将同心集中对应的同心项的<strong>搜索符</strong>合并（以斜杠/分开）<br>
+如上例中的I4和I7合并后为：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mn>4</mn></msub><mo separator="true">,</mo><msub><mi>I</mi><mn>7</mn></msub><mo>:</mo><mi>B</mi><mo>→</mo><mi>b</mi><mo separator="true">⋅</mo><mo separator="true">,</mo><mi>a</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi mathvariant="normal">/</mi><mi mathvariant="normal">#</mi></mrow><annotation encoding="application/x-tex">I_4,I_7: B \rightarrow b·,a/b/\#
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord">/</span><span class="mord mathdefault">b</span><span class="mord">/</span><span class="mord">#</span></span></span></span></span></p>
+<p>由LR(1)文法的项目集族合并同心集而来的新项目集族<strong>不会产生</strong>新的<strong>移进-规约冲突</strong>，但<strong>有可能产生规约-规约冲突</strong>。<br>
+​</p>
+<h4 id="规约-规约冲突">规约-规约冲突</h4>
+<p>一种冲突，应该不考。</p>
+<hr>
+<h3 id="624-lr1">6.2.4 LR(1)</h3>
+<p>构造LR(1)项目集族，不含冲突便是LR(1)。<br>
+​</p>
+<h4 id="搜索符">搜索符</h4>
+<ol>
+<li>有项目$ S \rightarrow \alpha ·X \beta ,y $ 和产生式$ X \rightarrow \gamma Z \delta $则在其所在的项目集中:</li>
+</ol>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>I</mi><mi>k</mi></msub><mo>:</mo><mspace linebreak="newline"></mspace><mi>S</mi><mo>→</mo><mi>α</mi><mo separator="true">⋅</mo><mi>X</mi><mi>β</mi><mo separator="true">,</mo><mi>y</mi><mspace linebreak="newline"></mspace><mi>X</mi><mo>→</mo><mo separator="true">⋅</mo><mi>γ</mi><mi>Z</mi><mi>δ</mi><mo separator="true">,</mo><msub><mi>z</mi><mn>1</mn></msub><mi mathvariant="normal">/</mi><msub><mi>z</mi><mn>2</mn></msub><mi mathvariant="normal">/</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">/</mi><msub><mi>z</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">I_k: \\ S \rightarrow \alpha ·X \beta ,y \\ X \rightarrow · \gamma Z \delta ,z_1/z_2/.../z_n 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mord mathdefault" style="margin-right:0.07153em;">Z</span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">/</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>其中$ z_n \in FIRST( \beta y) $</p>
+<ol start="2">
+<li>规定$ S' \rightarrow ·S,#<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">则</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">次</mi><mi mathvariant="normal">产</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">左</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">为</mi><mi>S</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">产</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">式</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">应</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">项</mi><mi mathvariant="normal">目</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">其</mi><mi mathvariant="normal">搜</mi><mi mathvariant="normal">索</mi><mi mathvariant="normal">符</mi><mi mathvariant="normal">为</mi></mrow><annotation encoding="application/x-tex">则有次产生的左部为S的产生式对应的项目，其搜索符为</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">则</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">次</span><span class="mord cjk_fallback">产</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">左</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">产</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">式</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">应</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">项</span><span class="mord cjk_fallback">目</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">其</span><span class="mord cjk_fallback">搜</span><span class="mord cjk_fallback">索</span><span class="mord cjk_fallback">符</span><span class="mord cjk_fallback">为</span></span></span></span> FIRST(\varepsilon #)={#} $</li>
+</ol>
+<h4 id="lr1分析表">LR(1)分析表</h4>
+<p>例如</p>
+<table>
+<thead>
+<tr>
+<th><strong>状态</strong></th>
+<th><strong>ACTION</strong></th>
+<th></th>
+<th></th>
+<th><strong>GOTO</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>a</strong></td>
+<td><strong>b</strong></td>
+<td><strong>#</strong></td>
+<td><strong>A</strong></td>
+<td><strong>S</strong></td>
+</tr>
+<tr>
+<td>0</td>
+<td>S3</td>
+<td>S4</td>
+<td>r2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td>acc</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>S3</td>
+<td>S4</td>
+<td>r2</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>S3</td>
+<td>S4</td>
+<td></td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>r4</td>
+<td>r4</td>
+<td>r4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td>r1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>r3</td>
+<td>r3</td>
+<td>r3</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>其中ACTION项目下，在对应状态遇到终结符时执行对应动作。Sn指跳转到状态n；rm指使用第m个产生式规约；</li>
+<li>在GOTO项目下的数字，代表在对应状态遇到非终结符所要跳转到的状态序号。</li>
+</ul>
+<h4 id="lr1分析过程">LR(1)分析过程</h4>
+<p>文法G[S]：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>S</mi><mo mathvariant="normal">′</mo></msup><mo>→</mo><mi>S</mi><mspace linebreak="newline"></mspace><mi>S</mi><mo>→</mo><mi>A</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mi>ε</mi><mspace linebreak="newline"></mspace><mi>A</mi><mo>→</mo><mi>a</mi><mi>A</mi><mi mathvariant="normal">∣</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">S&#x27; \rightarrow S \\ S \rightarrow AS| \varepsilon \\ A \rightarrow aA|b 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.801892em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord">∣</span><span class="mord mathdefault">ε</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">A</span><span class="mord">∣</span><span class="mord mathdefault">b</span></span></span></span></span></p>
+<p>分析串abab#</p>
+<figure data-type="image" tabindex="2"><img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641466810890-e35c644b-60e6-4e50-ba92-4c4d70ec3b41.png" alt="" loading="lazy"></figure>
+<hr>
+<h1 id="第七章-语法制导的语义计算">第七章 语法制导的语义计算</h1>
+<p>例：<br>
+给定文法G[S]:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mo>(</mo><mi>L</mi><mo>)</mo><mi mathvariant="normal">∣</mi><mi>a</mi><mspace linebreak="newline"></mspace><mi>L</mi><mo>→</mo><mi>L</mi><mo separator="true">,</mo><mi>S</mi><mi mathvariant="normal">∣</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">S \rightarrow (L) | a \\ L \rightarrow L,S|S 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">L</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord mathdefault">a</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span></span></p>
+<p>其属性文法（翻译模式）如下：<br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2022/01/06/1641469464.png" alt="" loading="lazy"></p>
+<p>其LR分析表和分析求值过程如下：<br>
+<img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641459061531-c7896d3c-0588-48c5-8feb-a0d4449d5278.png" alt="" loading="lazy"></p>
+<hr>
+<h1 id="第八章-静态语义分析和中间代码生成">第八章 静态语义分析和中间代码生成</h1>
+<h2 id="81-符号表">8.1 符号表</h2>
+<ul>
+<li>符号表是编译程序用到的最重要的数据结构之一</li>
+<li>符号表中通常存放：
+<ul>
+<li>符号的名字</li>
+<li>符号的类别（常量、变量、函数名、类名等）</li>
+<li>符号的数据类型</li>
+<li>符号的存储类别和存储分配信息</li>
+<li>符号的作用域和可见性</li>
+<li>其它属性</li>
+</ul>
+</li>
+</ul>
+<h3 id="811-作用域与单符号表组织">8.1.1 作用域与单符号表组织</h3>
+<figure data-type="image" tabindex="3"><img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641459684047-c1209db4-a2b9-4b65-968f-4edd4ae6ec90.jpg" alt="" loading="lazy"></figure>
+<h2 id="82-中间代码生成">8.2 中间代码生成</h2>
+<ul>
+<li>常见的中间代码表示：
+<ul>
+<li>抽象语法树（简称语法树）及其改进有向无圈图DAG</li>
+<li>三地址式/四元式</li>
+<li>P-code（Pascal专用）</li>
+<li>Bytecode（Java专用）</li>
+<li>SSA</li>
+</ul>
+</li>
+</ul>
+<h3 id="821-三地址式四元式">8.2.1 三地址式/四元式</h3>
+<p>例：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>7</mn></msub><mo>=</mo><mi>A</mi><mo>+</mo><mo>(</mo><mi>B</mi><mo>∗</mo><mo>(</mo><mi>C</mi><mo>−</mo><mi>D</mi><mo>)</mo><mo>)</mo><mo>+</mo><mfrac><mi>E</mi><mrow><mo>(</mo><mi>C</mi><mo>−</mo><mi>D</mi><msup><mo>)</mo><mi>N</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">T_7=A+(B*(C-D))+\frac{E}{(C-D)^N}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.29633em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.767331em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>表示为三地址式/四元式：<br>
+<img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641460687381-b4682a20-27e7-4667-a69d-ced48059c5b8.png" alt="" loading="lazy"></p>
+<h3 id="822-后缀式逆波兰式">8.2.2 后缀式（逆波兰式）</h3>
+<ul>
+<li>对一个式子，画出语法树，后序遍历（最终结果要注意顺序）</li>
+<li>遍历语法树时的简单记法：左右根</li>
+</ul>
+<p>例<br>
+下图语法树(a)的逆波兰式为：ABCD-*ECD-N^/++</p>
+<figure data-type="image" tabindex="4"><img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641461112494-84901e18-0bf3-4134-a41b-656f0e4053a8.png" alt="" loading="lazy"></figure>
+<hr>
+<h1 id="第九章-运行时存储组织">第九章 运行时存储组织</h1>
+<figure data-type="image" tabindex="5"><img src="https://b.picbed.cn/file/picbed-cn/2022/01/06/1641460201121-005fb5c8-ae2e-4d75-af6e-7a397dac07a1.png" alt="" loading="lazy"></figure>
+<ul>
+<li>运行时存储分配方案有两种：
+<ul>
+<li>静态存储分配</li>
+<li>动态存储分配
+<ul>
+<li>堆式动态存储分配</li>
+<li>栈式动态存储分配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="第十章-代码优化和目标代码生成">第十章 代码优化和目标代码生成</h1>
+<ul>
+<li>DAG化简</li>
+<li>目标代码生成技术的三个核心问题：
+<ul>
+<li>指令选择</li>
+<li>寄存器分配</li>
+<li>指令调度</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/347/">
+              <h3 class="post-title">
+                下一篇：神经网络 | 感知器原理及python代码实现and和or函数
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

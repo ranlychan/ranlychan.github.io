@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Typecho | ImgGuard：多图床文章图片管理备份插件开发日志1 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Typecho | ImgGuard：多图床文章图片管理备份插件开发日志1</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-02-28</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="想法记录">想法记录</h2>
+<blockquote>
+<p>“我的图片怎么全部丢失了？！”</p>
+</blockquote>
+<blockquote>
+<p>“一个个手动替换文章内失效图片地址，我真的受够了！”</p>
+</blockquote>
+<blockquote>
+<p>“你的图片，和文章一样重要！”</p>
+</blockquote>
+<p>想必免费的图床是很多个人站长和博主的选择，用于图片托管和分发。但市面上的免费图床质量参差不齐，使用Github作为仓库的方案在图片分发上也时常不尽人意。而如果博文中的图片链接经常失效，只能说是麻烦。但如果是图床跑路或者什么骚操作直接让图片消失了，恰好你又没有作备份，那损失就大了。（ImgTP让我体会到了备份的重要性）</p>
+<p>就是这样的背景下，我决心要为Typecho开发一款集多图床管理、文章图片备份与一键替换等功能为一体的插件，为广大站长的图片安全保驾护航。因此插件被我命名为：<code>ImgGuard</code>，即<code>图片卫士</code>。</p>
+<!--more-->
+<h2 id="开发进度与安排">开发进度与安排</h2>
+<p>由于考研复试等事务比较难抽身，所以目前先对流程做一个简单的规划。整个流程将被主要分为以下四个阶段：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>阶段内容</th>
+<th>预计时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设计</td>
+<td>调研学习Typecho插件开发，调研Typecho图床插件，整理需求，进行初步的功能设计、UI设计等</td>
+<td>2023.4-2023.5</td>
+</tr>
+<tr>
+<td>开发</td>
+<td>编码实现并穿插小规模的模块与功能测试</td>
+<td>2023.5</td>
+</tr>
+<tr>
+<td>发布上线</td>
+<td>完成验收测试，在Github发布release</td>
+<td>开发完成后</td>
+</tr>
+<tr>
+<td>维护</td>
+<td>收集反馈并针对问题进行改进，发布新版本</td>
+<td>发布上线后</td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/521/">
+              <h3 class="post-title">
+                下一篇：腾讯云社区与自媒体分享计划
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

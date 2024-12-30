@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>我的项目 | 派查查 ：一个WearOS智能手表系统上的快递查询应用 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">我的项目 | 派查查 ：一个WearOS智能手表系统上的快递查询应用</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                    APP
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/kzvW4YadVstD/">
+                    WearOS
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/JNclEz5g6Typ/">
+                    快递查询
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="前言">前言</h2>
+<p>​	在学习面向对象程序设计课程的时候，收获颇多，最后的课程报告选题选择了“Android开发”。但是安卓手机上好的应用数不胜数，自己不想重蹈覆辙做别人做过不知道多少遍的东西，就选择了当时相对Android手机软件开发比较小众的WearOS系统软件开发，做了TicWatch的问问商店里第一款腕上快递查询应用：派查查PieExpress。这也是我第一次做安卓开发，如有不足，还请海涵。</p>
+<hr>
+<h2 id="目录">目录</h2>
+<!-- index-menu -->
+<h2 id="项目概述">项目概述</h2>
+<p>**运行环境：**Google WearOS 国内版</p>
+<p>**软件类型：**快递查询工具</p>
+<p><strong>基本功能：</strong></p>
+<ul>
+<li>快递查询：在手表上输入快递运单号后，联网查询快递的运输信息，包括运输状态、到达时间和地点等。</li>
+<li>快递收藏：输入的运单号和查询的快递信息可以本地保存，方便下次查看，可以为运单号写备注，方便知道是哪个快递。</li>
+<li>语音录入：输入运单号或运单备注时可以语音输入（调用TicWatch语音接口实现，小米手表等可能无法使用）</li>
+</ul>
+<p>[info]**项目地址：**https://github.com/ranlychan/PieExpressTracking [/info]</p>
+<!--more-->
+<p><strong>运行截图：</strong><br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/4084368383.png" alt="图1. 主界面运行效果图" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://ranlychan.top/usr/uploads/2021/06/2424832963.png" alt="图2. 录入快递信息界面运行效果图" loading="lazy"></figure>
+<hr>
+<h2 id="设计背景">设计背景</h2>
+<p>​	如今，人们在网络购物时常常需要关注物流信息，而用智能手机方便快捷地获取快递信息技术已经较为成熟，应用也已较为广泛。例如在Android应用市场中比较热门的“菜鸟裹裹”，“快递100”等应用，但<strong>使用Android智能可穿戴设备获取快递信息的服务或应用却较为少见</strong>。以Android智能手表为例，因为在中国大陆无法连接到Google Play商店，国内基于Wear OS的智能手表的应用商店往往都是另起炉灶，多而不全，基本无法找到适配手表的快递查询应用。而基于Watch OS的Apple Watch因为有着成熟的Appstore生态支持，有较多的手表端物流查询应用以及依赖智能手机的查询应用，例如淘宝针对Apple Watch推出的客户端目前具有的待收货功能可追踪在淘宝购买的商品物流信息；Appstore收费应用“追快递专业版“支持IOS客户端添加和查询多家快递公司物流信息并实时推送到Apple Watch上。针对上述Wear OS快递查询应用少的情况，本文将着手介绍基于Wear OS的快递查询追踪应用的设计与实现。</p>
+<hr>
+<h2 id="系统架构">系统架构</h2>
+<p>快递物流信息查询系统将使用C/S(Client/Server)模式开发，因为初步来说，基于智能手表的Client发送获取物流信息的请求，由物流公司Server或专门整合多家物流信息的中间服务器通过API等形式提供所需物流信息，然后再由智能手表Client呈现给用户。这意味着有两条获取物流信息的方式：</p>
+<p>​	1)   直接通信：与需要查询的物流公司服务器直接通信，直接从物流公司获取所需物流信息，如从顺丰速递等获取。</p>
+<p>​	2)   间接通信：由整合多家物流信息的物流信息公司，如快递鸟，充当中间服务器的角色，Client与其通信相当于间接与多家其它物流公司Server通信。</p>
+<p>其一，由于一般来说，对于用户而言，往往需要查询多家快递公司的物流信息，所以如果选择直接通信的方式，Client需要同时对接多家物流公司接口，而选择间接通信的方式，Client只需要对接中间服务器接口就能查询上百家物流公司的快递信息。</p>
+<p>其二，物流公司的服务接口有可能发生变动，同时维护多家物流公司提供的接口所需维护工作量显然远大于只维护中间服务器提供的接口。</p>
+<p>此外，考虑到搭载Wear OS的设备一般是Android智能手表，运算性能储存空间等都较为有限，对接多家物流公司的接口至少在代码量上就远大于只对接中间服务器接口，会使程序体积变大，不利于在智能手表这类设备上运行。综上考虑，本系统将选择间接通信的方式获取物流信息。</p>
+<hr>
+<h2 id="接口介绍">接口介绍</h2>
+<p>项目使用快递鸟的即时查询API免费版。内容来自快递鸟API文档 <a href="http://www.kdniao.com/api-track">免费查询快递接口 物流即时查询API-快递鸟 (kdniao.com)</a></p>
+<h3 id="即时查询请求">即时查询请求</h3>
+<p>请求参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">必须要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">RequestData</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">请求内容需进行URL(utf-8)编码。请求内容JSON格式，须和DataType一致。</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">EBusinessID</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">商户ID，请在我的服务页面查看。</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">RequestType</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">请求指令类型：1002</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">DataSign</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">数据内容签名：把(请求内容(未编码)+AppKey)进行MD5加密，然后Base64编码，最后 进行URL(utf-8)编码。详细过程请查看Demo。</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">DataType</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">请求、返回数据类型：2-json；</td>
+<td style="text-align:left">O</td>
+</tr>
+</tbody>
+</table>
+<p>请求JSON示例：</p>
+<pre><code class="language-json">{
+                &quot;OrderCode&quot;: &quot;&quot;,
+                &quot;ShipperCode&quot;: &quot;SF&quot;,
+                &quot;LogisticCode&quot;: &quot;118650888018&quot;
+                }
+</code></pre>
+<h3 id="即时查询回复">即时查询回复</h3>
+<p>返回参数定义：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">必须要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">EBusinessID</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">用户ID</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">OrderCode</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">订单编号</td>
+<td style="text-align:left">O</td>
+</tr>
+<tr>
+<td style="text-align:left">ShipperCode</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">快递公司编码</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">LogisticCode</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">物流运单号</td>
+<td style="text-align:left">O</td>
+</tr>
+<tr>
+<td style="text-align:left">Success</td>
+<td style="text-align:left">Bool</td>
+<td style="text-align:left">成功与否</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">Reason</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">失败原因</td>
+<td style="text-align:left">O</td>
+</tr>
+<tr>
+<td style="text-align:left">State</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">物流状态：2-在途中,3-签收,4-问题件</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">Traces</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">AcceptTime</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">时间</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">AcceptStation</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">描述</td>
+<td style="text-align:left">R</td>
+</tr>
+<tr>
+<td style="text-align:left">Remark</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">备注</td>
+<td style="text-align:left">O</td>
+</tr>
+</tbody>
+</table>
+<p>返回JSON示例：</p>
+<pre><code class="language-json"> {
+        &quot;EBusinessID&quot;: &quot;1109259&quot;,
+        &quot;OrderCode&quot;: &quot;&quot;,
+        &quot;ShipperCode&quot;: &quot;SF&quot;,
+        &quot;LogisticCode&quot;: &quot;118461988807&quot;,
+        &quot;Success&quot;: true,
+        &quot;State&quot;: 3,
+        &quot;Reason&quot;: null,
+        &quot;Traces&quot;: [
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/25 08:05:37&quot;,
+        &quot;AcceptStation&quot;: &quot;正在派件..(派件人:邓裕富,电话:18718866310)[深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/25 04:01:28&quot;,
+        &quot;AcceptStation&quot;: &quot;快件在 深圳集散中心 ,准备送往下一站 深圳 [深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/25 01:41:06&quot;,
+        &quot;AcceptStation&quot;: &quot;快件在 深圳集散中心 [深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/24 20:18:58&quot;,
+        &quot;AcceptStation&quot;: &quot;已收件[深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/24 20:55:28&quot;,
+        &quot;AcceptStation&quot;: &quot;快件在 深圳 ,准备送往下一站 深圳集散中心 [深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/25 10:23:03&quot;,
+        &quot;AcceptStation&quot;: &quot;派件已签收[深圳市]&quot;,
+        &quot;Remark&quot;: null
+        },
+        {
+        &quot;AcceptTime&quot;: &quot;2014/06/25 10:23:03&quot;,
+        &quot;AcceptStation&quot;: &quot;签收人是：已签收[深圳市]&quot;,
+        &quot;Remark&quot;: null
+        }
+        ] 
+ } 
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/24/">
+              <h3 class="post-title">
+                下一篇：Typecho | 插件仓库TeStore ：一键安装、便捷管理、代理下载Typecho插件！强烈安利
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜The evolution of network configuration: a tale of two campuses | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜The evolution of network configuration: a tale of two campuses</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-14</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] H. Kim, T. Benson, A. Akella, and N. Feamster, “The evolution of network configuration: a tale of two campuses,” in Proceedings of the 2011 ACM SIGCOMM conference on Internet measurement conference, Berlin Germany: ACM, Nov. 2011, pp. 499–514. doi: 10.1145/2068816.2068863. [/info]</p>
+<!--more-->
+<h2 id="11-背景">1.1 背景</h2>
+<p>网络配置对整个网络性能有重要影响。但是我们对网络配置的本质和配置演变知之甚少。研究网络配置的演变可以增进我们对网络复杂性演变的理解，并有助于减少网络配置出错的可能。</p>
+<h2 id="12-待解决问题">1.2 待解决问题</h2>
+<p>我们缺乏对网络配置长期演变的理解。通过对网络配置演变的研究可以获得单个配置快照无法给我们的独特见解。这可以让我们更好地理解网络功能如何随时间推移而发展，哪些网络任务导致复杂性的增加，以及不同类型的配置更改与哪些任务相关。</p>
+<h2 id="13-现有工作缺点">1.3 现有工作缺点</h2>
+<p>现有工作主要关注对网络配置进行静态分析，来理解网络属性和诊断配置错误。也有一些工作探索了配置随时间的变化，但都是在更小的数据集或更短的时间跨度上进行的。</p>
+<h2 id="14-本文主要贡献">1.4 本文主要贡献</h2>
+<p>本文对两个大型校园网络五年来的所有路由器、防火墙和交换机的配置文件进行了首次详细的纵向研究。分析了配置大小的演变、配置更改的类型以及不同网络任务对配置演变的贡献。识别了配置更改的相关性和不同网络之间的相似与不同点。这些发现可以为改进配置管理和测试提供支持。</p>
+<h3 id="141-配置演变">1.4.1 配置演变</h3>
+<ul>
+<li>配置行数持续增长：在研究的5年时间里，两个校园网络的配置行数持续增加，路由器、防火墙和交换机的配置行数都呈增长趋势。</li>
+<li>功能分布变化：不同功能的配置行数随时间呈现不同的变化趋势。例如路由器的l1命令持续增加，而l3相对稳定。防火墙的访问控制规则大幅增加。</li>
+<li>设备类型变化：新增和更换不同类型的设备会导致配置变化。例如新增端口较少的交换机导致l2命令减少。</li>
+<li>关键时期变化：在某些关键时期，配置发生明显变化。例如新学年开始前和用户相对少的夏季，进行大规模网络变更。</li>
+<li>操作惯例演变：不同网络的特定操作惯例也随时间发展，例如启用/禁用所有接口的snmp trap。</li>
+<li>策略变更影响：政策变更如去掉防火墙的管理界面访问都对配置产生影响。</li>
+</ul>
+<h2 id="15-文章结论">1.5 文章结论</h2>
+<ul>
+<li>配置持续增长，各种因素(基础设施扩展、政策变更等)以不同的方式促成了配置的演变。</li>
+<li>路由器经历配置变更的频率更高，变更涉及的网络配置任务范围也更广。这表明许多关键的日常网络操作任务集中在路由器配置上。</li>
+<li>高度专用的网络设备(如防火墙)在不同网络之间展现更为相似的配置变更模式。</li>
+<li>交换机配置高度集中在端口上，大规模的端口接口变更频繁发生。交换机之间存在显著的相关配置变更。</li>
+<li>不同网络对一般目的设备(如核心路由器)的配置变更展现出独特的操作惯例。而专用设备的变更更为相似。</li>
+<li>路由器和交换机之间存在相关的配置变更，这为更好的配置管理工具提供了支持。</li>
+</ul>
+<h2 id="16-个人思考">1.6 个人思考</h2>
+<ul>
+<li>本文通过分析配置文件的演变，可以发现不同网络设备和功能的配置模式，这可以帮助设计设备和功能定制化的配置模板。</li>
+<li>相关性分析发现了不同配置功能之间的依赖关系，可以引导系统识别可能需要关联变更的配置。</li>
+<li>关键时期配置变化这一特性可以加以利用，在模型训练时可以加以关注。</li>
+<li>发现手动配置出错频繁的领域，可以优先对这些部分进行自动化处理。</li>
+<li>不同网络和设备的自定义惯例，可以通过学习方法提取为规则。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/631/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Mining policies from enterprise network configuration
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

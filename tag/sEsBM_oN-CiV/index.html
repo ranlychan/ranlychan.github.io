@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>安卓开发 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> 安卓开发
+          </h2> 
+        </div>
+
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/415/">
+        <h2 class="post-title">Python爬虫 | 美国特斯拉充电桩位置信息（含经纬度）爬取</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="概要">概要</h1>
+<p>最近在搞美赛模拟，2018D题需要用到特斯拉在美国的两种充电桩（一种是Supercharger，另一种是Destination Charging）的位置数据。下面介绍如何用Python在Tesla官网爬取已经建立的充电桩所在州、县、详细地址、经纬度坐标以及FIPS等信息，以及即将建立的充电桩的大致位置和计划建造时间。 <img src="https://img.400511.net/2022/02/27/DMCuBn41.jpg" alt="" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-02-17</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/76/">
+        <h2 class="post-title">学习笔记 | Android开发常用的几种模式</h2>
+      </a>
+      <div class="post-abstract">
+        <blockquote>
+<p>在Android Studio中，xml写layout只能是算画个草图，对界面的监听改变等逻辑都要在activity/fragment里处理，大型项目中会使其显得非常臃肿，难以维护。故而需要使用适合的开发模式使得项目易于阅读和维护。</p>
+</blockquote>
+<!-- index-menu -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/CppV-gR4FYnK/">
+                开发模式
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/73/">
+        <h2 class="post-title">学习笔记 | Android Studio安卓开发入门经验总结 干货</h2>
+      </a>
+      <div class="post-abstract">
+        <p>##前言##<br>
+最近完成了移动编程课程的学习，加上其它安卓开发项目的经历，感觉收获颇为丰富。故在此总结整理安卓开发中比较常见的一些问题，技巧和指南。<br>
+##0.目录##</p>
+<!-- index-menu -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/54/">
+        <h2 class="post-title">错误记录 | 一个导致ListView中item内容全部重复的可能原因</h2>
+      </a>
+      <div class="post-abstract">
+        <p>最近在写一个快递查询的WearOS App，突然有一次调试发现主界面的<code>ListView</code>里的item，显示的都是一模一样的内容，全是最新添加的一个快递的内容（这是一个伏笔哈哈哈）。<br>
+遂思前想后，开始以为是<code>ListView</code>的问题，但是没结果。接着以为是<code>Adapter</code>的问题，但很快又否决了这个想法，因为项目一开始也是用的<code>SimpleAdapter</code>，且当时<code>ListView</code>显示正常。无意中看到一篇Blog：</p>
+<blockquote>
+<p>HashMap对象重复赋值在多线程中的教训<br>
+https://blog.csdn.net/goodguyzl/article/details/83847286</p>
+</blockquote>
+<p>该文中写道：</p>
+<blockquote>
+<p>“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”</p>
+</blockquote>
+<p>我猛然意识到我也犯了同样的错误！<br>
+[info]<strong>将<code>HashMap</code>对象的申明放到循环外的话，意味着循环内的每次put会覆盖掉原有的值，而且<code>ListView</code>每次add的都是同一个HashMap对象！</strong><br>
+这就是为什么我的项目里<code>ListView</code>中显示的item全是最新添加的一个快递的信息。[/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

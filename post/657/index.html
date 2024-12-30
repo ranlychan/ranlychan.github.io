@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜SIMPLE-fying Middlebox Policy Enforcement Using SDN | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜SIMPLE-fying Middlebox Policy Enforcement Using SDN</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-10-15</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/GTCfNHFL-Cd/">
+                    边缘计算
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/4IW92cXri3X/">
+                    边缘推理优化
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] Qazi, Zafar Ayyub, Rui Miao, Cheng-Chun Tu, Vyas Sekar, Luis Chiang, and Minlan Yu. “SIMPLE-Fying Middlebox Policy Enforcement Using SDN,” n.d. [/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>
+<p>中间设备(middleboxes)在企业网络中起着关键的性能、安全和政策合规性的作用。但是手工设置中间设备的部署拓扑和路由非常复杂和容易出错。</p>
+</li>
+<li>
+<p>SDN为中间设备策略实施提供了一个有前景的替代方案。但是中间设备也为SDN带来了新的挑战,例如政策组合、资源管理、数据包修改等,这些都超出了SDN目前支持的传统二层/三层功能。</p>
+</li>
+</ul>
+<!--more-->
+<h2 id="主要问题">主要问题</h2>
+<ul>
+<li>
+<p>组合(Composition):网络政策通常要求数据包经过一系列中间设备(例如防火墙、IDS、代理)。如果仅仅使用基于流的转发规则,会导致TCAM利用效率低下,也会造成转发决策错误。</p>
+</li>
+<li>
+<p>负载均衡(Load balancing):由于中间设备需要进行复杂的包处理,均衡中间设备的负载非常重要。SDN可以实现负载均衡算法,但受限于交换机TCAM空间,生成这些规则在理论和实际上都是不可行的。</p>
+</li>
+<li>
+<p>动态报文变化(Dynamic traffic transformation):许多中间设备会主动修改流量的头信息和内容。如果SDN控制器对这些变换没有可见性,将很难设置正确的转发规则。但由于中间设备是封闭的,控制器很难知道这些内部处理逻辑。</p>
+</li>
+</ul>
+<h2 id="方法">方法</h2>
+<ul>
+<li>高效的数据平面支持组合:使用两种机制 - 在交换机之间建立隧道;为报文添加标签来标识报文的处理状态。</li>
+<li>实用的统一资源管理:将难以求解的优化问题分解为一个离线整数规划求解阶段和一个高效的在线负载均衡阶段。</li>
+<li>学习报文变换:利用SDN交换机的报告功能,设计轻量级的流关联机制,推断大多数常见的中间设备导致的报文变换。</li>
+</ul>
+<h2 id="评估实验">评估实验</h2>
+<ul>
+<li>使用Emulab仿真和Mininet仿真评估SIMPLE系统。</li>
+<li>与当前部署相比,SIMPLE提高了中间设备负载均衡6倍,接近新型中间设备架构的最优性能。</li>
+<li>在11节点拓扑中,SIMPLE需要约100ms进行引导和应对网络动态。</li>
+<li>在重新均衡中间设备负载时,SIMPLE只需要约1.3秒,比稻草人优化方案快4个数量级。</li>
+<li>在proxy场景中,SIMPLE的流关联可以达到95%的匹配准确率。</li>
+</ul>
+<h2 id="结论">结论</h2>
+<ul>
+<li>SIMPLE系统通过高效的数据平面设计、联合的资源管理和动态报文推断,使用SDN管理现有中间设备部署,提供了一个切实可行的方案。</li>
+<li>SIMPLE解决了行业关于SDN集成现有基础设施和支持四层到七层功能的担忧。</li>
+<li>SIMPLE采取了一种务实的立场,在不改变交换机和中间设备的情况下,实现SDN在中间设备领域的价值。</li>
+</ul>
+<h2 id="其他">其他</h2>
+<h3 id="pox-controller">POX Controller</h3>
+<ul>
+<li>POX是开源的SDN控制器软件,使用Python语言开发。</li>
+<li>为开发者提供了SDN控制器的基本框架和编程接口。</li>
+<li>开发者可以通过编写Python代码,基于POX实现自己的SDN控制器。</li>
+<li>SIMPLE系统就是基于POX Controller实现的,通过扩展POX的代码来添加SIMPLE的功能。</li>
+</ul>
+<h3 id="emulab">Emulab</h3>
+<ul>
+<li>Emulab是一个网络测试平台,由犹他大学开发。</li>
+<li>它可以通过软件模拟不同的网络拓扑结构。</li>
+<li>模拟出来的虚拟网络就像真实网络一样,可以在上面运行实验。</li>
+<li>文章中就是在Emulab上模拟出不同的测试网络,在这些虚拟网络上评估SIMPLE系统。</li>
+<li>和完全物理环境相比,Emulab提供了更灵活方便的测试手段。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/656/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Life on the Edge: Unraveling Policies into Configurations
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

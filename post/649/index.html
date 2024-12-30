@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜A Survey of Large Language Models | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜A Survey of Large Language Models</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-10-02</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                    网络管理
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] W. X. Zhao et al., “A Survey of Large Language Models.” arXiv, Sep. 11, 2023. Accessed: Sep. 18, 2023. [Online]. Available: http://arxiv.org/abs/2303.18223 [/info]</p>
+<h1 id="阅读笔记">阅读笔记</h1>
+<p><strong>模型选择</strong>：是否一定要选择参数量巨大的模型？如果需要更好的泛化能力，用于处理非单一的任务，例如对话，则可用选更大的模型；而对于单一明确的任务，则不一定越大越好，参数小一些的模型也能调教得很好。</p>
+<!--more-->
+<p><strong>接口交互</strong>：大语言模型可以使用网络请求接口获取其本身在预训练中没有的额外信息。</p>
+<p><strong>多模态</strong>：大语言模型展现出良好的多模态理解能力，特别是对于图片数据的处理能力。因此其对于一个网络中拓扑结构、流量矩阵等数据也是存在了可以理解和处理的可能的。</p>
+<p><strong>语言如何输入</strong>：自然语言首先需要被tokenize，从而将其用数字进行表示，使其可以正式输入模型。在输入模型后，还会进行词嵌入表示（或者是词的分布式表示），也就是进一步用多维向量表示一个词。词嵌入并非Transformer首创，此前的工作中已经在广泛使用词嵌入方法了，大名鼎鼎的Word2Vec就是其中一种。</p>
+<p><strong>“预训练和微调”学习范式</strong>：预训练是从CV兴起而后借鉴到NLP的一种训练方法，通常是无监督的。对于PLM，通常使用大量语料进行预训练，其过程无需人工标记，而是利用已有的词句信息对某一词进行预测。微调是指在PLM的基础上，进一步根据下游子任务的要求，对PLM进行更具针对性的有监督训练（包括对齐）并更新参数，使其适应子任务。微调主要分为指令微调和对齐微调。对于一些领域的子任务，PLM甚至无需微调也能依靠自身的上下文学习能力达到不错的效果。</p>
+<p><strong>与人类对齐</strong>：由于预训练数据不可避免参杂与主流价值观不符的内容，模型需要与人类价值观或偏好进行对齐，以减少危害并增加性能。相关工作利用带人类反馈的强化学习（RLHF）进行微调对齐。</p>
+<p><strong>扩展与扩展法则</strong>：语言模型在模型规模、数据规模和总计算量上的扩展，一般会使模型具备更好的特性与理解输出能力，并更可能涌现能力（包括上下文学习、指令遵循、逐步推理等）。LLMs由于规模扩展而产生的影响的现象成为扩展效应，有相关研究定量描述了LLMs的扩展法则。</p>
+<p><strong>代码数据训练提高CoT提示能力</strong>：Codex是在PLM基础上使用大量Github代码微调的GPT模型，可以解决困难的编程问题并在数学问题上有显著性能提升，猜测称代码训练可提高其思维链(CoT)提示能力。</p>
+<p><strong>LLMs资源</strong>：LLMs的预训练需要耗费大量资源（微调更新权重也很消耗），建议在已有开源资源基础上进行开发，包括开源模型和公共API（可微调），以及公开语料库，详细信息下面四张图总结得很好。</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/10/09/1696817153.png" alt="图片1.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/10/09/1696817158.png" alt="图片2.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/10/09/1696817163.png" alt="图片3.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/10/09/1696817146.png" alt="图片4.png" loading="lazy"></figure>
+<p><strong>模型训练</strong>：预训练阶段的任务通常有语言建模和去噪自编码，语言建模任务针对不同模型结构（因果解码器casual decoder、前缀解码器prefix decoder等）有不同任务变体。此外，训练LLM时最为重要的便是设置和技巧。</p>
+<ul>
+<li>
+<p>训练中动态增大batch size以有效稳定LLM训练过程</p>
+</li>
+<li>
+<p>动态学习率策略如初始采用线性增加预热策略，后续采用余弦衰减策略</p>
+</li>
+<li>
+<p>使用权重衰减和梯度裁剪来稳定训练，避免模型崩溃。</p>
+</li>
+<li>
+<p>采用数据并行、流水线并行、张量并行、ZeRO和混合精度训练等方法在有限资源情况下进行高效的并行化训练。</p>
+</li>
+</ul>
+<p><strong>RLHF用于微调</strong>：在有监督微调结束后，可以应用基于人类反馈的强化学习来进行对齐微调，更好地学习人类偏好。其中较为关键的我认为有两方面，一方面是奖励模型，相关工作使用有标注数据有监督地训练一个奖励模型预测人类偏好；另一方面是将LLM的微调形式化为强化学习问题。</p>
+<p><strong>LLM使用</strong>：经过预训练或微调后，模型的使用也别有学问，OpenAI的报告中大量做了这方面的文章。较为著名的使用策略有上下文学习和思维链提示。</p>
+<p><strong>LLM评估</strong>：主流的评估方法是在公共NLP任务数据集上进行测试评估。而专用于网络配置或是其他类似子任务的公共数据集暂时没有看到。因此这方面的评估需要进一步的设计和探讨。</p>
+<p><strong>LLM主要问题</strong>：在语言生成方面，其可控生成和专业化生成能力仍然面临挑战，例如在一般类型数据集训练的LM用于涉及专业知识的医学报告时。在知识利用方面，LM存在幻觉和知识实时性问题。前者表示LM会捏造事实，后者表示LM难以处理需要更新鲜知识的任务。在复杂推理方面，LM存在不一致性和数值计算问题。前者表示LM的推理路径与结果并不一致，后者表示LM的数值计算能力仍然有待提高。</p>
+<h1 id="个人感想">个人感想</h1>
+<ul>
+<li>此篇论文很好地揭示了LLM在结构、预训练、微调、评估等等诸多方面的细节。但由于技术日新月异，比较遗憾地是没有看到更新的关于多模态方面的介绍，因为原本的想法是想参照现有的语言模型结合图片数据的方式，来将网络配置与网络拓扑等非文本信息进行结合和补充。此外LLM可以通过交口交互获取额外信息这点值得注意，因为这意味着LLM可以通过接口获取到网络的信息，甚至也可以通过接口调用对网络做出动作（虽然我认为暂时没有这样的必要）。</li>
+<li>LLM的训练与微调有资源门槛，但有公开的模型可通过API进行微调，这一点可以考虑加以利用。</li>
+<li>网络管理运维存在实时性要求，因此在配置生成方面如果存在较高的实时性要求，则LLM可能难以胜任。因此我认为应该将目光进一步聚焦到配置文本debug或者实时性要求较低的配置生成方面。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/648/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Language Models are Few-Shot Learners
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

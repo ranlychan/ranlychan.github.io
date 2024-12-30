@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | Vercel部署RSSHub及其文档页面 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | Vercel部署RSSHub及其文档页面</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-10-13</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="概述">概述</h1>
+<blockquote>
+<p>近日在一边复习一边摸鱼玩RSS，十几年前的老东西竟然该死的有魅力。<s>（再不复习就复不完了啊）</s></p>
+</blockquote>
+<p>话说这RSSHub真是个好东西，可以在Vercel免费构建运行，但是你看人家<code>萌歪 https://moeyy.cn/rsshub/</code>自建的怎么就有和人家RSSHub官方一样的文档呢？所以我将在文章中记录在Vercel上同时部署RSSHub本体及其使用Vuepress实现的docs页面。</p>
+<h1 id="目录">目录</h1>
+<!--more-->
+<!--index-menu-->
+<h1 id="步骤">步骤</h1>
+<h2 id="1克隆rsshub仓库">1.克隆RSShub仓库</h2>
+<p>登录自己的github账号并去fork一下官方的RSSHub仓库：<a href="https://github.com/DIYgod/RSSHub">https://github.com/DIYgod/RSSHub</a></p>
+<h2 id="2在vecel完成rsshub部署">2.在Vecel完成RSShub部署</h2>
+<p>前往<a href="http://vecel.com">http://vecel.com</a> 登录并绑定git账号，新建工程，导入仓库，并直接部署。最后使用记得用自己的域名绑定Vecel的CNAME就可以快速访问了（可自动开启使用https）由于这些步骤在其他人写的博客里已经比较详细，故不赘述。<br>
+<img src="https://img1.imgtp.com/2022/10/13/HklciBrE.png" alt="成功完成部署" loading="lazy"></p>
+<p>##3.在Vecel完成Vuepress部署<br>
+这步是重点，此步按照本地构建，Vecel托管的思路进行。</p>
+<p>由于RSSHub的文档页面是使用VuePress构建的，所以对文档内容的修改可以转化为对markdown的修改，关于VuePress的详细内容可以参阅其他博客。所以下面我们将采用部署VuePress页面的策略来部署RSSHub的doc页面。<br>
+###3.1在Github新建一个仓库<br>
+命令行或者网页或者Github Desktop上建都可以，例如取名为RSSHub-doc</p>
+<p>###3.2在本地构建文档的静态页面<br>
+打开RSSHub项目（1.中克隆的仓库代码），在正常完成<code>npm install</code>后，运行<code>npm run docs:build</code></p>
+<p>###3.3上传静态页面<br>
+构建结束后将会在<code>/docs/.vuepress</code>下生成静态页面，将该目录下的所有内容提交至新建的Github仓库，再在Vercel新建一个项目，导入该仓库，构建和部署选项里不用特别设置，完成部署以后就可以访问了。</p>
+<figure data-type="image" tabindex="1"><img src="https://img1.imgtp.com/2022/10/13/0HzrriYC.png" alt="文档页面部署完成" loading="lazy"></figure>
+<p>后续可以自行将文档中的一些链接进行替换，以便直接复制使用rss地址时使用自己的服务器。当然也可以添加自己编写的rss路由。</p>
+<figure data-type="image" tabindex="2"><img src="https://img1.imgtp.com/2022/10/13/idDHNZMC.png" alt="自行编写和部署的路由" loading="lazy"></figure>
+<p>[info]<br>
+此步如果出错或有疑问，可以搜索关键词“Vercel部署VuePress页面”进行进一步了解。<br>
+[/info]</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/495/">
+              <h3 class="post-title">
+                下一篇：笔记 | 4K对齐、低级格式化、MBR引导记录？都是些啥玩意儿
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

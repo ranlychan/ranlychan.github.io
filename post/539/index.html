@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Typecho | 博客结构与插件开发笔记：附件及扩展方法 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Typecho | 博客结构与插件开发笔记：附件及扩展方法</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-03-01</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/iy0qND6CBCj/">
+                    ChatGPT
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="概要">概要</h1>
+<p>最近在学习Typecho插件开发，对于Typecho博客的数据表结构和一些基础插件方法有了一定了解，这篇笔记主要记录Typecho的七大数据表之一<code>contents</code>表及其用于存放<code>attachment</code>类的数据时的一些使用心得。</p>
+<!--more-->
+<h1 id="数据表与插件">数据表与插件</h1>
+<p>本文所提到的博客程序及其版本为Typecho 1.1 (17.10.30)，其数据表结构在官网有较为详细的介绍，包括表的数据字典：<a href="https://docs.typecho.org/database" title="https://docs.typecho.org/database">https://docs.typecho.org/database</a>，故在此不做赘述。但其中关于表中各属性的取值似乎并没有做举例或说明，下面对其中涉及附件功能扩充的部分属性进行举例说明补充。</p>
+<h2 id="contents表属性中的type与text">contents表属性中的type与text</h2>
+<p>在<code>contens</code>表（详细请参见官方文档）中，作者对于扩展性的考虑是相对比较周到的，其中设计的<code>type</code>和<code>text</code>两个基础属性可以对多样的内容进行扩展定义。在Typecho的设计中，<strong>博客文章、独立页面和附件（包括图片）信息都存储在contents表中，并使用<code>type</code>属性进行区分</strong>。原生<code>type</code>的取值及其对应内容类型的对应如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>type取值</th>
+<th>对应类型</th>
+<th>备注说明</th>
+<th>对应text内容示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>post</td>
+<td>文章</td>
+<td>无</td>
+<td><!--markdown--># Hello World 如果您看到这篇文章,表示您的 blog 已经安装成功.</td>
+</tr>
+<tr>
+<td>page</td>
+<td>独立页面</td>
+<td>无</td>
+<td><!--markdown-->本页面由 Typecho 创建, 这只是个测试页面.</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>草稿</td>
+<td>文章草稿</td>
+<td></td>
+</tr>
+<tr>
+<td>link</td>
+<td>链接</td>
+<td>不知道干啥的，作者应该打算存友情链接的</td>
+<td></td>
+</tr>
+<tr>
+<td>attachment</td>
+<td>附件（含图片）</td>
+<td>为附件元数据，不含附件自身</td>
+<td>a:5:{s:4:”name”;s:9:”image.jpg”;}</td>
+</tr>
+</tbody>
+</table>
+<p>最近经过试验探索发现，当<code>type</code>为<code>attachment</code>时，如上所示，其<code>text</code>中的内容存储的是<strong>附件的元数据</strong>，而<strong>这些附件的元数据是可通过插件扩充的</strong>。附件元数据默认包含的属性如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>附件元数据属性名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>附件名称</td>
+</tr>
+<tr>
+<td>path</td>
+<td>附件存储相对路径</td>
+</tr>
+<tr>
+<td>size</td>
+<td>附件比特大小</td>
+</tr>
+<tr>
+<td>type</td>
+<td>附件扩展后缀名，如jpg</td>
+</tr>
+<tr>
+<td>mime</td>
+<td>mime类型，如image/png</td>
+</tr>
+</tbody>
+</table>
+<h2 id="利用type和text属性开发插件">利用type和text属性开发插件</h2>
+<p>以上探索可以揭示Typecho优良的可扩展性，这为开发插件增强其功能提供了帮助。下面以开发写markdown文章的刚需——<strong>图床或OSS存储插件</strong>，为例子，介绍如何利用<code>type</code>和<code>text</code>属性。</p>
+<p>在Github调研众多大佬为Typecho开发的图床插件时，发现了<code>gogobody</code>开发的<code>SmmsForTypecho</code>，一款用于支持著名的SM.MS图床服务的Typecho插件。经过我对其<code>1.4</code>版本的release代码的阅读与测试发现，其对于上传到SM.MS的图片的元数据，<strong>建立了专门的数据表</strong><code>[prefix]smms_image_list</code>（其中<code>[prefix]</code>为Typecho安装时设置的数据库表前缀，默认为<code>typecho_</code>）。<strong>而这个表记录的信息似乎完全是可以合并到上述<code>contents</code>表中的<code>text</code>属性中的</strong>。</p>
+<p>也就是说，我们在开发类似的图床插件时，可以利用<code>contents</code>表的<code>text</code>属性来存储图片或其他附件的信息。这可以在你的插件<code>Plugin.php</code>中进行实现。</p>
+<p>我们知道，开发图床类的插件时，需要对附件上传、删除、修改和路径获取等过程进行注册，并编写自己的具体实现。下面的代码假设你已经在激活方法<code>activate()</code>里对上述进行了注册，并将展示<strong>如何在附件上传过程对附件添加自定义扩展元数据以及如何在路径获取过程对附件自定义扩展元数据进行读取</strong>。</p>
+<pre><code class="language-php">	// Plugin.php
+	
+	/**
+     * 上传文件处理函数
+     *
+     * @access public
+     * @param array $file 上传的文件
+     * @return mixed
+     */
+    public static function uploadHandle($file)
+    {
+	// ...省略一堆代码...
+	
+	// 此方法最终要返回一个键值对array用于存入contents表的text内
+	return array(
+			'name' =&gt; $file['name'],  // 附件名称
+			'path' =&gt; $path,      // 附件存储相对路径
+			'size' =&gt; $file['size'],  // 附件比特大小
+			'type' =&gt; $ext,         // 附件扩展后缀名
+			'mime' =&gt; self::mimeContentType($path), // mime类型
+              /* 下面是自定义的扩展元数据 */
+			'hash_algo' =&gt; 'md5',   // 计算hash值所用的算法
+			'hash' =&gt; hash_file('md5',$uploadFileTemp), // 附件hash值
+			'url' =&gt; $data['url'],    // 附件绝对路径
+			'source' =&gt; $data['url']  // 附件存储位置默认本机 loc:本机, smms:这个图床
+                );
+	}
+	
+	/**
+     * 获取实际文件绝对访问路径
+     *
+     * @access public
+     * @param array $content 单个文件的相关信息列表
+     * @return string
+     */
+    public static function attachmentHandle(array $content)
+    {
+		// 此方法传入的$content就是一个contents表中的对象
+		// 使用$content['attachment']-&gt;属性名 就可以访问存放在text字段中的附件元数据了
+        // 根据attachment的存储位置(本地还是图床等)来获取绝对路径
+        switch ($content['attachment']-&gt;source){
+            case &quot;smms&quot;:  // smms图床存储
+			    //存储了完整的url，这里将其相对路径摘除从而得到域名前缀，其实有点多此一举
+                $domain = str_replace($content['attachment']-&gt;path,'',$content['attachment']-&gt;url);
+                break;
+            case &quot;loc&quot;:   // 本机存储
+            default:
+                $domain = Helper::options()-&gt;siteUrl;
+            break;
+        }
+        return Typecho_Common::url($content['attachment']-&gt;path, $domain);
+    }
+</code></pre>
+<p>我利用上述代码原理，简单编写了插件并为附件添加了<code>hash</code>属性，用于存放上传附件的hash值，附件信息被存于数据库中时其<code>text</code>字段的值如下图所示。</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/03/02/AsJXHqtLB4Pl652.png" alt="附件存储在数据库的contents表中时的text字段（添加自定义属性'hash'）" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/538/">
+              <h3 class="post-title">
+                下一篇：Typecho | ImgGuard：多图床文章图片管理备份插件开发日志1
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

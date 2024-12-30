@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>学习笔记 | Android Studio安卓开发入门经验总结 干货 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">学习笔记 | Android Studio安卓开发入门经验总结 干货</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-24</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                    APP
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                    安卓开发
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>##前言##<br>
+最近完成了移动编程课程的学习，加上其它安卓开发项目的经历，感觉收获颇为丰富。故在此总结整理安卓开发中比较常见的一些问题，技巧和指南。<br>
+##0.目录##</p>
+<!-- index-menu -->
+<!--more-->
+<p>##1.开发环境##<br>
+Android Studio是谷歌基于IntelliJ IDEA社区版开发的，面向安卓开发的免费集成开发环境。其方便快捷的开发调试和可视化UI编辑可以令安卓开发事半功倍。本项目所使用集成开发环境为Android Studio 4.1.1，编程语言为Java，使用JDK 1.8，使用Gradle 4.1.1进行项目工程构建和依赖管理。<br>
+<br><br>
+##2.	项目新建##<br>
+Android Studio新建项目时选择一个Activity模板作为默认MainActivity，先选择Empty Activity作为开始。接着，Minimum SDK指的是本项目所支持的最小安卓SDK，点击“Help me choose”会出现如下界面帮助选择合适的安卓最小SDK版本：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/1836343255.png" alt="图1 安卓API版本选择帮助界面" loading="lazy"><br>
+<br><br>
+其中CUMULATIVE DISTRIBUTION表示如果支持该安卓版本以上设备，则预估能支持安卓设备占所有安卓设备的百分比。可见Minimum SDK越小所能支持设备越多，但没有必要一味追求支持更多设备，这需要根据一定的市场调查与经验来决定。本项目选择支持默认的安卓6.0及以上。<br>
+<br><br>
+##3.项目结构##<br>
+###3.1 开发模式###<br>
+安卓开发常见的开发模式有<code>MVC</code>，<code>MVP</code>，<code>MVVM</code>等(详见本站文章 “<a href="/archives/76.html" title="学习笔记 | Android开发常用的几种模式"><strong>学习笔记 | Android开发常用的几种模式</strong></a>”)，其中MVC非常容易上手，结构清晰易懂，为了简化开发，本项目使用MVC模式进行开发。<br>
+<br><br>
+###3.2 安卓项目文件及目录结构简介###</p>
+<ul>
+<li>安卓应用配置文件<code>AndroidManifest.xml</code>: 用于配置包名、应用权限、应用图标及名称、主题等基本信息，此外包括了应用的Activity相关配置，没有在此进行注册的Activity是不能被启动的。</li>
+<li>程序代码java: 在java目录下的对应包名中存放包括Activity在内的各java程序文件。</li>
+<li>资源文件res: 存放用于UI相关的各类资源，主要有:
+<ul>
+<li>drawable:存放可被绘制的图形，包括矢量图和位图，以及由xml编写的各类图层、状态选择器等比较实用的前端UI部件。</li>
+<li>layout: 以xml文件形式编写的用户交互界面，可以在Android Studio中进行实时渲染预览、可视化编辑等。</li>
+<li>values:
+<ul>
+<li>arrays.xml: 存放数组，在程序中按照自定义的数组名进行读取。</li>
+<li>colors.xml: 存放Hex色值，在程序中按照自定义的颜色名字进行读取。</li>
+<li>dimens.xml: 存放尺寸信息。</li>
+<li>strings.xml: 存放字符串，按照自定义的字符串名进行获取，方便多语言程序的本土化。</li>
+<li>themes
+<ul>
+<li>themes.xml: 程序主题，包括主色次色和各类样式。</li>
+<li>themes.xml(night): 程序夜间主题。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>mipmap: 存放贴图文件，如果期望贴图有放大缩小动画之类的可以获得更好的图像表现。</li>
+<li>xml: 存放一些其它xml格式的文件，例如网络安全配置文件network_security_config。</li>
+</ul>
+</li>
+<li>Gradle构建配置文件<code>build.gradle</code>
+<ul>
+<li>项目级构建配置build.gradle(Project: $project_name)：用于配置适用于项目的Gradle构建设置，例如使用的Gradle版本，构建脚本的仓库，依赖包仓库。例如：</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-xml">// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+		//这里放置项目构建仓库
+        google()
+        jcenter()
+    }
+    dependencies {
+		//这里放置项目构建所需的依赖，而不是模块(总之平时用的依赖一般都不是放这里)的依赖
+        classpath &quot;com.android.tools.build:gradle:4.1.1&quot;
+        // NOTE: Do not place your application dependencies here; they belong in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+	//依赖包仓库，也就是依赖包从哪下载，一般使用国内镜像下载快很多
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}//阿里云的仓库，便于下载依赖包
+        maven{ url &quot;https://jitpack.io&quot;}
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+</code></pre>
+<hr>
+<ul>
+<li>模块级构建配置build.gradle(Module: $project_name.app)</li>
+</ul>
+<pre><code class="language-xml">…
+dependencies {
+//这里才是放置要用到的第三方依赖的地方
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.fragment:fragment:1.2.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'//http通信的依赖库
+    implementation 'com.github.bumptech.glide:glide:3.7.0'//加载图像的依赖库
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+    implementation 'com.google.code.gson:gson:2.8.7'
+}
+</code></pre>
+<br>
+###3.3 程序设计要点###
+####3.3.1	Activity和Fragment的生命周期####
+正如生物一样，Activity和Fragment作为安卓交互程序也有“生死”，也就是生命周期。
+**Activity生命周期**：
+如图为一个Activity从被启动到被停止的生命周期：
+![图2 Activity生命周期\[\2\] ](https://ranlychan.top/usr/uploads/2021/06/150253617.png)
+<ul>
+<li><code>onCreate()</code>: Ativity被创建的时候，常用于初始化基本布局，使用setContentView()加载布局文件，进行一些其它基本不耗时间的操作，实在需要就用异步线程，避免页面长时间空白。</li>
+<li><code>onStart()</code>: Activity被展示的时候，也就是说被创建了不一定要显示出来，但要显示出来了才onStart()。</li>
+<li><code>onPause()</code>: Activity将要被挂起的时候，页面失去焦点无法交互，此时Activity仍可见，比如将转入后台运行。</li>
+<li><code>onResume()</code>:Activity已经从后台唤起并显示出来，将要但还未获得焦点无法操作的时候。</li>
+<li><code>onStop()</code>: Activity以及失去焦点且要转入后台的时候，此时Activity已不可见。</li>
+<li><code>onRestart()</code>: Activity被挂起后又被唤醒的时候，此时Activity还未显示出来。</li>
+<li><code>onDestroy()</code>: Activity被彻底销毁的时候。<br>
+<br><br>
+<strong>Fragment生命周期</strong>：<br>
+Fragment生命周期与Activity周期较为类似，但其中比较值得提及的是：</li>
+<li><code>onAttach()</code>：Fragment与Activity建立关联的时候，也就是此时Fragment已经知道了拥有自己的“上司”Activity是谁。</li>
+<li><code>onActivityCreated()</code>：此时建立关联的Activity已经结束了onCreate()并返回。</li>
+<li><code>onCreateView()</code>：此时初始化Fragment布局，也是将基本的布局加载好，不建议耗时间的操作，实在需要就用异步线程。</li>
+<li><code>onDestroyView()</code>：Fragment的视图已经被销毁，但与Activity的关联未销毁，仍然可以重新创建视图。</li>
+<li><code>onDetach()</code>：与Activity的关联将要被解除，Activity在onDestory()时会自动调用与之有关联的Fragment的onDetach()方法。<br>
+<br><br>
+####3.3.2	网络请求与异步线程####<br>
+Android 4.0以后网络请求不能在主线程中执行已经是老生常谈了，这是为例放置线程阻塞应用无响应。解决方案一般就是启动异步线程进行处理，UI线程和网络请求就分离开了，各干各的。但这之间如何通信呢，或者说网络请求结束，不管成功失败，如何告诉UI线程？这将在3.3.3 Handler消息处理中提到。<br>
+线程通常还要用到线程辅助类<code>Runnable</code>，在Runnable的要求强制重写的方法<code>run()</code>中执行网络请求任务。例如：</li>
+</ul>
+<pre><code class="language-Java">Runnable networkRunnable = new Runnable() {
+	@Override
+	public void run() {
+		//可以在此处执行网络请求和数据解析操作，拉取联系人消息之类
+	 }
+};
+Thread thread = new Thread(networkRunnable);
+thread.start();//启动线程
+</code></pre>
+<p>不仅如此，耗时操作通常都是在线程中执行的，例如数据库读写和一些其它文件操作之类，可见，多线程是安卓开发中一个重要的技术。<br>
+<br><br>
+####3.3.3	Handler和消息处理####<br>
+上节中提到，不同线程间如何通信，<code>Handler</code>就是一个易用的方案。如果把各个线程比作各干各活的工人，Handler就像是个中间人，负责把各个工人传来的消息进行处理，并有权操作UI线程中的组件，比如更新<code>TextView</code>的文字（非UI线程是不能操作的）。“工人”如何给Handler发一条消息？实现起来很简单，比如网络请求处理成功以后：</p>
+<pre><code class="language-Java">private final int NETWORK_PROCESS_OK = 1;//定义一个数字代号代表网络处理成功
+private final int NETWORK_PROCESS_FAIL = 0; //代表网络处理失败
+Message msg = handler.obtainMessage();//需要保证此时Handler的实例handler已经实例化不为空。
+msg.what= NETWORK_PROCESS_OK；
+msg.sendToTarget();
+//失败以后也可以传回原因：
+Message msg = handler.obtainMessage();
+msg.what= NETWORK_PROCESS_FAIL；
+msg.obj=reason;//reason一般是String，但可以是任何Object
+msg.sendToTarget();
+</code></pre>
+<p>而Handler接收到消息后的处理一般如下：</p>
+<pre><code class="language-Java">handler = new Handler(){
+	 public void handleMessage(Message msg) {  
+            switch (msg.what) {  
+            case NETWORK_PROCESS_OK:  
+                textview.setText(&quot;处理成功！&quot;);  
+                break; 
+		   case  NETWORK_PROCESS_FAIL:  
+                textview.setText(&quot;处理失败！原因：&quot; + msg.obj.toString());  
+                break;
+            }  
+        };  
+};
+</code></pre>
+<br>
+<p>####3.3.4 Activity间的跳转 ####<br>
+Activity间使用<code>Intent</code>类进行跳转和数据传输，具体如下：</p>
+<pre><code class="language-Java">Intent intent = new Intent(this,TargetActivity.class);//this是一个Activity对象
+intent.putExtra(“param1”,paramString1);//通过intent传送额外数据，可以在目标Activity中，使用getIntent()获取传入的intent对象，利用该intent对象的getStringExtra()接受传入的String类型参数，当然也有其它类型的，此处不列举。
+startActivity(intent);
+</code></pre>
+<p>值得注意的是，Intent所能传输的数据容量是有上限的，过多的数据不建议使用Intent进行传输。<br>
+<br><br>
+####3.3.5	回收型列表视图RecyclerView的使用####<br>
+<code>RecyclerView</code>是基于viewholder的回收理念在ListView上的一个升级版，功能强大，当然在不需要进行回收的场景就当然不要用了，例如实现多行可选择的标签，如果标签滑出屏幕外被回收了的话，选中状态也会一起丢失，除非用额外的对象进行选中状态记录。<br>
+RecyclerView的适用场景是有大量用于展示的列表数据的场景，比如微信的公众号页面的推文卡片、微信朋友圈、QQ的好友列表、小红书的瀑布流帖子等。<br>
+和<code>ListView</code>类似，要将数据适配到视图上进行展示需要使用适配器Adapter，不同的是RecyclerView的<code>BaseAdapter</code>已经将viewholder模式封装好了，而目前RecyclerView的适配器有很多优秀的第三方库，例如Github上开源的CymChad的适配器助手<code>BaseRecyclerViewAdapterHelper</code>，封装了基本的适配器操作，秩序简短的几行代码就能实现基本的适配操作，也封装了很多功能丰富的类与接口，例如可以实现下拉刷新，上拉加载的接口，可以实现多布局共存的<code>MultiItemAdapter&lt;T&gt;</code>等等[4]，因此在合适的场景下使用是很好的，避免重复造轮子，但为了学习和了解更底层的原理，本项目中还是用最原始的<code>ListView</code>和RecyclerView的自带适配器。<br>
+<br><br>
+####3.3.6	适配器理念Adapter ####<br>
+如上所说，列表视图需要一个中间件：适配器，来将数据适配到布局上，这是一个从结构化的数据到结构化的视图的中间过程，纵观整个项目开发，可以发现有很多地方在使用这样的理念，除了列表视图的适配器以外，装载Fragment的<code>ViewPager</code>的<code>PagerAdapter</code>也是同样使用了适配器的概念，使得ViewPager可以比较方便的管理多个Fragment，降低耦合。同样的，这样的理念也可以运用到有着多种网络请求的场景中，使用工厂模式和适配器理念，将网络请求返回结果适配到实体类对象或UI视图里，这对于降低耦合度和提高多态性是很有帮助的。<br>
+<br><br>
+##4. 参考文档##<br>
+[1] Android中 mipmap与drawable区别<br>
+https://blog.csdn.net/userzhanghao123/article/details/70243872<br>
+[2] Activity与Fragment生命周期探讨<br>
+https://www.jianshu.com/p/1b3f829810a1<br>
+[3] fragment生命周期（总结）<br>
+https://blog.csdn.net/weixin_33774615/article/details/88126868<br>
+[4] BaseRecyclerViewAdapterHelper<br>
+https://github.com/CymChad/BaseRecyclerViewAdapterHelper</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/54/">
+              <h3 class="post-title">
+                下一篇：错误记录 | 一个导致ListView中item内容全部重复的可能原因
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

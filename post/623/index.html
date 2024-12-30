@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | Distributed Inference with Deep Learning Models across Heterogeneous Edge Devices | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | Distributed Inference with Deep Learning Models across Heterogeneous Edge Devices</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-01</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/iPvRnsINsNg/">
+                    论文笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] C. Hu and B. Li, “Distributed Inference with Deep Learning Models across Heterogeneous Edge Devices,” in IEEE INFOCOM 2022 - IEEE Conference on Computer Communications, London, United Kingdom: IEEE, May 2022, pp. 330–339. doi: 10.1109/INFOCOM48880.2022.9796896. [/info]</p>
+<h1 id="11-背景">1.1 背景</h1>
+<p>随着深度学习在各种任务中的广泛应用,将模型部署到边缘设备进行推理非常重要。但是直接在资源受限的边缘设备上使用复杂的深度学习模型进行推理可能会很慢。因此,通过分布式推理来加速非常必要。</p>
+<!--more-->
+<h1 id="12-现有方法的缺点">1.2 现有方法的缺点</h1>
+<p>现有方法假设深度学习模型是简单的层链式结构，然而现代深度学习模型采用DAG来表示层关系。也有方法试图将DAG转化为链,这对简单的DAG可能有效,但无法处理更复杂的DAG结构模型。</p>
+<h1 id="13-要解决的问题">1.3 要解决的问题</h1>
+<ul>
+<li>现有方法无法处理DAG结构的复杂深度学习模型的大方向问题</li>
+<li>考虑依赖关系的模型各层的划分决策问题</li>
+</ul>
+<h1 id="14-文章主要贡献">1.4 文章主要贡献</h1>
+<ul>
+<li>提出EdgeFlow,这是一种面向通用DAG结构深度学习模型的新分布式推理机制</li>
+<li>设计了执行单元的概念,通过转发表维护层依赖关系</li>
+<li>提出了渐进模型划分算法,逐层最优地将模型划分为执行单元</li>
+<li>将考虑依赖关系和计算负载等的划分问题从IP问题化简为LP问题进行高效近似求解</li>
+<li>实现并评估了EdgeFlow,结果表明其大大减少了推理延迟,即使对复杂的DAG也非常有效</li>
+</ul>
+<h1 id="15-个人思考">1.5 个人思考</h1>
+<ul>
+<li>文章的工作对于边缘深度学习很有启发，尤其是作者对于层依赖关系和计算负载等约束条件的考虑，使得edgeflow可以很好地帮助解决模型在  推理阶段的云边协同问题。这也启发我思考，能否在训练阶段进行拆分，使得原始数据输入被处理和表示后再提交给云端进行进一步的训练处理。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/622/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | A Brief Introduction to Edge Computing and Deep Learning
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

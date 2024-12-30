@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>OpenCloudOS | yum源配置 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">OpenCloudOS | yum源配置</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-10-30</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/9XC-yzjfAh6/">
+                    网络配置
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="opencloudos-86版本yum源配置">OpenCloudOS 8.6版本yum源配置</h1>
+<p>在<code>/etc/yum.repos.d/</code>下的两个配置文件移动到别处备份后修改：</p>
+<!--more-->
+<pre><code class="language-bash"># OpenCloudOS.repo
+#
+# Author: OpenCloudOS &lt;infrastructure@opencloudos.tech&gt;
+#
+[BaseOS]
+name=OpenCloudOS $releasever - Base
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/BaseOS/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/BaseOS/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/BaseOS/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[AppStream]
+name=OpenCloudOS $releasever - AppStream
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/AppStream/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/AppStream/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/AppStream/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[Extras]
+name=OpenCloudOS $releasever - Extras
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/Extras/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/Extras/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/Extras/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[HighAvailability]
+name=OpenCloudOS $releasever - HighAvailability
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/HighAvailability/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/HighAvailability/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/HighAvailability/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[PowerTools]
+name=OpenCloudOS $releasever - PowerTools
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/PowerTools/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/PowerTools/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/PowerTools/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[ResilientStorage]
+name=OpenCloudOS $releasever - ResilientStorage
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/ResilientStorage/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/ResilientStorage/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/ResilientStorage/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[Plus]
+name=OpenCloudOS $releasever - Plus
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/Plus/$basearch/os/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/Plus/$basearch/os/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/Plus/$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+</code></pre>
+<pre><code class="language-bash"># OpenCloudOS-Sources.repo
+#
+# Author: OpenCloudOS &lt;infrastructure@opencloudos.tech&gt;
+#
+[BaseOS-source]
+name=OpenCloudOS $releasever - Base-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/BaseOS/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/BaseOS/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/BaseOS/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[AppStream-source]
+name=OpenCloudOS $releasever - AppStream-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/AppStream/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/AppStream/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/AppStream/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[Extras-source]
+name=OpenCloudOS $releasever - Extras-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/Extras/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/Extras/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/Extras/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[HighAvailability-source]
+name=OpenCloudOS $releasever - HighAvailability-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/HighAvailability/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/HighAvailability/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/HighAvailability/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[PowerTools-source]
+name=OpenCloudOS $releasever - PowerTools-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/PowerTools/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/PowerTools/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/PowerTools/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[ResilientStorage-source]
+name=OpenCloudOS $releasever - ResilientStorage-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/ResilientStorage/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/ResilientStorage/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/ResilientStorage/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+[Plus-source]
+name=OpenCloudOS $releasever - Plus-source
+baseurl=https://mirrors.pku.edu.cn/opencloudos/$releasever/Plus/source/tree/
+baseurl=https://mirrors.tencent.com/opencloudos/$releasever/Plus/source/tree/
+#baseurl=https://mirrors.opencloudos.tech/opencloudos/$releasever/Plus/source/tree/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OpenCloudOS
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/659/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜P4: programming protocol-independent packet processors
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

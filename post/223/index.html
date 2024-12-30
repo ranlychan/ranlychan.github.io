@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Typecho | 博客css和js无法加载 前台样式崩了 https相关 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Typecho | 博客css和js无法加载 前台样式崩了 https相关</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-29</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>###过程记录###</p>
+<ol>
+<li>今天为博客申请了一个SSL证书，安装完成以后开启了强制HTTPS，然后在博客后台<code>设置-基本-站点地址</code> 把原先的http地址改为了https。此时一切都还正常。</li>
+<li>然后我又把SSL证书部署取消了，结果在http下访问出问题，博客无法加载任何css样式和js！如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/3870009183.png" alt="失去css和js就是这么丑" loading="lazy"></li>
+</ol>
+<!--more-->
+<p>###错误原因###<br>
+如上所述，css与js无法加载，F12调出调试发现，竟然是因为<strong>所有css和js的路径都带https</strong>！因为把服务器SSL证书取消部署以后，忘记在博客后台改站点地址了。<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/1858550620.png" alt="调试模式发现大问题" loading="lazy"><br>
+###解决方案###<br>
+[info]服务器重新部署SSL证书并开启https后，在博客后台<code>设置-基本-站点地址</code>把站点地址修改为正确的地址，包括正确的http/https协议。<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/11/30/1638235512.png" alt="" loading="lazy">[/info]</p>
+<p>[danger]<strong>总结</strong>：<code>设置-基本-站点地址</code>选项和博客前台css、js以及文章图片路径相关联，错误设置会导致无法加载样式和文章图片。[/danger]</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/173/">
+              <h3 class="post-title">
+                下一篇：摄影干货 | 星空银河摄影小笔记
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

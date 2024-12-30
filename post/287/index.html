@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>物联网实践 | Huawei LiteOS开发环境搭建及Demo程序在Hi3861上编译烧录运行 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627898646.jpg')">
+            </div>
+          
+          <h2 class="post-title">物联网实践 | Huawei LiteOS开发环境搭建及Demo程序在Hi3861上编译烧录运行</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-07-30</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>##简介##<br>
+本次实践是为尝试在嵌有华为海思芯片的<code>Hi3861</code>WIFI物联网开发板上配置开发环境并使用配套开发工具(<code>HUAWEI DevEco Device Tool</code>或<code>HUAWEI LiteOS Studio</code>)将Demo工程编译烧录和运行。</p>
+<p>##目录##</p>
+<!--index-menu-->
+<!--more-->
+<p><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627898646.jpg" alt="Hello World成功烧录运行" loading="lazy"><br>
+##项目材料##<br>
+###硬件清单###</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>型号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WIFI主板</td>
+<td>HiSpark_WIFI_IoT_HI3861_CH340G_VER.A</td>
+</tr>
+<tr>
+<td>扩展底板</td>
+<td>HiSpark_WIFI_IoT_EXB_VER.A</td>
+</tr>
+<tr>
+<td>OLED显示板</td>
+<td>HiSpark_WIFI_IoT_OLED_VER.A</td>
+</tr>
+<tr>
+<td>NFC板</td>
+<td>HiSpark_WIFI_IoT_NFC_VER.A</td>
+</tr>
+</tbody>
+</table>
+<p>###开发环境###</p>
+<ul>
+<li><strong>系统：</strong> Windows 10 家庭版64位</li>
+<li><strong>软件：</strong>
+<ul>
+<li>Python 3.7</li>
+<li>Scons 4.1.0.post1或更高</li>
+<li>Git 2.31.1.windows.1或更高</li>
+<li>CH341SER.EXE</li>
+<li>riscv32-unknown-elf</li>
+<li>Huawei LiteOS Studio x64-1.45.7或更高</li>
+</ul>
+</li>
+</ul>
+<p>[info]所有所需软件和资料均可在润和社区下载：http://www.hihope.org/download/download.aspx?mtt=34 <code>HiSpark_Pegasus_TechnologyApplicatioIoT_Kit.zip</code>内包含了所有材料[/info]</p>
+<p>##开发环境搭建##<br>
+参照华为海思编撰的<a href="http://www.hihope.org/attached/upload/file/20210430/6375539698599553136017361.pdf" title="《物联网技术和应用》">《物联网技术和应用》</a>进行搭建。</p>
+<p>[info]<code>HiSpark_Pegasus_Setup_Package</code>文件夹内的<code>SetupInstall.bat</code>运行时可能出现“scons不是内部或外部命令...”的提示，此时请手动安装<code>Scons</code>并重新启动SetupInstall.bat[/info]<br>
+[info]SetupInstall.bat在运行时可能会处于长时间无响应状态，提示找不到某文件。此时应当继续等待，直到“Press any key to continue...”字样打印以提示安装完成[/info]</p>
+<p>##Demo程序编译烧录运行##<br>
+1.确认开发环境已经正确安装后，启动<code>Huawei LiteOS Studio</code></p>
+<p>2.新建工程，<strong>SDK版本</strong>选择<code>HiHope WiFi_IoT Hi3861SPC025</code>;<br>
+<strong>SDK目录</strong>在HiSpark_Pegasus_TechnologyApplication_IoT_Kit下的<code>HiHope_WiFi-IoT_Hi3861SPC025</code>；<br>
+<strong>参考目录</strong>选择在HiSpark_Pegasus_TechnologyApplication_IoT_Kit下的<code>HiHope_Pegasus_HelloWorld</code>。<br>
+目标板Hi3861V100。</p>
+<p>3.按F4进入工程配置，<strong>目标板配置</strong>中：厂商<code>HiSilicon</code>,选中目标板<code>Hi3861V00</code>,确认。</p>
+<p>4.<strong>编译器配置</strong>中：SConstruct脚本，点击文件夹右侧的放大镜自动搜索SConstruct脚本位置，正常搜索完点确认。</p>
+<p>5.<strong>烧录器配置</strong>中：烧录方式选择<code>HiBurner</code>，确认。</p>
+<p>6.<strong>串口配置</strong>中：成功连接Hi3861板后，端口选择唯一一个COM端口；波特率选择<code>921600</code>,确认。<br>
+[info]安装<code>CH340G驱动</code>后，将Hi3861主板与其余物料完成组装，再与计算机通过数据线连接。[/info]</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627898777.png" alt="完成安装后的板子，红框跳线需装上" loading="lazy"></figure>
+<p>7.F7<strong>编译</strong>，成功时终端输出紫色<code>BUILD SUCCESS</code>字样。</p>
+<p>8.F8<strong>烧录</strong>，出现HiBurn程序窗口时，按一次Hi3861板上的Ret按键，烧录开始。成功时如图：<br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627898863.png" alt="HiBurn烧录完成" loading="lazy"></p>
+<p>9.烧录完成，重新拔插数据线，HelloWorld程序运行正常，OLED屏上显示Hello World字样，Hi3861板上LED灯闪烁。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/254/">
+              <h3 class="post-title">
+                下一篇：物联网项目 | LeanCloud+树莓派+安卓实现住宅环境异常告警系统
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

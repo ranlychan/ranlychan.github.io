@@ -1,0 +1,428 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/415/">
+        <h2 class="post-title">Python爬虫 | 美国特斯拉充电桩位置信息（含经纬度）爬取</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="概要">概要</h1>
+<p>最近在搞美赛模拟，2018D题需要用到特斯拉在美国的两种充电桩（一种是Supercharger，另一种是Destination Charging）的位置数据。下面介绍如何用Python在Tesla官网爬取已经建立的充电桩所在州、县、详细地址、经纬度坐标以及FIPS等信息，以及即将建立的充电桩的大致位置和计划建造时间。 <img src="https://img.400511.net/2022/02/27/DMCuBn41.jpg" alt="" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-02-17</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/408/">
+        <h2 class="post-title">Python | 鼠标右键一键打开Jupyter Notebook</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="介绍">介绍</h2>
+<p>Jupyter Notebook是一个可以在网页中编写和运行代码的程序，其运行结果可直接在代码块下显示，非常便于及时用Markdown编写程序解释文本。</p>
+<p>然而每次打开Jupyter Notebook都要使用终端命令cd切换到工作目录，再使用<code>jupyter notebook</code>打开服务，比较麻烦。</p>
+<p>故而现在使用Windows注册表实现在工作目录右键菜单一键打开notebook。</p>
+<h3 id="效果预览">效果预览</h3>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2022/01/31/1643593703.png" alt="右键菜单效果，若未设置中文编码会显示乱码" loading="lazy"></figure>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-01-31</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/pEf2yJ2Fw44j/">
+                感知器
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/374/">
+        <h2 class="post-title">编译原理 | 期末复习笔记</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="目录">目录</h1>
+<!--index-menu-->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-01-06</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/Iz1dJXoi1VVx/">
+                美食菜谱
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/347/">
+        <h2 class="post-title">神经网络 | 感知器原理及python代码实现and和or函数</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="目录">目录</h2>
+<!--index-menu-->
+<h2 id="感知器原理">感知器原理</h2>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-12-08</span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/347/">
+        <div class="feature-container" style="background-image: url('https://s3.bmp.ovh/imgs/2022/05/19/4645db6e143ff7b6.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/219/">
+        <h2 class="post-title">树莓派 | Raspberry Pi 4B使用nginx+sqlite3+php7.3+typecho搭建轻量级博客系统</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>手头的树莓派4B跑了跑人脸识别以后就一直在吃灰。最近想起来以前看到一款很不错的叫<code>Typecho</code>的轻量级博客程序，简洁美观，拓展性强。正好可以把闲置的树莓派算力利用起来。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-08-26</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/Iz1dJXoi1VVx/">
+                美食菜谱
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/219/">
+        <div class="feature-container" style="background-image: url('https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/26/1629982217.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/287/">
+        <h2 class="post-title">物联网实践 | Huawei LiteOS开发环境搭建及Demo程序在Hi3861上编译烧录运行</h2>
+      </a>
+      <div class="post-abstract">
+        <p>##简介##<br>
+本次实践是为尝试在嵌有华为海思芯片的<code>Hi3861</code>WIFI物联网开发板上配置开发环境并使用配套开发工具(<code>HUAWEI DevEco Device Tool</code>或<code>HUAWEI LiteOS Studio</code>)将Demo工程编译烧录和运行。</p>
+<p>##目录##</p>
+<!--index-menu-->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-07-30</span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/287/">
+        <div class="feature-container" style="background-image: url('https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627898646.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/254/">
+        <h2 class="post-title">物联网项目 | LeanCloud+树莓派+安卓实现住宅环境异常告警系统</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>本系统监测的条件限于温湿度、火焰、烟雾或有毒气体，<s>以及登记授权人员人脸信息，（人脸检测和识别老早写了，懒得再接入了有时间再说吧）</s> 😐出现异常时可及时记录和向用户APP推送消息告警。<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/350204538.jpg" alt="完成后的树莓派和传感器" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-07-06</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                Typecho
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/239/">
+        <h2 class="post-title">美食菜谱 | 萝卜玉米猪骨汤制作攻略</h2>
+      </a>
+      <div class="post-abstract">
+        <p>#萝卜玉米猪骨汤#<br>
+##简介##<br>
+玉米萝卜和淮山，清甜的代表。不想吃饭的时候煲一锅清甜营养的玉米萝卜汤，胃口开朗起来了！<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/3203660093.jpg" alt="萝卜玉米猪骨汤" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-07-01</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                Typecho
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/234/">
+        <h2 class="post-title">美食菜谱 | 麻辣鲜虾制作攻略</h2>
+      </a>
+      <div class="post-abstract">
+        <p>#麻辣鲜虾#<br>
+这是我写的第一个菜谱~ 美食系列菜谱正式开启哈哈哈😚<br>
+##简介##<br>
+麻辣鲜虾，字如其名，以麻辣鲜香著称。既有花椒带来的麻爽和老干妈带来的香辣，又有鲜虾带来的回甘，其味无穷。<br>
+<img src="https://ranlychan.top/usr/uploads/2021/07/827199650.jpg" alt="麻辣虾完成的照片" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-07-01</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">
+                物联网
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/223/">
+        <h2 class="post-title">Typecho | 博客css和js无法加载 前台样式崩了 https相关</h2>
+      </a>
+      <div class="post-abstract">
+        <p>###过程记录###</p>
+<ol>
+<li>今天为博客申请了一个SSL证书，安装完成以后开启了强制HTTPS，然后在博客后台<code>设置-基本-站点地址</code> 把原先的http地址改为了https。此时一切都还正常。</li>
+<li>然后我又把SSL证书部署取消了，结果在http下访问出问题，博客无法加载任何css样式和js！如图：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/3870009183.png" alt="失去css和js就是这么丑" loading="lazy"></li>
+</ol>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-29</span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ranlychan.github.io/page/6/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://ranlychan.github.io/page/8/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>iOS设备自动登录汕大校园网认证 一次设置永久免登录 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">iOS设备自动登录汕大校园网认证 一次设置永久免登录</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-03-15</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="介绍">介绍</h1>
+<p>本文将介绍如何在苹果设备（Mac、iPad、iPhone）上使用捷径（Shortcuts）来使设备每次连接校园网WiFi后自动使用校园网账号登录，以及一键查询流量情况。当然，你也可以创建快捷方式在桌面以便掉线时一键重连，无须再前往浏览器输入账号密码登录。</p>
+<!--more-->
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="步骤">步骤</h1>
+<h2 id="1-获取已经制作好的登录指令">1. 获取已经制作好的登录指令</h2>
+<p>我已经制作好捷径指令，你需要使用你的苹果设备进入下面链接获取该快捷指令：https://www.icloud.com/shortcuts/5eb0a3e23e9c41e6a26963fbfcf30d62</p>
+<p>正常情况下，点击链接进入，并点击获取后，你应该看到如下或类似界面，点击添加：</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678875616.jpg" alt="" loading="lazy"></figure>
+<h2 id="2-首次配置你的校园网账号">2. 首次配置你的校园网账号</h2>
+<p>接着这个制作好的快捷指令会出现在你的指令列表里，点击它卡片右上角的三个小点进行编辑以配置账号密码。</p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678876058.jpg" alt="" loading="lazy"></figure>
+<p>如下图，将两个文本框中的文字替换为自己的账号和密码。其中红色框1的内容<code>替换为校园网账号</code>修改为校园网账号；蓝色框2的内容<code>替换为校园网密码</code>修改为校园密码。完成后点击右上角三角形运行进行测试。</p>
+<figure data-type="image" tabindex="3"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678876286.png" alt="" loading="lazy"></figure>
+<p>运行后，可能会弹出提醒询问是否允许访问网络这些，请允许。接着，如果成功则会弹出通知提醒<code>✅已成功登录汕头大学校园网</code>,否则请检查你的校园网账号和密码是否正确。</p>
+<h2 id="3-配置自动化">3. 配置自动化</h2>
+<p>如果一切顺利，你现在可以通过<code>捷径Shortcuts</code>的<code>自动化Automation</code>来实现当设备连上汕头大学校园网时，自动执行上面配置好的快捷指令，从而自动地登录校园网账号。</p>
+<p>首先需要在<code>捷径Shortcuts-&gt;自动化Automation-&gt;+（加号创建新流程）</code>，在接下来的弹窗<code>新自动化New Automation</code>中，选择<code>创建个人自动化Create Personal Automation</code>，接着下拉找到<code>WLAN</code>并点击，在新窗口中的<code>网络Network</code>右侧点击<code>选择Choose</code>以选择校园网WLAN。</p>
+<figure data-type="image" tabindex="4"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678886465.jpg" alt="创建一个自动化流程" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678886904.png" alt="点选汕大校园网信号STU并确认" loading="lazy"></figure>
+<p>选择STU后，<code>下一步Next</code>，进入<code>动作Actions</code>窗口，点击<code>添加动作Add Action</code>按钮，选中前文中导入的<code>登录汕大校园网</code>捷径并确认，接下来一路Nex即可。</p>
+<figure data-type="image" tabindex="6"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678887358.jpg" alt="为连接STU时添加动作" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678887321.png" alt="选择运行已经导入的捷径" loading="lazy"></figure>
+<p>本小节完。</p>
+<h2 id="4-获取已经制作好的流量查询指令">4. 获取已经制作好的流量查询指令</h2>
+<p>同样地，我也已经制作好流量查询的捷径指令，你需要使用你的苹果设备进入下面链接获取该快捷指令：https://www.icloud.com/shortcuts/e736334ef3c544c6aaee477aebbdb74a</p>
+<p>成功导入后，<strong>无需配置账号</strong>。使用场景一般可有以下两种：</p>
+<ol>
+<li>一种是在上面的自动化流程后，也就是在连接校园网并自动登录后，再执行流量查询指令；</li>
+<li>另一种是长按<code>查询汕大校园网流量</code>指令卡片，点击<code>分享Share-&gt;添加到主屏幕Add to Home Screen</code>。这样你就可以在桌面上通过点击图标来实现对校园网流量的快捷查询。查询结果将以消息提醒形式展示，如下图。</li>
+</ol>
+<figure data-type="image" tabindex="8"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/03/15/1678888170.png" alt="校园网流量查询提醒" loading="lazy"></figure>
+<p>最后，你也可以根据自己的需要，在学习了解iOS独特的<code>捷径Shortcuts</code>的基础上定制更多有趣的内容~</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/560/">
+              <h3 class="post-title">
+                下一篇：考研 | 竞赛和大创也算科研经历？对考研复试有多大帮助？
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

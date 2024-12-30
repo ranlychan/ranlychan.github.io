@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Towards Edge Computing Using Early-Exit Convolutional Neural Networks | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Towards Edge Computing Using Early-Exit Convolutional Neural Networks</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-01</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/iPvRnsINsNg/">
+                    论文笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] R. G. Pacheco, K. Bochie, M. S. Gilbert, R. S. Couto, and M. E. M. Campista, “Towards Edge Computing Using Early-Exit Convolutional Neural Networks,” Information, vol. 12, no. 10, p. 431, Oct. 2021, doi: 10.3390/info12100431. [/info]</p>
+<h1 id="11-背景">1.1 背景</h1>
+<p>在计算机视觉应用中,移动设备由于计算资源的限制往往需要将卷积神经网络(CNN)的推理任务转移到云端完成。但是除了给云端带来更多的网络负载之外,这种方法还会使那些需要低延迟的应用变得不可行。</p>
+<!--more-->
+<h1 id="12-要解决的问题">1.2 要解决的问题</h1>
+<p>在边缘计算场景下，如何减少将图像分类等计算机视觉任务的推理转移到云端带来的网络负载和延迟问题。</p>
+<h1 id="13-现有方法的缺点">1.3 现有方法的缺点</h1>
+<ol>
+<li>简单地将CNN推理完全转移到云端,会增加网络负载和推理延迟。</li>
+<li>针对推理任务在边缘设备和云端的划分,现有工作主要关注最小化推理时间,没有考虑模型性能。</li>
+<li>现有的使用分支神经网络在边缘设备进行部分推理的方法,没有对分支数量和置信度阈值等超参数进行深入分析。</li>
+</ol>
+<h1 id="14-文章主要贡献">1.4 文章主要贡献</h1>
+<ol>
+<li>在边缘计算场景中,评估了使用带有多个分支/侧支的MobileNetV2作为提前退出的卷积神经网络模型,可以减少因将图像分类任务完全卸载至云端而带来的数据上传量和推理时间。</li>
+<li>通过调整提前退出神经网络中分支的数量、分支的位置以及用于判断是否在分支上进行分类的置信度阈值,分析了这些超参数对提前退出率和分类性能的影响。</li>
+<li>结果显示,在分支深层位置适当设置2-4个分支,并采用0.75-0.85的置信度阈值,可以在不明显损失分类性能的情况下,使得大约40%-80%的图像可以在边缘设备上提前完成分类,显著减少推理延迟和网络负载。</li>
+<li>在使用边缘服务器与AWS EC2云实例构建的实际边缘计算场景中,与完全在云端进行推理相比,使用提前退出的MobileNetV2可以将图像分类任务的平均推理时间减少27%到61%。</li>
+<li>还发现添加过多分支会导致推理时间增长但提前退出率提升有限;而先前分支由于获得的特征较原始输入相似,提前退出效果很差。</li>
+<li>整体而言,该方法为需要低延迟的计算机视觉应用提供了一种有效的加速方案。</li>
+</ol>
+<h1 id="15-个人思考">1.5 个人思考</h1>
+<ul>
+<li>关于模型压缩：经过了解，发现模型压缩是一个宽泛的任务概念，主要是指对于DNNs的模型的压缩优化。PapersWithCode上的专题页面为https://paperswithcode.com/task/model-compression （Benchmarks、Datasets &amp; Codes）。本文基于Early-Exit实现的分支神经网络也属于这一大任务之下。模型压缩的次级概念整理如下：
+<ul>
+<li>专注于减小模型比特大小的比特压缩（Bit Compression）</li>
+<li>专注于减少模型参数数量的参数压缩（Parameter Compression）</li>
+<li>关注减小模型计算量的计算压缩（Computational Compression）</li>
+<li>专注于优化模型结构的结构压缩（Structural Compression）</li>
+</ul>
+</li>
+<li>关于分支神经网络：分支神经网络通常在中间主干层同层添加并行的分支，输出层综合考虑每个分支计算得到的置信度给出最后的输出结果。从分支子模型的角度来看，分支神经网络与随机森林有一定相似性，都综合了各个子模型的意见/结果来得最终输出。而使用Early-Exit实现的分支神经网络具备了减少计算量和通信量、易于训练部署重要特点，非常契合边缘计算的应用场景。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/626/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 |  Edge-Cloud Polarization and Collaboration: A Comprehensive Survey for AI
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

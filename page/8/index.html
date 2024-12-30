@@ -1,0 +1,495 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/173/">
+        <h2 class="post-title">摄影干货 | 星空银河摄影小笔记</h2>
+      </a>
+      <div class="post-abstract">
+        <p>##拍摄信息##</p>
+<!-- ![](https://s2.loli.net/2023/02/28/UmYzCdFOpZu2yrh.jpg) -->
+<ul>
+<li>
+<p><strong>设备器材</strong>:尼康D7100、尼康18-140mm镜头、三脚架</p>
+</li>
+<li>
+<p><strong>拍摄时间</strong>:凌晨零时左右</p>
+</li>
+<li>
+<p><strong>拍摄地点</strong>:贵州老家乡下</p>
+</li>
+<li>
+<p><strong>拍摄参数</strong>:ISO2200 快门15秒 光圈f/3.5</p>
+</li>
+</ul>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-28</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/wGC4h1n8P3NN/">
+                摄影
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/173/">
+        <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/02/28/UmYzCdFOpZu2yrh.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/171/">
+        <h2 class="post-title">杂记 | 哔哩哔哩视频一键转发Typecho插件</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-28</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/wGC4h1n8P3NN/">
+                摄影
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/76/">
+        <h2 class="post-title">学习笔记 | Android开发常用的几种模式</h2>
+      </a>
+      <div class="post-abstract">
+        <blockquote>
+<p>在Android Studio中，xml写layout只能是算画个草图，对界面的监听改变等逻辑都要在activity/fragment里处理，大型项目中会使其显得非常臃肿，难以维护。故而需要使用适合的开发模式使得项目易于阅读和维护。</p>
+</blockquote>
+<!-- index-menu -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/CppV-gR4FYnK/">
+                开发模式
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/73/">
+        <h2 class="post-title">学习笔记 | Android Studio安卓开发入门经验总结 干货</h2>
+      </a>
+      <div class="post-abstract">
+        <p>##前言##<br>
+最近完成了移动编程课程的学习，加上其它安卓开发项目的经历，感觉收获颇为丰富。故在此总结整理安卓开发中比较常见的一些问题，技巧和指南。<br>
+##0.目录##</p>
+<!-- index-menu -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/54/">
+        <h2 class="post-title">错误记录 | 一个导致ListView中item内容全部重复的可能原因</h2>
+      </a>
+      <div class="post-abstract">
+        <p>最近在写一个快递查询的WearOS App，突然有一次调试发现主界面的<code>ListView</code>里的item，显示的都是一模一样的内容，全是最新添加的一个快递的内容（这是一个伏笔哈哈哈）。<br>
+遂思前想后，开始以为是<code>ListView</code>的问题，但是没结果。接着以为是<code>Adapter</code>的问题，但很快又否决了这个想法，因为项目一开始也是用的<code>SimpleAdapter</code>，且当时<code>ListView</code>显示正常。无意中看到一篇Blog：</p>
+<blockquote>
+<p>HashMap对象重复赋值在多线程中的教训<br>
+https://blog.csdn.net/goodguyzl/article/details/83847286</p>
+</blockquote>
+<p>该文中写道：</p>
+<blockquote>
+<p>“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”</p>
+</blockquote>
+<p>我猛然意识到我也犯了同样的错误！<br>
+[info]<strong>将<code>HashMap</code>对象的申明放到循环外的话，意味着循环内的每次put会覆盖掉原有的值，而且<code>ListView</code>每次add的都是同一个HashMap对象！</strong><br>
+这就是为什么我的项目里<code>ListView</code>中显示的item全是最新添加的一个快递的信息。[/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                安卓开发
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/51/">
+        <h2 class="post-title">错误记录 | Android Studio Start Failed com.intellij.ide.plugins.PluginManager</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/36/">
+        <h2 class="post-title">我的项目 | 派查查 ：一个WearOS智能手表系统上的快递查询应用</h2>
+      </a>
+      <div class="post-abstract">
+        <h2 id="前言">前言</h2>
+<p>​	在学习面向对象程序设计课程的时候，收获颇多，最后的课程报告选题选择了“Android开发”。但是安卓手机上好的应用数不胜数，自己不想重蹈覆辙做别人做过不知道多少遍的东西，就选择了当时相对Android手机软件开发比较小众的WearOS系统软件开发，做了TicWatch的问问商店里第一款腕上快递查询应用：派查查PieExpress。这也是我第一次做安卓开发，如有不足，还请海涵。</p>
+<hr>
+<h2 id="目录">目录</h2>
+<!-- index-menu -->
+<h2 id="项目概述">项目概述</h2>
+<p>**运行环境：**Google WearOS 国内版</p>
+<p>**软件类型：**快递查询工具</p>
+<p><strong>基本功能：</strong></p>
+<ul>
+<li>快递查询：在手表上输入快递运单号后，联网查询快递的运输信息，包括运输状态、到达时间和地点等。</li>
+<li>快递收藏：输入的运单号和查询的快递信息可以本地保存，方便下次查看，可以为运单号写备注，方便知道是哪个快递。</li>
+<li>语音录入：输入运单号或运单备注时可以语音输入（调用TicWatch语音接口实现，小米手表等可能无法使用）</li>
+</ul>
+<p>[info]**项目地址：**https://github.com/ranlychan/PieExpressTracking [/info]</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/pE6OObeKNxH8/">
+                APP
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/kzvW4YadVstD/">
+                WearOS
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/JNclEz5g6Typ/">
+                快递查询
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/24/">
+        <h2 class="post-title">Typecho | 插件仓库TeStore ：一键安装、便捷管理、代理下载Typecho插件！强烈安利</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                Typecho
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/21/">
+        <h2 class="post-title">Typecho | 博客程序、主题及插件安装常见问题汇总</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2021-06-20</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                Typecho
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/128/">
+        <h2 class="post-title">VLOG | 新年记录 | 除夕夜小雪却格外温暖呢</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2020-01-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/wGC4h1n8P3NN/">
+                摄影
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ranlychan.github.io/page/7/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://ranlychan.github.io/page/9/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

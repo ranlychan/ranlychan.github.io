@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Reinforcement Learning with Feedback from Multiple Humans with Diverse Skills | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Reinforcement Learning with Feedback from Multiple Humans with Diverse Skills</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-31</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] T. Benson, A. Akella, and D. A. Maltz, “Mining policies from enterprise network configuration,” in Proceedings of the 9th ACM SIGCOMM conference on Internet measurement, Chicago Illinois USA: ACM, Nov. 2009, pp. 136–142. doi: 10.1145/1644893.1644909. [/info]</p>
+<!--more-->
+<h2 id="11-背景">1.1 背景</h2>
+<ul>
+<li>强化学习通过环境交互获得经验进行学习，但有时样本不足以保证收敛。利用人类先验知识可以帮助强化学习。</li>
+<li>从单一训练师获得足够优质反馈很难，需要考虑多个训练师。但反馈可能不一致、不频繁。</li>
+</ul>
+<h2 id="12-方法">1.2 方法</h2>
+<ul>
+<li>基于Advise算法，扩展以接受多个训练师的反馈。同时假设事先不知道并需要估计每个训练师的一致性水平(正确反馈概率)，假设训练师的策略符合二项分布，可由其反馈进行估计并应用于智能体的策略。</li>
+<li>使用EM算法估计状态-动作对的一致性水平C(s,a)，然后取平均得到具体训练师一致性C。</li>
+<li>设计自适应学习率α以递归地高精度估计一致性水平C，学习率α决定了当前状态-动作对的一致性水平估计C(s,a)对总体一致性水平C的更新强度。学习率越大,当前C(s,a)的影响就越大。</li>
+<li>根据所有训练师一致性水平，贝叶斯聚合其反馈产生新的策略，一致性高的训练师的反馈影响大。</li>
+</ul>
+<h2 id="13-结论">1.3 结论</h2>
+<ul>
+<li>实验结果显示，可以正确估计训练师一致性水平，即使存在对抗训练师。</li>
+<li>多个训练师可以提高反馈质量，学习速度接近事先知道一致性水平的情况。</li>
+<li>一致性水平估计本身也很有价值，可以诊断训练师和强化学习设置的问题。</li>
+<li>未来工作包括处理连续状态/动作，以及针对不同状态估计一致性。</li>
+</ul>
+<h2 id="14-个人思考">1.4 个人思考</h2>
+<ul>
+<li>利用人类反馈在强化学习中训练更具备鲁棒性和探索性的智能体的技术显然已经在ChatGPT等语言模型上得以成功应用，其收集二元反馈的直观表现就包括了每次生成内容都可以点赞或者踩这一方式。然而正如本文所述，庞杂的用户群体中并非人人都是专家，所收集的反馈存在不一致问题。故而对反馈及提出反馈的trainer进行一致性水平评估是一个很直接的具有统计基础的解决思路，并且可以实现对群体反馈的融合。</li>
+<li>考虑将带群体反馈优化的强化学习用于网络设备配置文本生成，可能存在一些需要进一步了解的地方。首先是人类trainer的策略是否能沿用文章中的二项分布？其次是文本生成场景下的状态-动作对的粒度该如何划分，具体说就是是否应该将生成内容整体作为动作看待（即单个状态动作对），还是将内容文本拆开来看（即连续动作状态对，参考自回归的思路，将前面步的生成内容也作为状态中的参数，而待生成对下一步作为动作）。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/646/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Attention Is All You Need
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

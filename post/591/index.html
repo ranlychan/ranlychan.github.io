@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | Design Guidelines for Robust Internet Protocols | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | Design Guidelines for Robust Internet Protocols</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-06-29</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] Anderson T E , Shenker S , Stoica I ,et al.Design Guidelines for Robust Internet Protocols[J].ACM SIGCOMM Computer Communication Review, 2003, 33(1):125-130.DOI:10.1145/774763.774783. [/info]</p>
+<h1 id="11-问题背景">1.1 问题背景</h1>
+<p>因特网在健壮性的设计上，早期在fail-stop故障模型的假设上进行。但这一假设在现实情况中的适用性不好，特别是在存在拜占庭故障的网络中。而已有的应对拜占庭故障的方法并不足够。此外不同组织设计的不同协议随时间也在变动，应对拜占庭故障变得更加困难。</p>
+<!--more-->
+<h1 id="12-研究方法">1.2 研究方法</h1>
+<p>主要是案例分析法。对于一些关键的论点作者均举了现实案例进行分析和论证。例如Internet存在对于拜占庭故障的脆弱性和现有应对拜占庭故障的方式并不够两个论点。文章主要提出的六个指导准则也基于案例分析总结得来。</p>
+<h1 id="13-解决方法">1.3 解决方法</h1>
+<p>需要制定一套设计准则，帮助协议设计者从根本上改变原先的网络协议设计方式，防范拜占庭故障，以获得更好的健壮性。</p>
+<h2 id="131-六大指导准则">1.3.1 六大指导准则</h2>
+<p>需要注意的是，这些准则并非严格狭隘的标准，而是一套通用和不具体的建议，以确保Internet的核心活力不被扼杀。六大准则的总体理念是应该进行防御性设计，即在设计中考虑传入信息可能不正确、节点损坏和恶意节点等情况。</p>
+<p>(1)	精简理念：随着时间的推移，接口往往会变得越来越复杂，而复杂性可能导致问题。复杂设计使得不同组织方面的实现变得更加困难，组件之间的意外相互作用可能隐藏潜在的致命漏洞。论文以BGP协议中的路由振荡为例，说明了复杂语义的负面影响。</p>
+<p>(2)	最小化依赖：在协议设计时，常常为了方便就假设参与协议的其他节点是可信的，但这种信任往往是错误的。问题通常在协议被广泛使用时才会显现，因为不同动机和安全策略的用户会导致问题。例如，TCP协议中的拥塞控制机制容易受到恶意接收方的攻击。为了解决这些问题，则可能需要下一个准则：验证。</p>
+<p>(3)	尽可能验证：过多验证可能带来复杂度，因此需要权衡。文中以TCP拥塞控制中存在的恶意ACK攻击和SACK防护为例，说明如何在协议中添加验证机制，并使用一次性数字来改进拥塞通知。</p>
+<p>(4)	保护己方资源：考虑未认证的请求可能耗尽资源。例如，传统的TCP连接建立容易受到&quot;SYN flood&quot;拒绝服务攻击的影响，攻击者发送大量伪造的SYN数据包，导致服务器耗尽连接资源。可行的解决办法是重新设计连接建立协议的方法，通过将连接状态返回给客户端来减轻服务器的负担。</p>
+<p>(5)	限制故障范围：设计协议时应考虑限制错误行为可能造成的损害，并防止不稳定性的发生，或者在发生时确保影响不会失控扩散。第一个例子是路由波动问题，通过引入路由波动阻尼机制，可以减少本地链路和路由不稳定对远程网络的影响。第二个例子是BGP错误处理，修复了一些错误处理机制不完善的问题，避免了错误的传播导致互联网范围的故障。</p>
+<p>(6)	大方暴露错误：系统的健壮性隐患有时可能处于潜伏状态，只有在系统中发生其他错误时才会被触发。因此，在问题扩大之前，系统设计师和运营者需要寻找并修复错误。例如，最近对TCP校验和错误的调查揭示了数据在主机或路由器上损坏的问题。类似地，对BGP配置策略的研究发现了一些缺陷，导致ISP向客户提供了意外的中转。</p>
+<h1 id="14-个人思考">1.4 个人思考</h1>
+<ul>
+<li>
+<p>论文阅读方法：经过前面三篇的论文阅读，我认为自己没有掌握一个适合的论文阅读方法或者思路，撰写的阅读报告也存在着重点不突出，不够言简意赅的问题。因此我结合网络资料搜索和向同学请教的方式，初步学习了论文阅读和报告撰写的一些方法，并在这篇论文阅读时付诸实践。我认为这次的阅读报告效果要相对前三次的在简要性方面会更好。</p>
+</li>
+<li>
+<p>常被忽略的隐性假设：文章提到早期设计Internet的协议时是基于“fail-stop”故障模型假设的。我认为在系统没有真正构建之前，设计师很难不对系统做出类似的假设，不管是隐性的还是显性的。这其中的隐性假设往往很难被意识到，进而常被忽略去检验其是否成立。因此在做设计时需要时刻注意自己是否做了什么假设，并仔细论证其合理性。</p>
+</li>
+<li>
+<p>对于鲁棒性的考虑：在进行一些设计时，例如设计网络请求接口和应用程序时，我想我对于鲁棒性的考虑比较有限。在一些项目中，很多人对于鲁棒性的考虑似乎进并没有，只追求项目能够赶紧上线，不知这应当是称为效率和健壮性的平衡呢，还是贪图简单快捷？</p>
+</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/590/">
+              <h3 class="post-title">
+                下一篇：笔记 | 关于分布式系统的失效/故障/failure
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

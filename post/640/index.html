@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Efficient and Safe Network Updates with Suffix Causal Consistency | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Efficient and Safe Network Updates with Suffix Causal Consistency</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] S. Liu, T. A. Benson, and M. K. Reiter, “Efficient and Safe Network Updates with Suffix Causal Consistency,” in Proceedings of the Fourteenth EuroSys Conference 2019, Dresden Germany: ACM, Mar. 2019, pp. 1–15. doi: 10.1145/3302424.3303965. [/info]</p>
+<!--more-->
+<h2 id="11-背景">1.1 背景</h2>
+<p>软件定义网络(SDN)中控制器在下发策略时需要快速且一致的更新，否则可能导致包丢失甚至是使包违反网络策略。传统实现一致性的方法许多都基于原子性更新，也即数据分组不能混合执行新老策略，存在速度和效率问题。因此需要一个高效安全的网络更新方法，既能快速部署新规则，又能避免不一致。</p>
+<h2 id="12-现有方法缺点">1.2 现有方法缺点</h2>
+<p>原子性更新(如CU)需要等待新路径全部更新完成才能使用，速度慢。</p>
+<ul>
+<li>分阶段更新(如TSU)需要多步完成，也比较慢。</li>
+<li>都需要同时保留新老规则，存储开销大。</li>
+</ul>
+<h2 id="13-本文主要贡献">1.3 本文主要贡献</h2>
+<ul>
+<li>提出后缀因果一致性(SCC)的网络更新抽象，允许包途径新老路径的混合。</li>
+<li>设计了实现SCC的高效算法，可以加速规则部署，减少规则存储开销。</li>
+</ul>
+<h2 id="14-本文主要方法">1.4 本文主要方法</h2>
+<ul>
+<li>每条规则打上时间戳，数据包继承该时间戳。交换机只能匹配时间戳&gt;=数据包时间戳的规则。</li>
+<li>设计了闭包、回退等算法来有选择地更新部分交换机的规则。</li>
+<li>在Open vSwitch和P4交换机上实现了该算法。</li>
+</ul>
+<h2 id="15-本文主要结论">1.5 本文主要结论</h2>
+<ul>
+<li>与CU、TSU、COCONUT相比，SCC部署速度更快,规则开销更小，数据包丢失更少。</li>
+<li>SCC可以保证黑洞自由，有界循环等性质。（其中黑洞自由指的是在从旧的路由配置过渡到新的配置过程中，不会有数据包被丢弃；有界循环指的是数据包在网络更新期间的最大循环次数是有限的，不会出现数据包无限循环的情况。）</li>
+<li>SCC的规则生成时间随拓扑规模增长较慢，可扩展性好。</li>
+</ul>
+<h2 id="16-个人思考">1.6 个人思考</h2>
+<ul>
+<li>策略更新与配置下发：先前的考虑中，共划分了用户需求、策略语义、网络语义、系统映射四个阶段来实现配置生成。但现在结合先前论文对于配置复杂性的来源分析中，所提到的分布式带来的复杂性，可以考虑在系统映射后再添加一个阶段，即配置下发。在此阶段，系统映射阶段生成的配置文件作为控制器下发策略的载体，兼顾速度与一致性下发给设备，从而避免给多台设备进行配置所带来的复杂性。之前论文提到在企业网络中分布式设备配置带来的复杂性问题相较ISP网络要更为突显，因此配置下发这一阶段可以很好地应对企业网络。</li>
+<li>对于SDN的进一步考虑：对于大语言模型来说，在部署后可以收集用户与模型的对话与反馈信息进一步改进模型，在SDN中收集网络信息传送到控制器来改进配置生成模型应当也存在类似可能，但要评估这样做的消耗是否值得。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/639/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Demystifying configuration challenges and trade-offs in network-based ISP services
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

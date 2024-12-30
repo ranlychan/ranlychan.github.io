@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>物联网 | HASS+MQTT+树莓派室内监测小型物联网系统 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/02/26/hn5XYmiOMoVwa68.jpg')">
+            </div>
+          
+          <h2 class="post-title">物联网 | HASS+MQTT+树莓派室内监测小型物联网系统</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-06-12</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="实践说明">实践说明</h1>
+<p>本次实践将在阿里云服务器上部署Home Assistant服务和MQTT服务，并在树莓派4B上通过GPIO口连接温湿度、火焰和烟雾传感器。最终编写Python程序将树莓派通过MQTT连接到Home Assistant，实现远程监控室内环境条件的效果。</p>
+<!--more-->
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/02/26/hn5XYmiOMoVwa68.jpg" alt="效果图" loading="lazy"></figure>
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="物料清单">物料清单</h1>
+<p>表1 实践过程所用主要物料及说明</p>
+<table>
+<thead>
+<tr>
+<th><strong>配件名称</strong></th>
+<th><strong>数量</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raspberry Pi 4B</td>
+<td>1</td>
+<td>物联网终端设备主机</td>
+</tr>
+<tr>
+<td>闪迪Micro SD 16GB</td>
+<td>1</td>
+<td>为树莓派烧录系统</td>
+</tr>
+<tr>
+<td>树莓派专用电源适配器及电源线</td>
+<td>1</td>
+<td>为树莓派供电</td>
+</tr>
+<tr>
+<td>MQ-2烟雾传感器</td>
+<td>1</td>
+<td>检测燃烧产生烟雾及有害气体</td>
+</tr>
+<tr>
+<td>火焰传感器</td>
+<td>1</td>
+<td>检测一定线性范围的火焰</td>
+</tr>
+<tr>
+<td>DHT11温湿度传感器</td>
+<td>1</td>
+<td>检测室内温度和相对湿度</td>
+</tr>
+<tr>
+<td>杜邦线</td>
+<td>9</td>
+<td>连接传感器和树莓派电脑</td>
+</tr>
+<tr>
+<td>阿里云服务器2G内存50G磁盘</td>
+<td>1</td>
+<td>部署HASS和MQTT服务</td>
+</tr>
+</tbody>
+</table>
+<h1 id="部署过程">部署过程</h1>
+<p>本次实践将在我的另外一篇文章<a href="https://ranlychan.top/archives/254.html">“基于树莓派4B的室内环境监测和预警系统”</a>中的物联网设备的基础上，进行进一步扩展修改，设计和部署一个较为完善的小型智能物联网系统，包含服务器、消息中间件、自制IoT设备和用户客户端（Web管理后台）。（具体GPIO接线和传感器介绍这些看另外那篇博文）<br>
+实践将主要分为以下两大步：</p>
+<ol>
+<li>部署Home Assistant和MQTT服务器；</li>
+<li>将原有监测设备进行修改并通过MQTT接入Home Assistant。</li>
+</ol>
+<p>其中第一步需要将Home Assistant和组件EMQX安装至系统中，且由于docker技术的便捷易用，上述的框架和组件均在基于docker技术下的linux系统下安装配置。此处不再赘述，按照网上其它流程走即可。下面主要提一下Home Assistant的安装参数。</p>
+<h2 id="home-assistant部署">Home Assistant部署</h2>
+<p>表2 系统状态参数表</p>
+<table>
+<thead>
+<tr>
+<th><strong>系统状态参数</strong></th>
+<th><strong>值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版本</td>
+<td>core-2021.12.8</td>
+</tr>
+<tr>
+<td>安装类型</td>
+<td>Home Assistant Container</td>
+</tr>
+<tr>
+<td>开发版</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Supervisor</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>true</td>
+</tr>
+<tr>
+<td>用户</td>
+<td>root</td>
+</tr>
+<tr>
+<td>虚拟环境</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Python 版本</td>
+<td>3.9.7</td>
+</tr>
+<tr>
+<td>操作系统系列</td>
+<td>Linux</td>
+</tr>
+<tr>
+<td>操作系统版本</td>
+<td>4.18.0-305.19.1.el8_4.x86_64</td>
+</tr>
+<tr>
+<td>CPU 架构</td>
+<td>x86_64</td>
+</tr>
+<tr>
+<td>时区</td>
+<td>Asia/Shanghai</td>
+</tr>
+</tbody>
+</table>
+<h2 id="emqx部署">EMQX部署</h2>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2023/02/26/Ht6mB4ayicWd2xO.png" alt="EMQX部署完成后的端口设置" loading="lazy"></figure>
+<h2 id="树莓派iot接入mqtt服务器">树莓派IoT接入MQTT服务器</h2>
+<p>将物联网设备（基于树莓派GPIO的传感设备）接入到Home Assistant前，需要先通过MQTT客户端将设备连接到MQTT服务器。<br>
+首先介绍一下物联网设备通过消息中间件与HASS通信的过程。将物联网设备（基于树莓派GPIO的传感设备）称为ClientA，将Home Assistant称为ClientB，EMQX服务器为Broker。则一条传感器信息通过MQTT的订阅机制传送的过程如下：</p>
+<ol>
+<li>ClientA 连接到 Broker；</li>
+<li>ClientB 连接到 Broker，并订阅主题 Topic1；</li>
+<li>ClientA 发送给 Broker 一条消息，主题为 Topic1；</li>
+<li>Broker 收到 ClientA 的消息，发现 ClientB 订阅了 Topic1，然后将消息转发到 ClientB；</li>
+<li>ClientB 从 Broker 接收到该消息。</li>
+</ol>
+<p>Eclipse Paho Python (opens new window)为 Eclipse Paho 项目下的 Python 语言版客户端库，该库能够连接到 MQTT Broker 以发布消息，订阅主题并接收已发布的消息。我们将通过Paho把树莓派连接到MQTT服务器。</p>
+<blockquote>
+<p>[1]<a href="https://www.emqx.io/docs/zh/v4.4/development/python.html">MQTT Python 客户端库 | EMQX 文档</a></p>
+</blockquote>
+<p>先在树莓派使用 PyPi 包管理工具安装：</p>
+<pre><code class="language-bash">pip3 install paho-mqtt
+</code></pre>
+<p>接着在树莓派使用Python编写主控程序，读取传感器数据并按照一定采样时间间隔通过MQTT Broker发送传感器数据。主控程序代码如下（一些依赖已经提前安装）：</p>
+<pre><code class="language-python"># Python 3.7.3 (/usr/bin/python3)
+# main_for_raspberry.py
+import time
+import sys
+import Adafruit_DHT
+import RPi.GPIO as GPIO 
+import time
+import logging
+from datetime import datetime
+import json
+import paho.mqtt.client as mqtt
+
+logging.basicConfig(level=logging.DEBUG)
+
+# MQTT服务器配置
+MQTT_SERVER_IP = 'xxx.xxx.xxx.xxx' # 你的服务器地址
+MQTT_SERVER_PORT = 1883
+MQTT_SERVER_KEEPALIVE = 60
+
+# 传感器引脚配置
+DHT11_chanel = 23 #BCM,GPIO.4
+MQ2_chanel = 17 #BCM,GPIO.0
+fire_sensor_chanel = 24 #BCM,GPIO.5
+
+# init GPIO
+GPIO.setmode(GPIO.BCM) 
+GPIO.setup(MQ2_chanel,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(fire_sensor_chanel,GPIO.IN)
+
+# 连接成功回调
+def on_connect(client, userdata, flags, rc):
+    print('Connected with result code '+str(rc))
+
+# 消息接收回调
+def on_message(client, userdata, msg):
+    print(msg.topic+&quot; &quot;+str(msg.payload))
+
+def main():
+    client = mqtt.Client()
+
+    # 指定回调函数
+    client.on_connect = on_connect
+    client.on_message = on_message
+    
+    # 建立连接
+    client.connect(MQTT_SERVER_IP, MQTT_SERVER_PORT, MQTT_SERVER_KEEPALIVE)
+
+    while(True):
+        # 获取并打包传感器信息为JSON格式
+        recDate = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        hum,temp = getHumiAndTemp()
+        fireState = isFireOK()
+        smokeState = isMQ2OK()
+        data_obj = json.dumps({'Temperature':temp,
+        'Humidity':hum,
+        'Fire':fireState,
+        'Smoke':smokeState,
+        'Date':recDate})
+    print(data_obj)
+    # 发布消息
+    client.publish('homeassistant/tp_rasp',payload=str(data_obj),qos=0)
+    time.sleep(5)
+
+    client.loop_forever()
+
+# 获取DHT11传感器的温湿度数据
+def getHumiAndTemp():
+    return Adafruit_DHT.read_retry(11,DHT11_chanel)
+
+# 二值型传感器被触发则返回&quot;on&quot;
+# 获取MQ-2烟雾传感器的状态
+def isMQ2OK():
+    if(bool(GPIO.input(MQ2_chanel))):
+        return &quot;off&quot;
+    else:
+        return &quot;on&quot; 
+
+# 获取火焰传感器的状态
+def isFireOK():
+    if GPIO.input(fire_sensor_chanel) == GPIO.HIGH:
+        return &quot;off&quot;
+    else:
+        return &quot;on&quot;
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>如果提示找不到依赖，则需要分别安装依赖：</p>
+<pre><code class="language-bash"># 安装树莓派GPIO驱动
+pip3 install PRi.GPIO
+
+# 安装DHT11传感器依赖
+pip3 install Adafruit_Python_DHT
+
+# 其它自行安装
+</code></pre>
+<p>确保树莓派主机可以访问互联网的情况下，启动主控程序。<br>
+接着就需要在部署Home Assistant的服务器上，打开配置文件configuration.yaml，本次实践部署中，这个文件在/home/hass/config下，使用nano命令打开（也可用vim）：</p>
+<pre><code class="language-bash">nano /home/hass/config/configuration.yaml
+</code></pre>
+<p>将其修改为（mqtt项下username和password已去除，实际需要填入）：</p>
+<pre><code class="language-bash"># Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+  automation: !include automations.yaml
+  script: !include scripts.yaml
+  scene: !include scenes.yaml
+
+# MQTT
+mqtt:
+  broker: localhost #MQTT服务器地址
+  port: 1883 #MQTT服务器端口
+  username: #MQTT服务器用户名
+  password: #MQTT服务器密码
+  discovery: true
+  discovery_prefix: homeassistant
+
+# 温湿度传感器的温度值
+sensor 1:
+  platform: mqtt
+  name: &quot;temperature&quot;
+  state_topic: &quot;homeassistant/tp_rasp&quot;
+  unit_of_measurement: &quot;℃&quot;
+  value_template: '{{ value_json.Temperature }}'
+  device_class: temperature
+
+# 温湿度传感器的湿度值
+sensor 2:
+  platform: mqtt
+  name: &quot;humidity&quot;
+  state_topic: &quot;homeassistant/tp_rasp&quot;
+  unit_of_measurement: &quot;%&quot;
+  value_template: '{{ value_json.Humidity }}'
+  device_class: humidity
+
+# 火焰传感器
+binary_sensor 1:
+  platform: mqtt
+  name: &quot;fire&quot;
+  state_topic: &quot;homeassistant/tp_rasp&quot;
+  value_template: '{{ value_json.Fire }}'
+  device_class: problem
+
+# 烟雾传感器
+binary_sensor 2:
+  platform: mqtt
+  name: &quot;smoke&quot;
+  state_topic: &quot;homeassistant/tp_rasp&quot;
+  value_template: '{{ value_json.Smoke }}'
+  device_class: smoke
+</code></pre>
+<p>Ctrl+O保存，Ctrl+X退出。再用浏览器打开Home Assistant的Web管理页面，在概览页右上角三个点内点击编辑仪表盘选项，添加卡片可以找到配置的传感器。按照规则添加完成以后，部署就完成了。<br>
+<img src="https://s2.loli.net/2023/02/26/tZD1RYxzQ9hkGAI.png" alt="编辑仪表盘选项添加卡片" loading="lazy"><br>
+完成后还可以前往Home Assistant的Github仓库下载安卓端APP，简单连接到部署在服务器的服务程序后，就可以通过手机监控传感器数据了，同时也会将手机的一些传感器信息上传到Home Assistant。最终在Web管理后台的效果如下图：<br>
+<img src="https://s2.loli.net/2023/02/26/a9tdD6yeBHOmWXr.png" alt="Web管理后台" loading="lazy"></p>
+<p>在Home Assistant的安卓移动App上显示效果如下：<br>
+<img src="https://s2.loli.net/2023/02/26/SpIViDyv69KTXqH.png" alt="安卓移动App" loading="lazy"><br>
+在安卓手机桌面上使用上使用Home Assistant的桌面小部件：<br>
+<img src="https://s2.loli.net/2023/02/26/AHgVl2RtwxDdUmk.png" alt="桌面小部件" loading="lazy"><br>
+树莓派与传感器组成的IoT设备在运行时如下图所示：<br>
+<img src="https://s2.loli.net/2023/02/26/iBlnSuUfk2EZeLw.png" alt="树莓派与传感器组成的IoT设备" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/482/">
+              <h3 class="post-title">
+                下一篇：算法 | byte值的按位不定长存储算法 [C/C++] 
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

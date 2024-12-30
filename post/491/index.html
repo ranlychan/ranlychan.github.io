@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | 初探Kotlin协程 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | 初探Kotlin协程</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-08-26</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/iKfpkD2sIJ1P/">
+                    算法
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="如何理解协程">如何理解协程</h1>
+<p>协程是一种不同于<code>进程</code>和<code>线程</code>的存在，其本质是一种函数，同一线程中的多个协程是串行执行的，但为了理解仍然需要三者一起对比。</p>
+<p>进程、线程、协程三者的上下文切换对比：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>进程</th>
+<th>线程</th>
+<th>协程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切换者</td>
+<td>操作系统</td>
+<td>操作系统</td>
+<td>用户（编程者/应用程序）</td>
+</tr>
+<tr>
+<td>切换时机</td>
+<td>根据操作系统自己的切换策略，用户不感知</td>
+<td>根据操作系统自己的切换策略，用户不感知</td>
+<td>用户自己（的程序）决定</td>
+</tr>
+<tr>
+<td>切换内容</td>
+<td>页全局目录&amp;内核栈&amp;硬件上下文</td>
+<td>内核栈&amp;硬件上下文</td>
+<td>硬件上下文</td>
+</tr>
+<tr>
+<td>切换内容的保存</td>
+<td>保存于内核栈中</td>
+<td>保存于内核栈中</td>
+<td>保存于用户自己的变量（用户栈或者堆）</td>
+</tr>
+<tr>
+<td>切换过程</td>
+<td>用户态 - 内核态 - 用户态</td>
+<td>用户态 - 内核态 - 用户态</td>
+<td>用户态（没有陷入内核态）</td>
+</tr>
+<tr>
+<td>切换效率</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<!--more-->
+<p>从以上协程的特性中，可以知道协程的应用场景是<code>I/O密集型任务</code>，而非<code>计算密集型任务</code>。</p>
+<p>[info] 我认为关于协程的全部，最佳参考为Google官方编写的文章：<br>
+<a href="https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&amp;mid=2652052998&amp;idx=2&amp;sn=18715a7e33b7f7a5878bd301e9f8f935&amp;scene=21">谷歌开发者：在 Android 开发中使用协程 | 背景介绍</a><br>
+[/info]</p>
+<h1 id="在安卓开发中使用协程">在安卓开发中使用协程</h1>
+<p><code>Kotlin 1.3</code>版本中开始引入了一种全新处理并发的方式：协程，可以在 Android 平台上使用它来简化异步执行的代码，主要用来解决两个问题:</p>
+<ol>
+<li>处理耗时任务 (Long running tasks)，这种任务常常会阻塞住主线程；</li>
+<li>保证主线程安全 (Main-safety) ，即确保安全地从主线程调用任何 suspend 函数。</li>
+</ol>
+<p>在 Kotlin 中，所有协程都必须在调度器中运行，即使它们是在主线程上运行也是如此。<code>suspend</code>并不代表后台执行，在哪里执行由调度器决定。协程可以自行暂停，而调度器负责将其恢复。Kotlin提供了以下三种调度器并罗列了其使用场景：</p>
+<table>
+<thead>
+<tr>
+<th>调度器名称</th>
+<th>运行线程</th>
+<th>使用场景</th>
+<th>适用案例1</th>
+<th>适用案例2</th>
+<th>适用案例3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dispatchers.Main</td>
+<td>Android上的主线程</td>
+<td>用来处理UI交互和一些轻量级任务</td>
+<td>调用suspend函数</td>
+<td>调用UI函数</td>
+<td>更新LiveData</td>
+</tr>
+<tr>
+<td>Dispatchers.IO</td>
+<td>非主线程</td>
+<td>专为磁盘和网络IO进行了优化</td>
+<td>数据库</td>
+<td>文件读写</td>
+<td>网络处理</td>
+</tr>
+<tr>
+<td>Dispatchers.Default</td>
+<td>非主线程</td>
+<td>专为CPU密集型任务进行了优化</td>
+<td>数组排序</td>
+<td>JSON数据解析</td>
+<td>处理差异判断</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个使用调度器的例子。在 get 方法的主体内，调用 withContext(Dispatchers.IO) 来创建一个在 IO 线程池中运行的块。放在该块内的任何代码都始终通过 IO 调度器执行。由于 withContext本身就是一个suspend函数，它会使用协程来保证主线程安全。</p>
+<pre><code class="language-Kotlin">// Dispatchers.Main
+suspend fun fetchDocs() {    
+    // Dispatchers.Main    
+    val result = get(&quot;developer.android.google.cn&quot;)    
+    // Dispatchers.Main    
+    show(result)
+}
+// Dispatchers.Main
+suspend fun get(url: String) = withContext(Dispatchers.IO) {        
+     // Dispatchers.IO    
+}    
+// Dispatchers.Main
+</code></pre>
+<p>为了更好地管理和使用协程，一般要指定协程上下文（CoroutineContext）和协程作用域（CoroutineScope）。<br>
+<code>CoroutineScope</code> 会跟踪它使用 <code>launch</code> 或 <code>async</code> 创建的所有协程。您可以随时调用 <code>scope.cancel()</code> 以取消正在进行的工作（即正在运行的协程）。在 Android 中，某些 KTX 库为某些生命周期类提供自己的 <code>CoroutineScope</code>。例如，<code>ViewModel</code> 有 <code>viewModelScope</code>，<code>Lifecycle</code> 有 <code>lifecycleScope</code>。不过，与调度程序不同，<code>CoroutineScope</code> 不运行协程。</p>
+<pre><code class="language-Kotlin">class ExampleClass {
+
+    //异常处理
+    private val handler = CoroutineExceptionHandler { _, exception -&gt;
+        println(&quot;------------BaseViewModel异常捕获--------------&quot;)
+        exception.printStackTrace()
+    }
+    protected val parentJob = SupervisorJob() + handler
+    
+    //协程上下文
+    protected open val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.IO
+    //协程作用域
+    protected val scope = CoroutineScope(coroutineContext)
+    
+    fun exampleMethod() {
+        // Starts a new coroutine within the scope
+        scope.launch {
+            // New coroutine that can call suspend functions
+            fetchDocs()
+        }
+    }
+
+    fun cleanUp() {
+        // Cancel the scope to cancel ongoing coroutines work
+        scope.cancel()
+    }
+}
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/489/">
+              <h3 class="post-title">
+                下一篇：物联网 | HASS+MQTT+树莓派室内监测小型物联网系统
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

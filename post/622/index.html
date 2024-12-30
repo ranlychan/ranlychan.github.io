@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | A Brief Introduction to Edge Computing and Deep Learning | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | A Brief Introduction to Edge Computing and Deep Learning</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-01</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] B. Christophe, “A Brief Introduction to Edge Computing and Deep Learning,” Nov. 28, 2020. https://medium.com/swlh/a-brief-introduction-to-edge-computing-and-deep-learning-5af8c50e2f5c (accessed Jul. 16, 2023). [/info]</p>
+<p>这篇博文由浅入深，从边缘计算和深度学习的重要性开始论述，接着介绍了边缘计算的两个主要范式，并以COSMOS智能路口例子引出了边缘深度学习的五项基本技术，最后罗列了边缘深度学习目前存在的问题和挑战。</p>
+<!--more-->
+<h1 id="11-两个范式">1.1 两个范式</h1>
+<p>范式指的是一个领域里被人们广泛接受的思想体系、理论体系或方法论。而边缘计算的两个范式就是两种实现边缘计算的理论方法体系，两者常结合使用。</p>
+<ul>
+<li>边缘智能：将计算负载分散到具有一定算力的终端设备</li>
+<li>智能边缘：在网络边缘增加新的基础设施提供存储与算力</li>
+</ul>
+<h1 id="12-五项基本技术">1.2 五项基本技术</h1>
+<ul>
+<li>应用框架：系统组织运行并提供服务的框架，例如智能交通检测应用。可以完整的大模型放云端、小模型放边缘、大模型拆开放云和边。</li>
+<li>学习推理：深度学习在边缘计算架构中的实际部署和推理。适当在边缘处理可以减少云端推理压力，例如完全在边缘层查找RoI和进行对象识别。</li>
+<li>计算支持：在网络架构、硬件（CPU, GPU, FPGA, ASIC)和软件方面调整边缘计算平台以支 持深度学习计算。</li>
+<li>边缘训练：在资源和隐私限制下，为分布式边缘设备的边缘智能训练 DL 模型。主要是分布式训练，如分布式随机梯度下降和联邦学习。</li>
+<li>维护管理: 深度学习在维护和管理边缘计算网络（系统）不同功 能中的应用，例如边缘缓存、计算卸载。</li>
+</ul>
+<h1 id="13-个人思考">1.3 个人思考</h1>
+<ul>
+<li>边缘计算的必要性：边缘计算具有缓解云端深度学习存在的传输、隐私、鲁棒性等方面的问题的作用，并非网络性能提升就可以被替代的。就算网络条件理想，达到了高带宽低时延的要求，其依然可以作为补充，使得终端不依赖云，从而使系统有一定的弹性。此外边缘计算可以减少与云的数据数据传输，可以节省成本。</li>
+<li>边缘计算与大语言模型训练：对于需要大量算力、语料，同时需要注重数据隐私的大语言模型预训练，也许可以利用云边协同计算帮助进行。边缘计算可以很好地利用边缘算力以及终端用户语料，同时数据隐私保护更是其应有之意。但建立起这样一个云边协同的大语言模型预训练系统存在诸多挑战，其必要性有待验证。</li>
+<li>边缘深度学习的实现：文章对于边缘深度学习的介绍，尤其是对于模型训练和部署方面，将计算负载在云、边和端间进行均衡，并将大DL模型拆分部署这块内容，验证了我的猜想，加深了我对边缘深度学习的理解。</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/08/01/7lZMOGjx1QE5aAK.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/620/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Chameleon: scalable adaptation of video analytics
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

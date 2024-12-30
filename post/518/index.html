@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | SwitchHosts自动刷新DNS缓存和重启nscd服务[Ubuntu] | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | SwitchHosts自动刷新DNS缓存和重启nscd服务[Ubuntu]</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-10-19</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/4_RwRpLS61ca/">
+                    Windows
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="介绍">介绍</h1>
+<p>众所周知，Github在国内由于DNS污染而常常无法访问。故而诞生了种种解决手段。其中修改本地hosts文件直接进行本地DNS解析是其中一个合法且免费的手段。</p>
+<p>本文将介绍在Ubuntu 20.04 LTS上，使用SwitchHosts软件每次自动更新hosts文件后，自动刷新DNS缓存并重启nscd服务，使得hosts文件立即生效。<br>
+<img src="https://s2.loli.net/2023/02/26/INpzRLaJfXQgjm2.png" alt="SwitchHosts界面在Ubuntu系统" loading="lazy"></p>
+<!--more-->
+<h1 id="正文">正文</h1>
+<h2 id="前提">前提</h2>
+<p>首先本文默认你已经：</p>
+<ol>
+<li>已经安装了指定版本或更新的SwitchHosts v4.1.2 (6086) for Linux</li>
+<li>安装了nscd服务（使用<code>sudo apt-get install nscd</code>安装即可）</li>
+<li>SwitchHosts上已经有稳定的可自动更新的Github的DNS解析记录（例如<code>Github520</code>、<code>ineo6/hosts</code>等提供的hosts源）</li>
+</ol>
+<h2 id="步骤">步骤</h2>
+<p>很简单，只需在SwitchHosts的<code>设置</code>-&gt;<code>偏好(Preferences)</code>-&gt;<code>命令行(Commends)</code>中，写入刷新DNS缓存的命令即可。</p>
+<p>下面是我自己使用的命令：</p>
+<pre><code class="language-bash">echo &quot;hosts file updated&quot;
+sudo -S /etc/init.d/nscd restart &lt;&lt; EOF 
+[su密码]
+EOF
+echo &quot;nscd restarted&quot;
+sudo systemd-resolve --flush-caches 
+echo &quot;dns caches flushed&quot;
+</code></pre>
+<p>请将里面的<code>[su密码]</code>自行替换为自己的管理员密码，不需要添加<code>[</code>和<code>&quot;</code>等。</p>
+<p>如果效果不好，可以试试更换其他刷新DNS的方法，或者试试nscd专门刷新hosts缓存的命令<code>sudo nscd -i hosts</code>，直接添加到上述命令的后面即可（当然也可以替换你觉得没用的命令）。</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/02/26/X1NtzARjeBiFkbK.png" alt="添加命令行" loading="lazy"></figure>
+<p>添加并保存后，尝试开关一次某个hosts源，再回来设置界面，点击<code>查看历史记录（Show History）</code>查看命令行的历史执行情况，看看有没有报错。正常执行则应该如下图：</p>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2023/02/26/NcHyqOiKxjLI6QT.png" alt="正常执行显示的执行日志" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/481/">
+              <h3 class="post-title">
+                下一篇：计网 | 腾讯视频点播流量抓包分析与可视化Wireshark
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Unraveling the Complexity of Network Management | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Unraveling the Complexity of Network Management</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-11</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/iPvRnsINsNg/">
+                    论文笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] T. Benson, A. Akella, and D. Maltz, “Unraveling the Complexity of Network Management,” in Proceedings of the 6th USENIX Symposium on Networked Systems Design and Implementation, in NSDI’09. USA: USENIX Association, 2009, pp. 335–348. doi: 10.5555/1558977.1559000. [/info]</p>
+<h1 id="11-背景">1.1 背景</h1>
+<ul>
+<li>企业网络配置非常复杂，不同网络之间配置差异很大。</li>
+<li>企业网络中，配置错误是造成网络故障的一个重要原因。</li>
+</ul>
+<!--more-->
+<h1 id="12-存在问题">1.2 存在问题</h1>
+<ul>
+<li>企业网络中，网络配置越是复杂则越容易故障且难以升级和管理。</li>
+<li>没有一种系统的方法来量化企业配置的复杂程度，以及复杂性对关键管理任务的影响程度。</li>
+</ul>
+<h1 id="13-现有方法缺点">1.3 现有方法缺点</h1>
+<ul>
+<li>使用配置文件行数等简单指标不能准确反映配置复杂性。</li>
+<li>无法实现自动计算配置复杂性。</li>
+</ul>
+<h1 id="14-文章主要贡献">1.4 文章主要贡献</h1>
+<ul>
+<li>提出了3类可从配置文件自动计算的衡量配置复杂性的指标:
+<ul>
+<li>引用复杂性指标：反映配置引用链的复杂程度。文章使用引用依赖图分析路由器平均引用链长度、路由策略原子单元数量及配置每个单元所需引用数量。</li>
+<li>路由器角色复杂性指标：反映网络中定义的角色类型与数目构成的复杂性。文章通过配置相似性（主要是检测是否使用相同模板）对配置进行区分并识别出不同角色。</li>
+<li>固有复杂性指标：反映网络的可达性策略和访问控制策略的复杂程度。文章通过扩展可达性集概念实现对策略复杂性的自动计算提取。</li>
+</ul>
+</li>
+<li>通过对多家企业和大学的网络操作员与设计师进行访谈验证了这些指标可以有效反映配置复杂性。</li>
+<li>除了衡量配置复杂性，本文工作还可以用于理解网络结构、发现配置错误以及指导和自动化网络设计等。</li>
+</ul>
+<h1 id="15-个人思考">1.5 个人思考</h1>
+<ul>
+<li>这篇论文属于前导性的工作，量化了导致配置错误问题产生的一大根源：配置复杂性。对于配置复杂性的深入理解可以帮助自动化配置研究的推进，具体可以用于作为一方面的指标，衡量自动化配置时所生成的配置的静态复杂性。当然，这样的论文也启发了我，对于一个较为细分问题任务进行研究时，可以先从搞清楚问题本身开始入手，而不一定一上来就要马上解决问题。</li>
+<li>文章的调研中指出，当时用于辅助进行配置的工具并不成熟，配置模板被广泛使用。这也是文章对于路由器角色定义的一个重要依据，但我认为这是一个很好的改进点，因为模板复用情况并不完全反映路由器角色。后续也许可以使用聚类算法等机器学习方法对路由器角色进行挖掘。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/633/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Random sketch learning for deep neural networks in edge computing
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

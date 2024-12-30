@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Verifying and Monitoring IoTs Network Behavior Using MUD Profiles | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Verifying and Monitoring IoTs Network Behavior Using MUD Profiles</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-24</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info]  A. Hamza, D. Ranathunga, H. H. Gharakheili, T. A. Benson, M. Roughan, and V. Sivaraman, “Verifying and Monitoring IoTs Network Behavior Using MUD Profiles,” IEEE Trans. Dependable and Secure Comput., vol. 19, no. 1, pp. 1–18, Jan. 2022, doi: 10.1109/TDSC.2020.2997898. [/info]</p>
+<!--more-->
+<h2 id="11-背景">1.1 背景</h2>
+<p>IoT设备的网络安全问题日益凸显，为减小这种风险，IETF推进促使IoT设备厂商出具设备的网络行为具体描述文件，也就是MUD profile。</p>
+<p>MUD profile对于可能与设备通信的端点或子网进行列举，同时可明确通信方向，并区分了本地网络与Internet。其以JSON格式书写。</p>
+<p>然而目前尚未有明确的方法来使厂家为IoT设备开发网络行为描述文件，亦未有为组织机构设计的利用网络行为描述文件进行分析和监控IoT设备网络行为的方法。</p>
+<h2 id="12-方法">1.2 方法</h2>
+<ul>
+<li>提出并开源了MUDgee，一种利用vSwitch自动捕获和跟踪IoT设备的TCP/UDP流并根据规则自动从流中提取生成MUD profile的工具。
+<ul>
+<li>其核心是从捕获的TCP/UDP流提取生成描述文件的过程，文章考虑如下
+<ul>
+<li>IP反查域名并关联</li>
+<li>允许Internet的所有UDP进行双向通信</li>
+<li>当设备同一端口超过5个不同IP与之通信，自动允许所有IP在该端口的双向通信</li>
+<li>将网关当作本地通信映射控制器并赋予特定namespace</li>
+<li>允许用户手动设置域名通配以批量进行访问控制</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>提出了MUDdy，一种检验MUD profile语法与语义正确性的工具
+<ul>
+<li>遵循YANG模型和IETF建议检查profile的语法正确性</li>
+<li>使用元图表示设备的网络资源访问情况并使用元图代数进行分析profile前后一致性</li>
+<li>参考SCADA最佳实践检查profile的适用性</li>
+</ul>
+</li>
+<li>提出了运行时分析IoT设备网络行为及MUD分类的方法
+<ul>
+<li>先截取目标设备网络活动并生成MUD profile</li>
+<li>再对生成的profile与数据库已有的计算静态相似度和动态相似度</li>
+<li>根据各类预设场景对两个相似度设定阈值以进行识别</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-实验">1.3 实验</h2>
+<p>目的：验证MUDgee自动生成IoT设备的MUD配置文件的能力，并验证MUDdy的检测分析能力。<br>
+内容：<br>
+(1) 使用自主开发工具MUDgee，根据I测试环境IoT设备的网络流量包自动生成MUD配置文件。<br>
+(2) 使用MUDdy解析配置文件，检测冗余规则。<br>
+(3) 检查配置文件是否符合安全最佳实践。<br>
+结果：实验验证了自动生成和分析MUD配置文件的可行性，并检测到了一些存在问题的规则，为改进MUD提供了参考。<br>
+不足：生成的配置仅基于有限流量包，且设备被入侵时生成的配置可能不正确。</p>
+<h2 id="14-个人思考">1.4 个人思考</h2>
+<ul>
+<li>本文涉及一种用于IoT设备网络安全的proffile，与交换机与路由器的配置文件不同，但同样具备使用语言模型进行生成的可能，即输入网络环境信息和抓取到的IoT设备的网络流并输出JSON格式的MUD profile.</li>
+<li>文章中对于生成的MUD profile进行了语法和语义正确性的检查，其检查方法值得借鉴。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/640/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Efficient and Safe Network Updates with Suffix Causal Consistency
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | Python环境下的GUI编程常用包 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | Python环境下的GUI编程常用包</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-07-19</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/r_sTFUvatgw/">
+                    SDN
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/tLna1FCbHDe/">
+                    Middlebox
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="前言">前言</h2>
+<p>Python的使用频率和范围越来越大，在一些开发工作中由于需要可视化的图形界面，常常需要进行图形用户界面（Graphic User Interface, GUI）开发。例如，目前最火热的大模型应用，常常是以一个网页界面进行操作和展示，从而免去了控制台或接口操作的复杂性。因此本文总结记录了我接触了解过的GUI开发相关工具和依赖库。</p>
+<p>本文将Python开发中的GUI分为了原生GUI和Web GUI两大类，前者指的是以Windows或Android系统程序窗口的形式展示的界面，其界面风格受具体系统影响；后者是基于Web技术展示的网页界面，具有跨平台一致性的好处。此外为了原生GUI能够方便地移植到其他用户的系统进行使用，本文还简单介绍了可执行程序打包工具。</p>
+<!--more-->
+<h2 id="目录">目录</h2>
+<!--index-menu-->
+<h2 id="原生gui">原生GUI</h2>
+<h3 id="tkinter">Tkinter</h3>
+<p>Python中自带的免费开源GUI框架，无需额外安装即可使用。上手容易，使用简单，教程文档众多。具备可视化界面设计器 <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。有较多的主题和美化资源。</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2024/07/19/eqLThAOQDU6zvp4.png" alt="" loading="lazy"></figure>
+<h3 id="wxpython">wxPython <sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></h3>
+<p>免费开源GUI框架，需额外安装使用。具备可视化界面设计器<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> <sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>。上手难度适中。</p>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2024/07/19/P5ylB76COK3eMgF.png" alt="" loading="lazy"></figure>
+<p><img src="https://s2.loli.net/2024/07/19/Sa4GyekBpPJZD12.png" alt="" loading="lazy"><br>
+<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></p>
+<h3 id="pyqt">PyQT<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup></h3>
+<p>个人与商业双重许可的跨平台GUI框架，需额外安装使用。具备官方可视化界面设计器<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>。上手难度较高，功能也相对强大。</p>
+<figure data-type="image" tabindex="3"><img src="https://s2.loli.net/2024/07/19/lLUCoXkIh6gBu31.png" alt="" loading="lazy"></figure>
+<h3 id="pysimplegui">PySimpleGUI <sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup></h3>
+<figure data-type="image" tabindex="4"><img src="https://s2.loli.net/2024/07/19/qwbrtAJk293oneN.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://s2.loli.net/2024/07/19/iBLGQzlmvtDXUVC.png" alt="" loading="lazy"></figure>
+<h3 id="kivy">Kivy <sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup></h3>
+<p>支持Windows, Linux, MacOS, Android和iOS的跨平台免费开源GUI框架，需额外安装使用。</p>
+<figure data-type="image" tabindex="6"><img src="https://s2.loli.net/2024/07/19/GS3RmDvZraYg75i.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://s2.loli.net/2024/07/19/axXwqUzAID5gSVy.png" alt="" loading="lazy"></figure>
+<h2 id="web-ui">Web UI</h2>
+<h3 id="streamlit">Streamlit <sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup></h3>
+<p>非常热门的Python Web UI框架，有非常多组件，具备对Dataframe的可视化支持，针对机器学习应用做了很多优化，社区活跃，界面简约美观，支持云部署。</p>
+<figure data-type="image" tabindex="8"><img src="https://s2.loli.net/2024/07/19/JV8erNBAYtH13Ko.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://s2.loli.net/2024/07/19/YwmJORrAxEVdZTL.png" alt="" loading="lazy"></figure>
+<h3 id="gradio">Gradio <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup></h3>
+<p>与Streamlit相似的非Python Web UI框架，同样非常适合机器学习应用。界面是简约的Hugging Face Style。</p>
+<figure data-type="image" tabindex="10"><img src="https://s2.loli.net/2024/07/19/eDSctNoY8wA3JmR.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://s2.loli.net/2024/07/19/8kar6xDQUbKzcJt.png" alt="" loading="lazy"></figure>
+<h3 id="nicegui">NiceGUI <sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup></h3>
+<p>相对Streamlit等更简单容易上手，界面非常简约。</p>
+<figure data-type="image" tabindex="12"><img src="https://s2.loli.net/2024/07/19/yEOhxf1McTj2DqB.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://s2.loli.net/2024/07/19/gc8nhEGF4wTr6uR.png" alt="" loading="lazy"></figure>
+<h2 id="可执行程序打包">可执行程序打包</h2>
+<h3 id="pyinstaller">Pyinstaller <sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup></h3>
+<p>免费开源的支持Windows, Linux和MacOS系统的应用程序打包工具，操作简单，应用广泛。</p>
+<h3 id="nuitka">Nuitka <sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup></h3>
+<p>个人免费商用付费的跨平台应用程序打包工具，应用程序编译为C文件，代码效率与安全性有提升。</p>
+<h2 id="reference">Reference</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>https://github.com/ParthJadhav/Tkinter-Designer <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>https://wxpython.org/index.html <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>https://github.com/wxFormBuilder/wxFormBuilder <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>https://wxglade.sourceforge.net/ <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>https://www.yiibai.com/wxpython/wx_gridbagsizer.html <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>https://doc.qt.io/ <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>https://doc.qt.io/qtdesignstudio/studio-getting-started.html <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>https://www.pysimplegui.com/ <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>https://kivy.org/ <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>https://streamlit.io/ <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>https://www.gradio.app/ <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>https://nicegui.io/ <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>https://pyinstaller.org/ <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>https://nuitka.net/ <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/683/">
+              <h3 class="post-title">
+                下一篇：Linux | Ubuntu通过USB访问Redmi K40存储出现xxx was not providedby any .service files错误
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

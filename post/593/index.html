@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | Interpreting Deep Learning-Based Networking Systems | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | Interpreting Deep Learning-Based Networking Systems</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-07-05</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] Meng Z , Wang M , Bai J ,et al.Interpreting Deep Learning-Based Networking Systems[C]//SIGCOMM '20: Annual conference of the ACM Special Interest Group on Data Communication on the applications, technologies, architectures, and protocols for computer communication.ACM, 2020.DOI:10.1145/3387514.3405859. [/info]</p>
+<h1 id="11-问题背景">1.1 问题背景</h1>
+<p>深度学习在计算机网络方面的应用取得重要成果，但DNN模型参数庞大，通常被视为黑盒，无法提供对其决策过程和内部运行机制的解释。这使得网络运营者难以理解模型，从而使模型难设计、难debug（牵一发而动全身）、难即席调整，又因性能要求高且决策时延高而难以部署。此外，现有方法在目标、通用性和模型的数据形式上均不适用于为网络运营者提供解释性。</p>
+<!--more-->
+<h1 id="12-解决方法">1.2 解决方法</h1>
+<ul>
+<li>本地系统：本地系统是指在本地收集信息并只为一个实例进行决策的系统，其只为单一实例决策；
+<ul>
+<li>方法：使用特殊的重采样方法让DNN进行Teacher-Student training来训练决策树，并按规则对树进行剪枝，得到可解释的决策树，并可将树用于部署，解决难调整和难部署问题。</li>
+</ul>
+</li>
+<li>全局系统：全局系统是指在整个网络范围聚合信息并为多个实例制定全局性计划的系统。
+<ul>
+<li>方法：使用超图对模型进行表征，再对超图用关键连接搜索最优化算法计算得到各部分重要性。</li>
+</ul>
+</li>
+</ul>
+<h1 id="13-实验">1.3 实验</h1>
+<p>文中的实验主要分为以下几个方面，针对问题背景中的问题，一一进行了实验说明，最后总结了对Metis可解释性进行基准测试的实验结果，表明决策树在性能上优于其他解释方法，并展示了Metis的超参数鲁棒性和低计算开销。下面简单分为几个部分来阐述。</p>
+<h2 id="131-系统解释性">1.3.1 系统解释性</h2>
+<p><strong>实验目的</strong>：证明Metis的对于DL-based网络系统中DNN的解释能力的有效性。<br>
+<strong>实验设置</strong>：设置两组实验，分别针对本地系统和全局系统。其中本地系统选取基于强化学习的自适应比特率系统Pensieve，选取决策树的顶4层绘图观察；对于全局系统，选取RouteNet的一个闭环路由系统并在NSFNet topologys数据集上训练，最后选取前5个掩码值（路径-链路连接的重要性值）高的路径进行展示。<br>
+<strong>实验结果</strong>：能够捕捉现有的模式，还能发现新的知识，证明了Metis的解释能力。<br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/07/05/1688526780.png" alt="" loading="lazy"><br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/07/05/1688526787.png" alt="" loading="lazy"><br>
+<img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/07/05/1688526922.png" alt="" loading="lazy"></p>
+<h2 id="132-指导模型设计">1.3.2 指导模型设计</h2>
+<p><strong>实验目的</strong>：证明Metis具备指导DL-based网络系统中DNN模型设计的能力。<br>
+<strong>实验设置</strong>：根据上一个实验的观察结果，将Pensieve的DNN中rt影响增大（将其直接连到输出层），并重新训练模型，对比更改前后的模型效果。<br>
+<strong>实验结果</strong>：修改后的模型在训练速度和QoE上均优于修改前。</p>
+<h2 id="133-调试能力">1.3.3 调试能力</h2>
+<p><strong>实验目的</strong>：证明Metis具备在DL-based网络系统中调试DNN模型的能力。<br>
+<strong>实验设置</strong>：在一组具有固定带宽的链路上进行Pensieve的模拟，套用[50] 的实验配置，并替换测试视频为1000秒秒的视频。在模拟中尝试进行问题调试。<br>
+<strong>实验结果</strong>：在固定的3000kbps的链路上Pensieve的比特率选择在两极摆动，最优选择仅占其总选择的0.4%，Metis帮助发现了这一问题。经过过采样缺失的比特率并重新训练后，过采样决策树的效果得到了提升，证明Metis还能帮助解决问题。</p>
+<h2 id="134-轻量级部署">1.3.4 轻量级部署</h2>
+<p><strong>实验目的</strong>：评估Metis对Pensieve和AuTO系统的性能和效果的影响，以及其在决策树部署和实现方面的潜力。<br>
+<strong>实验设置</strong>：文章采用了实验和仿真两种方法。对于Pensieve，作者分析了其在选择比特率时的频率分布，并在固定带宽环境下进行了模拟实验。对于AuTO，作者评估了决策树的决策延迟和性能表现，并在SmartNIC上进行了初步的部署实验。作者还进行了资源消耗和页面加载时间的评估。<br>
+<strong>实验结果</strong>：Metis的解释能够保持原始系统的性能，并带来决策延迟的缩短、资源消耗的减少以及在数据平面设备上的实现潜力。</p>
+<h2 id="135-即席调整">1.3.5 即席调整</h2>
+<p><strong>实验目的</strong>：验证在具有类似路径的拓扑结构中，通过使用分流节点和连接掩码值的方法来估计路径性能，帮助网络运营商在重新路由时选择最佳路径，而无需估计端到端路径延迟。<br>
+<strong>实验设置</strong>：使用NSFNet拓扑结构和RouteNet*生成的路由路径作为实验环境。考虑所有比最短路径多1跳的路径作为候选路径，并测量其路径延迟和分流节点处的掩码值。重复实验使用50个流量样本。<br>
+<strong>实验结果</strong>：大多数实验结果的点位于第一和第三象限内，验证了通过掩码值可以估计路径性能的有效性。这为网络运营商在重新路由时提供了一种指标，帮助他们选择合适的路径，而无需准确估计路径延迟。</p>
+<h1 id="14-个人思考">1.4 个人思考</h1>
+<p>于我而言，文章的想法和实现非常精彩，能够让一些深度学习模型得以具备一定解释性，同时还可以实现模型在可接受性能损失的范围内实现轻量部署。此外，作者对于决策树和超图的应用准确抓住了多数DL-based网络系统的特性，使得两大类的系统均可以实现可解释性的目标。这篇文章是我首次阅读的有关深度学习模型可解释性的文章，这让我对其方法和意义有了一定的了解。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/591/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Design Guidelines for Robust Internet Protocols
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

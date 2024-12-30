@@ -1,0 +1,516 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/494/">
+        <h2 class="post-title">笔记 | Vercel部署RSSHub及其文档页面</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="概述">概述</h1>
+<blockquote>
+<p>近日在一边复习一边摸鱼玩RSS，十几年前的老东西竟然该死的有魅力。<s>（再不复习就复不完了啊）</s></p>
+</blockquote>
+<p>话说这RSSHub真是个好东西，可以在Vercel免费构建运行，但是你看人家<code>萌歪 https://moeyy.cn/rsshub/</code>自建的怎么就有和人家RSSHub官方一样的文档呢？所以我将在文章中记录在Vercel上同时部署RSSHub本体及其使用Vuepress实现的docs页面。</p>
+<h1 id="目录">目录</h1>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-10-13</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                Android
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/495/">
+        <h2 class="post-title">笔记 | 4K对齐、低级格式化、MBR引导记录？都是些啥玩意儿</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="一点题外话">一点题外话</h1>
+<p>很久以前喜欢捣鼓电脑啊外设什么的，却也没有搞出什么名堂。经常见到标题里的一些术语，却也只是一知半解。最近在复习操作系统，对以往的瞎捣鼓小有感触和总结。故写下此文。</p>
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="磁盘">磁盘</h1>
+<p>初中的时候开始认识磁盘（硬盘），还是因为在教室用Ghost映像给电脑装系统，磁盘引导记录给整坏了，从家里拆了一块过去顶用(笑死)。</p>
+<p>磁盘是一中基于磁介质的外部存储装置，我们经常叫机械硬盘，就是因为里面是用机械装置驱动、读写的（马达马达马达马哒哒哒）。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-10-04</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">
+                物联网
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/jyg4qik2Q5kn/">
+                树莓派
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/491/">
+        <h2 class="post-title">笔记 | 初探Kotlin协程</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="如何理解协程">如何理解协程</h1>
+<p>协程是一种不同于<code>进程</code>和<code>线程</code>的存在，其本质是一种函数，同一线程中的多个协程是串行执行的，但为了理解仍然需要三者一起对比。</p>
+<p>进程、线程、协程三者的上下文切换对比：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>进程</th>
+<th>线程</th>
+<th>协程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切换者</td>
+<td>操作系统</td>
+<td>操作系统</td>
+<td>用户（编程者/应用程序）</td>
+</tr>
+<tr>
+<td>切换时机</td>
+<td>根据操作系统自己的切换策略，用户不感知</td>
+<td>根据操作系统自己的切换策略，用户不感知</td>
+<td>用户自己（的程序）决定</td>
+</tr>
+<tr>
+<td>切换内容</td>
+<td>页全局目录&amp;内核栈&amp;硬件上下文</td>
+<td>内核栈&amp;硬件上下文</td>
+<td>硬件上下文</td>
+</tr>
+<tr>
+<td>切换内容的保存</td>
+<td>保存于内核栈中</td>
+<td>保存于内核栈中</td>
+<td>保存于用户自己的变量（用户栈或者堆）</td>
+</tr>
+<tr>
+<td>切换过程</td>
+<td>用户态 - 内核态 - 用户态</td>
+<td>用户态 - 内核态 - 用户态</td>
+<td>用户态（没有陷入内核态）</td>
+</tr>
+<tr>
+<td>切换效率</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-08-26</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/iKfpkD2sIJ1P/">
+                算法
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/489/">
+        <h2 class="post-title">物联网 | HASS+MQTT+树莓派室内监测小型物联网系统</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="实践说明">实践说明</h1>
+<p>本次实践将在阿里云服务器上部署Home Assistant服务和MQTT服务，并在树莓派4B上通过GPIO口连接温湿度、火焰和烟雾传感器。最终编写Python程序将树莓派通过MQTT连接到Home Assistant，实现远程监控室内环境条件的效果。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-06-12</span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/489/">
+        <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/02/26/hn5XYmiOMoVwa68.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/482/">
+        <h2 class="post-title">算法 | byte值的按位不定长存储算法 [C/C++] </h2>
+      </a>
+      <div class="post-abstract">
+        <p><strong>问题背景</strong>：<br>
+首先，在基于动态规划的灰度图像压缩算法中，压缩前灰度值序列的每个值原本以8bit，即1byte进行存储，压缩后，灰度值序列分为n个段，每个段中的每个元素都不一定以8bit存储，具体存储位数存放在一个大小为n的byte数组中。我们称这为不定长存储。</p>
+<p>其次，我们知道在计算机中一般为按字节编址和存储，在Python、C/C++等编程语言中主要提供的读写的最小单位也是字节，而不是比特。但要实现灰度值序列的不定长存储，按比特读写是更方便的。</p>
+<p>[info]在实际使用时，请注意考虑大小端存储的问题。[/info]</p>
+<p><strong>解决问题</strong>：现有一个byte值序列data[data_size]，和另外一个byte值序列B[data_size]。其中第i个元素B[i]，表示data[i]将以B[i]个bit存储。例如B[i]=3表示data[i]希望以3个bit存储。</p>
+<p><strong>输出结果</strong>：</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/02/28/kYyFMHdnvtbp7hi.png" alt="将12个值不定长存入byte数组（buffer）" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2023/02/28/lbEjkqNAMVQInZy.jpg" alt="输入输出原理解释" loading="lazy"></figure>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-05-19</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                计算机网络
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ranlychan.github.io/tag/x0buR3NIuPEZ/">
+                Socket
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/476/">
+        <h2 class="post-title">计网 | C语言Socket编程获取本机IP及指定域名IP</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="实验目的和要求">实验目的和要求</h1>
+<ul>
+<li>使用Winsock提供的API函数 ,利用Socket获得本机IP和本机名称。</li>
+<li>使用Winsock提供的API函数 ,利用Socket获得百度域名的IP 。</li>
+</ul>
+<h2 id="结果预览">结果预览</h2>
+<figure data-type="image" tabindex="1"><img src="https://img1.imgtp.com/2022/10/18/IR8dHmDY.png" alt="程序最终效果图" loading="lazy"></figure>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-04-23</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                Typecho
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/471/">
+        <h2 class="post-title">计网 | Cisco Packet Tracer下模拟交换机及VLAN配置实验记录</h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="实验目的和要求">实验目的和要求</h1>
+<ul>
+<li>熟悉交换机各种命令模式和基本命令</li>
+<li>学习交换机的基本配置，制作网络拓扑图（1台交换机、2台PC），2台PC能够ping通（截图）。</li>
+<li>截图网络拓扑图（2台PC），2台pc机分别用连通线和交叉线连接，然后测试其连通性。</li>
+<li>学习交换机VLAN的配置方法，正确的配置交换机的VLAN，截图网络拓扑图；</li>
+<li>查看配置pc1、pc2和pc3在配置VLAN前后的连通性。</li>
+<li>了解交换机VLAN配置常用命令</li>
+</ul>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-04-15</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/9hBcqs2qqn4d/">
+                编译原理
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/532/">
+        <h2 class="post-title">人类的思想和能力正受到AI的挑战</h2>
+      </a>
+      <div class="post-abstract">
+        <p>#人类的思想和能力正受到AI的挑战</p>
+<h2 id="联系chatgpt和new-bing">联系ChatGPT和New Bing</h2>
+<p>我一直对人工智能感到兴趣，尤其是对自然语言处理的应用。最近，我发现了两个令人惊叹的新产品：ChatGPT和New Bing。</p>
+<p>我第一次接触到ChatGPT是在一次在线聊天中。我和一个机器人对话，但是它的回答非常自然和流畅，几乎让我忘记了它是一个机器人。后来我才知道这个机器人背后是由一种称为GPT的大规模预训练语言模型驱动的。我感到非常惊讶，因为这个机器人的语言处理能力超乎了我的想象。</p>
+<p>我接下来又发现了一个令人惊叹的产品：New Bing。New Bing基于人工智能技术，使用大规模的语言模型（GPT-3.5）和分类器来训练和微调，使其能够理解和回答用户的问题，同时能够给出出处网页链接。与ChatGPT不同，New Bing可以实时利用Bing搜索读取网页，并展现出一些读取和描述图片、视频流的能力。<br>
+<img src="https://i.insider.com/63e8fc214102a900184c720a?width=1000&amp;format=jpeg&amp;auto=webp" alt="" loading="lazy"></p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-02-26</span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/437/">
+        <h2 class="post-title">杂谈 | 从刘慈欣科幻小说到元宇宙</h2>
+      </a>
+      <div class="post-abstract">
+        <blockquote>
+<p>《超新星纪元》是我国著名科幻小说作家刘慈欣写于1991的长篇科幻小说，我在今年寒假读完了这本书。也正是在这个寒假看完这本书后，元宇宙的概念开始火到出圈，，各大科技巨头纷纷宣布入场。因而联想起《超新星纪元》中早早就出现了大刘对于元宇宙、大数据、数据挖掘和人工智能等技术的大胆构想！</p>
+</blockquote>
+<!-- ![元宇宙印象概念图](https://s3.bmp.ovh/imgs/2022/02/299175721c8c0e13.jpg) -->
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-02-23</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/9cjCcltMX8DJ/">
+                Python
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/437/">
+        <div class="feature-container" style="background-image: url('https://s3.bmp.ovh/imgs/2022/02/299175721c8c0e13.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ranlychan.github.io/post/402/">
+        <h2 class="post-title">Flask手写数字识别画板网页+深度神经网络</h2>
+      </a>
+      <div class="post-abstract">
+        <!-- ![](https://s2.loli.net/2023/03/13/oUELrBpeV8Mk43X.png) -->
+<h1 id="1-系统概要">1. 系统概要</h1>
+<p>手写数字识别画板系统，按照MVC原则开发，主要由两部分组成：交互界面（视图View）部分是传统的HTML +CSS+JS网页（这同样也是一种遵循MVC开发方式）；手写数字识别部分（模型Model）是使用Python开发的深度学习的模型；两者间通过基于Flask框架开发的Python Web服务连接（控制Control），具体而言，两者间手写数字识别部分功能的信息传输方式为：HTTP请求收发JSON格式的数据。</p>
+<blockquote>
+<p>项目Jupyter Noteook（阿里天池）<br>
+https://tianchi.aliyun.com/notebook-ai/detail?postId=469149</p>
+</blockquote>
+<blockquote>
+<p>项目Gitee地址<br>
+https://gitee.com/ranlychan/hand-writting-digit-rec-web-app</p>
+</blockquote>
+<blockquote>
+<p>项目Github地址<br>
+https://github.com/ranlychan/HandWrittingDigitRecWebApp</p>
+</blockquote>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2022-02-17</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">
+                物联网
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ranlychan.github.io/post/402/">
+        <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/03/13/oUELrBpeV8Mk43X.png')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ranlychan.github.io/page/5/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://ranlychan.github.io/page/7/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

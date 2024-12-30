@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>树莓派 | Raspberry Pi 4B使用nginx+sqlite3+php7.3+typecho搭建轻量级博客系统 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/26/1629982217.jpg')">
+            </div>
+          
+          <h2 class="post-title">树莓派 | Raspberry Pi 4B使用nginx+sqlite3+php7.3+typecho搭建轻量级博客系统</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-08-26</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/Iz1dJXoi1VVx/">
+                    美食菜谱
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h2 id="前言">前言</h2>
+<p>手头的树莓派4B跑了跑人脸识别以后就一直在吃灰。最近想起来以前看到一款很不错的叫<code>Typecho</code>的轻量级博客程序，简洁美观，拓展性强。正好可以把闲置的树莓派算力利用起来。</p>
+<!--more-->
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/26/1629982217.jpg" alt="raspberry_typecho" loading="lazy"></figure>
+<h2 id="目录">目录</h2>
+<!--index-menu-->
+<h2 id="概要">概要</h2>
+<h3 id="硬件环境">硬件环境</h3>
+<ul>
+<li>服务器：树莓派4B 烧录RaspberryPi OS</li>
+<li>储存卡：16GB SanDisk 高速卡</li>
+<li>外壳：九层亚克力板外壳+散热小风扇</li>
+<li>网络环境：校园网 有固定内网IP但无公网IP</li>
+</ul>
+<h3 id="开始搭建">开始搭建</h3>
+<h4 id="sqlite3">SQLite3</h4>
+<p><strong>安装：</strong> 命令行输入<code>sudo apt-get install sqlite3</code><br>
+<strong>启动：</strong> 命令行输入<code>sudo service sqlite3 start</code></p>
+<h4 id="php73及拓展库">PHP7.3及拓展库</h4>
+<p><strong>安装：</strong> 命令行输入<code>sudo apt-get install php7.3-fpm php7.3-mbstring php7.3-curl php7.3-xml php7.3-xmlrpc php7.3-zip php7.3-common</code></p>
+<p>[info]其中<code>php7.3-mbstring</code>和<code>php7.3-curl</code>是<code>Typecho</code>博客程序所必需的扩展库。[/info]</p>
+<p><strong>启动：</strong> 命令行输入<code>sudo service php7.3-fpm start</code></p>
+<h4 id="nginx">Nginx</h4>
+<p><strong>安装：</strong> 命令行输入<code>sudo apt-get install nginx</code><br>
+<strong>启动：</strong> 命令行输入<code>sudo service nginx start</code><br>
+<strong>配置：</strong><br>
+1.命令行输入<code>sudo nano /etc/nginx/sites-available/default</code><br>
+2.将以下内容<br>
+<code>index index.html index.htm index.php index.nginx-debian.html;</code><br>
+改为<br>
+<code>index index.html index.htm index.php index.nginx-debian.html;</code></p>
+<p>3.将以下内容</p>
+<pre><code class="language-php">#location ~ \.php$ {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# With php-fpm (or other unix sockets):
+	#	fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+	#	# With php-cgi (or other tcp sockets):
+	#	fastcgi_pass 127.0.0.1:9000;
+	#}
+</code></pre>
+<p>改为</p>
+<pre><code class="language-php">location ~ ^.+.php {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# With php-fpm (or other unix sockets):
+		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+	#	# With php-cgi (or other tcp sockets):
+	#	fastcgi_pass 127.0.0.1:9000;
+		fastcgi_split_path_info ^((?U).+.php)(/?.+)$;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+		include fastcgi_params;
+	}
+</code></pre>
+<p>4.命令行输入<code>sudo service nginx restart</code></p>
+<p><strong>检验：</strong> 如果使用的是树莓派的图形界面，可以用树莓派自带浏览器输入localhost访问；如果不是，可以用同一局域网下的其它设备直接访问树莓派的IP。若Nginx安装成功，则访问页面出现<code>Welcome to Nginx!</code>字样。</p>
+<h4 id="typecho">Typecho</h4>
+<p><strong>安装：</strong><br>
+1.前往 http://typecho.org/download 下载博客程序并将博客程序压缩包内的build文件夹下的文件解压存放到<code>/var/www/html</code>下。</p>
+<ol start="2">
+<li></li>
+</ol>
+<ul>
+<li>命令行输入<code>cd /var/www/html</code> 再输入<code>sudo chown -R www-data:www-data ./</code>将目录所有者更改为www-data;</li>
+<li>输入<code>sudo find ./ -type d -exec chmod 755 {} \;</code>将该目录下所有<strong>文件夹</strong>权限改为755；</li>
+<li>输入<code>sudo find ./ -type f -exec chmod 644 {} \;</code>将该目录下所有<strong>文件</strong>权限改为644；</li>
+</ul>
+<p>3.打开树莓派上的浏览器访问localhost或使用其他电脑访问树莓派的局域网地址进入Typecho安装程序，填写信息后安装成功。<br>
+<strong>问题：</strong><br>
+[warning]<strong>访问后台时出现404</strong><br>
+命令行输入<code>sudo nano /etc/nginx/sites-available/default</code>仔细检查Nginx配置文件是否与上述配置一致，特别是<code>location ~ ^.+.php {</code>这里。<br>
+[/warning]</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/287/">
+              <h3 class="post-title">
+                下一篇：物联网实践 | Huawei LiteOS开发环境搭建及Demo程序在Hi3861上编译烧录运行
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>错误记录 | 一个导致ListView中item内容全部重复的可能原因 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">错误记录 | 一个导致ListView中item内容全部重复的可能原因</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                    安卓开发
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>最近在写一个快递查询的WearOS App，突然有一次调试发现主界面的<code>ListView</code>里的item，显示的都是一模一样的内容，全是最新添加的一个快递的内容（这是一个伏笔哈哈哈）。<br>
+遂思前想后，开始以为是<code>ListView</code>的问题，但是没结果。接着以为是<code>Adapter</code>的问题，但很快又否决了这个想法，因为项目一开始也是用的<code>SimpleAdapter</code>，且当时<code>ListView</code>显示正常。无意中看到一篇Blog：</p>
+<blockquote>
+<p>HashMap对象重复赋值在多线程中的教训<br>
+https://blog.csdn.net/goodguyzl/article/details/83847286</p>
+</blockquote>
+<p>该文中写道：</p>
+<blockquote>
+<p>“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”“HashMap对象是在while循环外面声明的（第一行代码那里），但是在循环里面这个HashMap对象反复了put了key相同的两个键值对，问题可能就出在这里”</p>
+</blockquote>
+<p>我猛然意识到我也犯了同样的错误！<br>
+[info]<strong>将<code>HashMap</code>对象的申明放到循环外的话，意味着循环内的每次put会覆盖掉原有的值，而且<code>ListView</code>每次add的都是同一个HashMap对象！</strong><br>
+这就是为什么我的项目里<code>ListView</code>中显示的item全是最新添加的一个快递的信息。[/info]</p>
+ <!--more-->
+<p>下面是我的代码和运行界面的前后对比。（<code>ListView</code>显示的item的数据源没有改变的情况下）</p>
+<pre><code class="language-Java">//修改前的问题代码
+Map&lt;String, Object&gt; showitem = new HashMap&lt;String, Object&gt;();
+for (int i = 0; i &lt; len; i++) {
+	showitem.put(&quot;comIcon&quot;, imgIds[i]);
+	showitem.put(&quot;name&quot;, names[i]);
+	showitem.put(&quot;expNos&quot;, expNos[i]);
+	showitem.put(&quot;expInfos&quot;, expInfos[i]);
+	listitem.add(showitem);
+}
+SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{&quot;comIcon&quot;, &quot;name&quot;, &quot;expNos&quot;,&quot;expInfos&quot;}, new int[]{R.id.comIcon, R.id.name, R.id.expNum,R.id.expInfo});
+listView.setAdapter(myAdapter);
+</code></pre>
+<p>运行结果：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/2142195931.png" alt="" loading="lazy"></p>
+<pre><code class="language-java">//修改后的正常代码
+for (int i = 0; i &lt; len; i++) {
+	Map&lt;String, Object&gt; showitem = new HashMap&lt;String, Object&gt;();
+	showitem.put(&quot;comIcon&quot;, imgIds[i]);
+	showitem.put(&quot;name&quot;, names[i]);
+	showitem.put(&quot;expNos&quot;, expNos[i]);
+	showitem.put(&quot;expInfos&quot;, expInfos[i]);
+	listitem.add(showitem);
+}
+SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem, R.layout.list_item, new String[]{&quot;comIcon&quot;, &quot;name&quot;, &quot;expNos&quot;,&quot;expInfos&quot;}, new int[]{R.id.comIcon, R.id.name, R.id.expNum,R.id.expInfo});
+listView.setAdapter(myAdapter);
+</code></pre>
+<p>修改后的运行结果：<br>
+<img src="https://ranlychan.top/usr/uploads/2021/06/3806323745.png" alt="" loading="lazy"></p>
+<hr>
+<blockquote>
+<p>[这是一篇历史文章，来自我的CSDN博客https://blog.csdn.net/weixin_43114076/article/details/114830741]</p>
+</blockquote>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/51/">
+              <h3 class="post-title">
+                下一篇：错误记录 | Android Studio Start Failed com.intellij.ide.plugins.PluginManager
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

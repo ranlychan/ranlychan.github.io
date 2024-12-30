@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-01</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/iPvRnsINsNg/">
+                    论文笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] E. Li, L. Zeng, Z. Zhou, and X. Chen, “Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing,” IEEE Trans. Wireless Commun., vol. 19, no. 1, pp. 447–457, Jan. 2020, doi: 10.1109/TWC.2019.2946140. [/info]</p>
+<h1 id="11-背景">1.1 背景</h1>
+<p>深度神经网络(DNN)是支持移动智能应用的关键技术，但在移动设备上运行DNN存在计算资源有限的挑战。传统的云计算辅助的DNN推理存在明显的延迟问题。边缘计算作为一种新兴的计算模式，可以用于支持实时的DNN推理。</p>
+<!--more-->
+<h1 id="12-要解决的问题">1.2 要解决的问题</h1>
+<p>网络环境多变，如何针对不同的网络带宽条件优化DNN的推理性能和时延？如何在满足预定义的时延要求下，最大化DNN的推理精度?</p>
+<h1 id="13-现有方法的缺点">1.3 现有方法的缺点</h1>
+<p>仅使用设备端或边缘服务器端计算DNN都存在明显的性能缺陷。仅使用模型分割或模型压缩也无法同时兼顾精度和时延。</p>
+<h1 id="14-文章的主要贡献">1.4 文章的主要贡献</h1>
+<ul>
+<li>提出Edgent框架，通过设备端和边缘端协同进行DNN推理，并创新性地联合优化模型分割和模型压缩以在满足预定义时延要求的前提下最大化精度。</li>
+<li>针对静态和动态网络环境进行了专门设计，分别使用回归模型预测和带宽状态检测进行在线优化，生成适当的分区点和退出点。</li>
+<li>实现了原型系统，实验结果验证了Edgent的有效性。</li>
+</ul>
+<h1 id="15-个人思考">1.5 个人思考</h1>
+<ul>
+<li>本文有机结合模型分割和提前退出机制，起到了一加一大于二的效果。</li>
+<li>可以考虑引入知识蒸馏和量化等模型压缩方法，进一步减小模型大小。</li>
+<li>最近看的文章中，共计两篇都是优化边缘推理的，涉及模型拆分和基于模型压缩等优化方法。针对边缘推理优化的文章似乎比较热门。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/623/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Distributed Inference with Deep Learning Models across Heterogeneous Edge Devices
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

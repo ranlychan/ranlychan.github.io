@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>计网 | C语言Socket编程获取本机IP及指定域名IP | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">计网 | C语言Socket编程获取本机IP及指定域名IP</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-04-23</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="实验目的和要求">实验目的和要求</h1>
+<ul>
+<li>使用Winsock提供的API函数 ,利用Socket获得本机IP和本机名称。</li>
+<li>使用Winsock提供的API函数 ,利用Socket获得百度域名的IP 。</li>
+</ul>
+<h2 id="结果预览">结果预览</h2>
+<figure data-type="image" tabindex="1"><img src="https://img1.imgtp.com/2022/10/18/IR8dHmDY.png" alt="程序最终效果图" loading="lazy"></figure>
+<!--more-->
+<h1 id="环境记录">环境记录</h1>
+<table>
+<thead>
+<tr>
+<th><strong>名称</strong></th>
+<th><strong>值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>Windows 11 家庭中文版22H2</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>16GB</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz   2.20 GHz</td>
+</tr>
+<tr>
+<td>IDE</td>
+<td>DEV-C++ 5.10</td>
+</tr>
+</tbody>
+</table>
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="实验记录">实验记录</h1>
+<h2 id="配置ide">配置IDE</h2>
+<p>需要注意的是引用winsock2.h头文件后，<strong>还需要链接该头文件的实现文件</strong>，在本机上使用宏#pragma comment (lib, &quot;ws2_32.lib&quot;)无法成功添加该实现文件ws2_32。手动编译时会出现如下报错信息：</p>
+<p><img src="https://img1.imgtp.com/2022/10/18/NInLW6aA.png" alt="DEV-C++下编译出错" loading="lazy"><br>
+参考网上许多解决办法没有效果，最后解决办法如下：<br>
+[info]如下图，可以打开DEV-C++菜单栏的Toos-&gt;Compiler Options-&gt; General，找到Add the following commands when calling the compiler:勾上复选框，在下面的输入框中写入<code>-lwsock32</code>并确定。这样编译运行的时候就可以自动链接了。[/info]</p>
+<p>这样做相当于编译命令变成了<code>gcc socket_exp.c -o socket_exp.exe -lwsock32</code> ，其中socket_exp是我的文件名。举一反三，在VSCode中就可以自己手动链接了。</p>
+<figure data-type="image" tabindex="2"><img src="https://img1.imgtp.com/2022/10/18/UpvjY5II.png" alt="DEV-C++配置编译参数" loading="lazy"></figure>
+<h2 id="新建程序">新建程序</h2>
+<p>使用IDE新建一个C语言程序进行编写。代码如下：</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;winsock2.h&gt;
+
+void queryLocalIP() {
+	WSADATA data;
+	if(WSAStartup(MAKEWORD(1,1),&amp;data)!=0){
+		printf(&quot;初始化错误&quot;);
+    }
+    
+  	char host[255]=&quot;&quot;;
+	if(gethostname(host,sizeof(host))==SOCKET_ERROR){
+		printf(&quot;无法获取计算机主机名\n&quot;);
+	}
+	else{
+		printf(&quot;本机名称为：%s\n&quot;,host);
+	}
+
+	struct hostent *p=gethostbyname(host);
+	if(p==0){
+		printf(&quot;无法获取计算机主机名及IP\n&quot;);
+	}
+	else{
+		
+		//本机IP:循环输出本机所有网卡的IP，其中包括虚拟网卡 
+    	int i;
+    	for(i=0;p-&gt;h_addr_list[i]!=0;i++){
+    		struct in_addr in;
+    		memcpy(&amp;in,p-&gt;h_addr_list[i],sizeof(struct in_addr));
+    		printf(&quot;本机的第%d块网卡的IP为：%s\n&quot;,i+1,inet_ntoa(in));
+    		//cout&lt;&lt;&quot;第&quot;&lt;&lt;i+1&lt;&lt;&quot;块网卡的IP为:&quot;&lt;&lt;inet_ntoa(in)&lt;&lt;endl;
+    	}
+	}
+	WSACleanup();
+} 
+
+void queryHostNameIP(char *host) {
+	WSADATA data;
+	if(WSAStartup(MAKEWORD(1,1),&amp;data)!=0){
+		printf(&quot;初始化错误&quot;);
+    }
+  
+	//char host[255];
+
+	struct hostent *p=gethostbyname(host);
+	if(p==0){
+		printf(&quot;无法获取%s的信息\n&quot;,host);
+	}
+	else{
+		//本机IP:循环输出本机所有网卡的IP，其中包括虚拟网卡 
+    	int i;
+    	for(i=0;p-&gt;h_addr_list[i]!=0;i++){
+    		struct in_addr in;
+    		memcpy(&amp;in,p-&gt;h_addr_list[i],sizeof(struct in_addr));
+    		printf(&quot;解析%s的第%d个IP为：%s\n&quot;,host,i+1,inet_ntoa(in));
+    		//cout&lt;&lt;&quot;第&quot;&lt;&lt;i+1&lt;&lt;&quot;块网卡的IP为:&quot;&lt;&lt;inet_ntoa(in)&lt;&lt;endl;
+    	}
+	}
+	
+	WSACleanup();
+}
+ 
+int main(){
+	queryLocalIP();
+	
+	printf(&quot;=================================\n&quot;);
+	char*  hostname = &quot;www.baidu.com&quot;;
+	queryHostNameIP(hostname); 
+	printf(&quot;=================================\n&quot;);
+	//输出个人信息
+	printf(&quot;Ranly 2022/4/23&quot;);
+	return 0;
+}
+</code></pre>
+<p>ok,下面编译运行就正常了。用完以后记得把编译设置里加上去的参数去掉，以便以后写其他代码出问题。</p>
+<h1 id="实验分析">实验分析</h1>
+<h2 id="winsock2常见结构体和方法">winsock2常见结构体和方法</h2>
+<h3 id="gethostname获取本机主机名">gethostname获取本机主机名</h3>
+<p><code>int gethostname(char *name, size_t len);</code></p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>char *</td>
+<td>用于存储获得的主机名，其长度必须为len字节或是更长。</td>
+</tr>
+<tr>
+<td>len</td>
+<td>size_t</td>
+<td>接收缓冲区的最大长度，可通过sizeof(name)获取。</td>
+</tr>
+</tbody>
+</table>
+<p>返回值：</p>
+<ul>
+<li>如果函数成功，则返回0。</li>
+<li>如果发生错误则返回-1。错误号存放在外部变量errno中。</li>
+</ul>
+<h3 id="gethostbyname获取主机名对应信息">gethostbyname获取主机名对应信息</h3>
+<p><code>struct hostent *gethostbyname(const char *hostname);</code><br>
+参数说明：</p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hostname</td>
+<td>const char *</td>
+<td>要查询的主机名，域名</td>
+</tr>
+</tbody>
+</table>
+<p>返回值：</p>
+<ul>
+<li>如果函数失败，则返回0。</li>
+<li>如果成功，返回的指针指向的结构体中包含所需信息，具体如下小节所示。</li>
+</ul>
+<h3 id="hostent">hostent</h3>
+<p>对于一个hostname，可以通过<code>gethostbyname(char *hostname);</code>方法来获得一个hostent的结构体的指针。</p>
+<p>传入的hostname可以是通过gethostname获取的<strong>本机主机名</strong>或是本地局域网内可被发现的其它主机的名字，例如 <code>LBW's PC</code> ，也可以是一个常见的网络域名，例如某度的二级域名 <code>www.baidu.com</code>。</p>
+<pre><code class="language-c">struct hostent {
+　   char *h_name; /* 主机的官方域名 */
+　　 char **h_aliases; /* 一个以NULL结尾的主机别名数组 */
+　　 int h_addrtype; /* 返回的地址类型，在Internet环境下为AF-INET */
+　　 int h_length; /* 地址的字节长度 */
+　　 char **h_addr_list; /* 一个以0结尾的二维数组，包含该主机的所有地址*/
+};
+</code></pre>
+<p>详细解析：</p>
+<ul>
+<li>h_name：官方域名（Official domain name）。官方域名代表某一主页，但实际上一些著名公司的域名并未用官方域名注册。</li>
+<li>h_aliases：别名，可以通过多个域名访问同一主机。同一 IP 地址可以绑定多个域名，因此除了当前域名还可以指定其他域名。</li>
+<li>h_addrtype：gethostbyname() 不仅支持 IPv4，还支持 IPv6，可以通过此成员获取IP地址的地址族（地址类型）信息，IPv4 对应 AF_INET，IPv6 对应 AF_INET6。</li>
+<li>h_length：保存IP地址长度。IPv4 的长度为 4 个字节，IPv6 的长度为 16 个字节。</li>
+<li>h_addr_list：这是最重要的成员。通过该成员以整数形式保存域名对应的 IP 地址。对于用户较多的服务器，可能会分配<strong>多个 IP 地址给同一域名</strong>，利用多个服务器进行<strong>均衡负载</strong>。</li>
+</ul>
+<h3 id="sockaddr_in">sockaddr_in</h3>
+<pre><code class="language-c">struct sockaddr_in {
+	short int sin_family;         /* 协议族 */
+	unsigned short int sin_port;  /* 端口号 */
+	struct in_addr sin_addr;      /* Internet 地址 */
+	unsigned char sin_zero[8];    /* 和结构体 sockaddr 大小相同 */
+};
+
+</code></pre>
+<h3 id="in_addr">in_addr</h3>
+<p>这个结构体就是32位的IP地址了。要进行格式化输出字符串，不要直接读取，而是使用<code>char *inet_ntoa (struct in_addr);</code>方法将in_addr类型的变量转换为char数组，从而可以pirntf为用<code>.</code>间隔的IP地址字符串。</p>
+<pre><code class="language-c">struct in_addr {
+	union {
+	struct { u_char s_b1,s_b2,s_b3,s_b4; } S_un_b;
+	struct { u_short s_w1,s_w2; } S_un_w;
+	u_long S_addr;
+} S_un;
+</code></pre>
+<h1 id="参考资料">参考资料</h1>
+<p>https://blog.csdn.net/k916631305/article/details/109498205<br>
+https://blog.csdn.net/u011608357/article/details/18862853<br>
+https://baike.baidu.com/item/inet_ntoa%28%29/10082005<br>
+https://www.cnblogs.com/kex1n/p/5524644.html<br>
+http://c.biancheng.net/view/2357.html</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/471/">
+              <h3 class="post-title">
+                下一篇：计网 | Cisco Packet Tracer下模拟交换机及VLAN配置实验记录
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

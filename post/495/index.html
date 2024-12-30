@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>笔记 | 4K对齐、低级格式化、MBR引导记录？都是些啥玩意儿 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">笔记 | 4K对齐、低级格式化、MBR引导记录？都是些啥玩意儿</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-10-04</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/MGrqSuJI29y8/">
+                    物联网
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/jyg4qik2Q5kn/">
+                    树莓派
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="一点题外话">一点题外话</h1>
+<p>很久以前喜欢捣鼓电脑啊外设什么的，却也没有搞出什么名堂。经常见到标题里的一些术语，却也只是一知半解。最近在复习操作系统，对以往的瞎捣鼓小有感触和总结。故写下此文。</p>
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<h1 id="磁盘">磁盘</h1>
+<p>初中的时候开始认识磁盘（硬盘），还是因为在教室用Ghost映像给电脑装系统，磁盘引导记录给整坏了，从家里拆了一块过去顶用(笑死)。</p>
+<p>磁盘是一中基于磁介质的外部存储装置，我们经常叫机械硬盘，就是因为里面是用机械装置驱动、读写的（马达马达马达马哒哒哒）。</p>
+<!--more-->
+<p>有幸（不幸）拆开过一块开不了机的可怜硬盘，只记得里面的盘片很光滑，很适合当镜子。。马达很顺滑，想拆来做遥控车（不是）。</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/02/28/gy38J2D9hNlTZR5.jpg" alt="硬盘内部，希望你没看过" loading="lazy"></figure>
+<p>[info]<br>
+关于硬盘的一些性能指标我在这篇笔记里做了记录：<a href="https://ranlychan.top/archives/328.html" title="硬件捣鼓 | 笔记本机械硬盘选购小笔记">硬件捣鼓 | 笔记本机械硬盘选购小笔记</a><br>
+[/info]</p>
+<p>操作系统是如何在这么小一块硬盘上存储海量信息的？这首先涉及到的是文件系统结构，从上之下包括逻辑文件系统、文件组织模块、基本文件系统、I/O控制以及最终的设备。</p>
+<p>从中不难看出操作系统的一些特点，即分层分工，逻辑物理分离。这是我个人的一点理解。分层分工指的就是各层各司其职，像公司上下有老总把握方向（画大饼），但无需熟悉底层细节（如何搬砖）；也有产品经理把老板的大饼转化成各位工程师（码农）的需求，码农当然就可以哒哒哒操起电脑开干了。而工位上的电脑、测试机、<s>咖啡</s>这些就是具体的设备了。</p>
+<ul>
+<li>
+<p>上面这样的运作大体上和文件系统的结构是非常相似的，逻辑文件系统使用的当不是直接的物理地址，而是逻辑地址，<s>就像老板开会总是张口头部，闭口私域流量这些<strong>互联网黑话</strong></s>。</p>
+</li>
+<li>
+<p>而文件组织模块则是负责将上层的逻辑块地址转换为物理地址，就像产品经理可以一边听懂老板的黑话，一边可以用人话翻译成需求清单一样。</p>
+</li>
+<li>
+<p>基本文件系统无情地向设备驱动程序发送<strong>通用命令</strong>，比如端茶倒水拿外卖，具体坐电梯下去还是走楼梯下去，人家不在乎。一般来说可能是你的Leader，但我Leader还是很好的。内存缓冲区也由基本文件系统管理，包括磁盘缓冲区在内。</p>
+</li>
+<li>
+<p>I/O控制具备两套法宝，一套是专门应付设备的的设备驱动程序（码农勤劳的双手），一副是应付文件系统的I/O中断处理程序（应付Leader，时不时要打断你叫你干点什么，比如“看看这个bug？”、“看看这个需求？”...，于是被中断了你就保存好在写的代码，转去CSDN、Google、StackOverflow...）。</p>
+</li>
+</ul>
+<p>扯了这么多，其实还没写到最重要的内容。吐槽结束，下面讲正题吧。</p>
+<h2 id="磁盘逻辑结构">磁盘逻辑结构</h2>
+<p>如你所见，一个硬盘里往往有多个<strong>盘片</strong>，每个盘片一般两面都可读写，即两个<strong>盘面</strong>。每个盘面上划了很多道道，从外到内的一圈圈同心圆环称为<strong>磁道</strong>。再像切蛋糕一样把盘面均分为很多扇形，就把原来的磁道分成更小的<strong>扇区</strong>。不同盘面上，相对中心位置来说位置相同的磁道，就是一个柱面。</p>
+<p>虽然在几何上不同磁道的扇区不同，但其实上面存储的信息量是一致的，比如都是512B，那么靠近内侧的扇区因为面积更小，所以数据密度就更大。</p>
+<p>而因为扇区比较小的，往往数据又很大，数据的读写在逻辑上就不是一个扇区一个扇区的读写了，而是以一个基本的单位进行。在Windows中称为<strong>簇</strong>，UNIX和Linux中则为<strong>块</strong>，以连续的几个扇区为基本单位来组织。</p>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2023/02/28/x6c9mapPHn1si3q.png" alt="基本逻辑结构" loading="lazy"></figure>
+<h1 id="扇区和4k对齐">扇区和4K对齐</h1>
+<p>我们常常听说，对磁盘进行4K对齐可以提高磁盘的效率。甚至对SSD进行4K对齐可以提高SSD寿命。这个4K是上什么东东，对齐又是什么东东？</p>
+<p>以前的磁盘扇区比较小，比如只有512B，而如今的磁盘因为发展迅速，指定了新的扇区大小，例如4KB，而为了兼容，就把4KB当成8个512B的扇区在用。如果一个分区从这8个中除了第一个512B以外的其他几个开始，就称为4K不对齐。显然，4K对齐就是要把分区挪到4KB扇区的真正起始位置。</p>
+<figure data-type="image" tabindex="3"><img src="https://s2.loli.net/2023/02/28/qPMSGFIVEW4hAdJ.png" alt="DiskGenius官方的4K对齐检测教程" loading="lazy"></figure>
+<h1 id="mbr引导">MBR引导</h1>
+<p>MBR, Master Boot Record, 即主引导记录。一般来说，MBR引导记录和分区表是对普通用户不可见的，不属于我们常常在“我的电脑”里看到的“卷”</p>
+<p>[info]<strong>分区、文件系统和卷</strong>：<br>
+磁盘分区就是多个连续的柱面。</p>
+<p>一个分区在初始被划分出来时是空闲的、可自由分配的，只有被安装了<strong>文件系统</strong>才称为<strong>卷 (Volume)</strong>，我们才能往里放文件。我们新增分区的时候默认的名字“新加卷”就是这个意思。</p>
+<p>文件系统最常见的就是我们硬盘分区常用的NTFS、U盘常用的FAT32或exFAT之类的FAT文件系统。这些系统主要是用来组织管理文件在磁盘上的物理实现的。<br>
+[/info]</p>
+<figure data-type="image" tabindex="4"><img src="https://s2.loli.net/2023/02/28/rWGZNnDstYfMX4H.jpg" alt="" loading="lazy"></figure>
+<p>MBR一般是在磁盘上的位置是最上面、最外面的0号柱面、0号磁道、0号扇区（有些是1号扇区），这样子每次操作系统最先读取到的就是MBR里的主引导程序了。</p>
+<h2 id="主引导程序">主引导程序</h2>
+<p>主引导程序会在分区表确定活动分区，也就一般是安装有操作系统的分区，读取这个分区的第一块，也就是引导块，这样就可以在引导块中读取并真正开始进行操作系统的启动了，例如Windows系统或是Linux系统。</p>
+<h1 id="低级格式化">低级格式化</h1>
+<p>将整个磁盘重新划分柱面、磁道和扇区的一种格式化方式，通常也叫物理格式化，或者俗称“低格”。这是最彻底的数据清除方式。磁盘上的所有信息，包括原有的MBR、每个分区引导块内的信息都会被清除。因此这是一个很危险的操作。</p>
+<p>磁盘有时候使用久了可能会有一些逻辑坏道，这些磁道上无法再读写数据了，如果实在没办法了可以尝试找回数据，备份好了，再进行低级格式化，以拯救一下变砖的硬盘或是U盘。因为低格中的重建工作会检测正常、可用的盘面、磁道和扇区，坏道将不会再使用。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/491/">
+              <h3 class="post-title">
+                下一篇：笔记 | 初探Kotlin协程
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

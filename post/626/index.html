@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 |  Edge-Cloud Polarization and Collaboration: A Comprehensive Survey for AI | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 |  Edge-Cloud Polarization and Collaboration: A Comprehensive Survey for AI</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-01</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] J. Yao et al., “Edge-Cloud Polarization and Collaboration: A Comprehensive Survey for AI,” IEEE Trans. Knowl. Data Eng., pp. 1–1, 2022, doi: 10.1109/TKDE.2022.3178211. [/info]</p>
+<!--more-->
+<h1 id="11-内容概要">1.1 内容概要</h1>
+<p>这篇是一篇综述性文章，主要关于云计算、边缘计算以及边云协同计算在人工智能方面的进展。论文的主要内容如下：</p>
+<ul>
+<li>云计算AI：讨论了用于云计算的CPU、GPU、TPU和DPU等硬件。介绍了计算机视觉、自然语言处理和网络服务等领域基于云计算的AI模型。</li>
+<li>边缘计算AI：概述了用于边缘计算的VPU、边缘TPU、移动GPU和神经处理单元等硬件。探讨了轻量级网络架构设计、模型压缩等技术来满足边缘计算的限制。</li>
+<li>边缘-云协同AI：介绍了两个典型的协作方式:以隐私为主的协作(如联邦学习)和以效率为主的协作。从迁移学习、元学习和因果推断等角度思考边缘-云协同的经典范式。</li>
+<li>前沿热点：探讨了在边缘部署预训练模型、图神经网络和强化学习模型的潜力、实践经验和未来方向。</li>
+<li>挑战和应用：提出数据和平台等主要难题。探讨了边缘-云协同AI在推荐系统、自动驾驶、游戏和物联网安全等领域的应用前景。</li>
+</ul>
+<p>根据综述内容整理得到思维导图如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/08/01/Q8F3rcKlm6MWO2Z.png" alt="" loading="lazy"></figure>
+<p>这篇综述文章中提出了边缘计算AI的以下几个潜力方向和待解决的挑战以及相应的现有方法:</p>
+<h2 id="潜力方向">潜力方向:</h2>
+<ol>
+<li>边缘预训练模型 - 探索模型压缩、推理加速和少样本适应技术,以便大规模预训练模型能够在边缘环境中部署。</li>
+<li>边缘图神经网络 - 使用联邦学习、量化和元学习技术来解决数据隔离、内存消耗和 generalization 等问题。</li>
+<li>边缘-云强化学习 - 边缘执行和云优化相结合,实现更好的个性化、鲁棒性和通用性。</li>
+</ol>
+<h2 id="挑战">挑战:</h2>
+<ol>
+<li>数据 - 目前缺乏公开的边缘-云协同数据集,这限制了算法研究。</li>
+<li>平台 - 需要建立成熟的边缘计算平台,方便算法比较和模型评估。</li>
+<li>效率 - 需要进一步提高通信效率、降低训练时间成本。</li>
+<li>个性化 - 需要处理不同边缘环境的数据分布差异,实现个性化。</li>
+<li>安全与隐私 - 需要进一步保证边缘和云端的数据安全,防止模型提取原始数据。</li>
+</ol>
+<h2 id="现有解决方法">现有解决方法：</h2>
+<ol>
+<li>数据方面,可以构建语义相似的合成数据集加以利用。</li>
+<li>平台方面,可以参考一些开源的边缘计算平台如Luoxi进行改进。</li>
+<li>效率方面,可以使用模型压缩、量化、知识蒸馏等技术来降低计算和存储成本。还可以使用编码计算等方法优化通信效率。</li>
+<li>个性化方面,可以采用联邦学习、迁移学习、元学习等技术,实现云边协同并适配不同的边缘环境。</li>
+<li>安全与隐私方面,文中提到了同态加密、安全多方计算、差分隐私等加强联邦学习安全性的经典方法。最新工作开始从因果推断的角度入手,进一步提高模型的鲁棒性。</li>
+<li>在模型设计方面,探索了基于蒸馏的模型压缩方法、动态推理路径选择的架构搜索等新思路。</li>
+<li>在协同方式方面,除了联邦学习,探讨了分拆部署、云边个性化协同等新型协作模式。</li>
+</ol>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/625/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Edge AI: On-Demand Accelerating Deep Neural Network Inference via Edge Computing
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

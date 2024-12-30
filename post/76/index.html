@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>学习笔记 | Android开发常用的几种模式 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">学习笔记 | Android开发常用的几种模式</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-06-24</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/UiBD8beZT_Jz/">
+                    Android
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/sEsBM_oN-CiV/">
+                    安卓开发
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/CppV-gR4FYnK/">
+                    开发模式
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <blockquote>
+<p>在Android Studio中，xml写layout只能是算画个草图，对界面的监听改变等逻辑都要在activity/fragment里处理，大型项目中会使其显得非常臃肿，难以维护。故而需要使用适合的开发模式使得项目易于阅读和维护。</p>
+</blockquote>
+<!-- index-menu -->
+<!--more-->
+<p>##MVC##</p>
+<ul>
+<li><strong>Model 模型</strong>，负责数据的加载和存储。</li>
+<li><strong>View 视图</strong>，负责界面的展示,一般在activity或fragment里实现。</li>
+<li><strong>Controller 控制器</strong>，负责逻辑控制，将操作转发给特定的Model。</li>
+</ul>
+<p>###优点：###</p>
+<ul>
+<li>结构清晰，职责划分清晰</li>
+<li>降低耦合</li>
+<li>有利于组件重用</li>
+</ul>
+<p>###缺点：###</p>
+<ul>
+<li>一般来说，Activity /Fragment 会承担 View和Controller 两个角色，就会导致 Activity / Fragment 中代码较多</li>
+<li>Model 直接操作 View，View 的修改会导致 Controller 和 Model 都进行改动</li>
+<li>增加了代码结构的复杂性</li>
+</ul>
+<hr>
+<p>##MVP##</p>
+<ul>
+<li>Model 模型，负责数据的加载和存储。</li>
+<li>View 视图，负责界面的展示。</li>
+<li>Presenter 控制器，负责逻辑控制。</li>
+</ul>
+<p>与MVC模式大同小异，在 MVC中Model 直接操作View 进行视图展示，而在MVP 里，要通知Presenter 去中转。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2021/08/02/1627901263.png" alt="MVP模式示例图 *来自知乎" loading="lazy"><br>
+###优点：###</p>
+<ul>
+<li>结构清晰，职责划分清晰</li>
+<li>模块间充分解耦</li>
+<li>有利于组件的重用</li>
+</ul>
+<p>###缺点：###</p>
+<ul>
+<li>会引入大量的接口，导致项目文件数量激增</li>
+<li>增大代码结构复杂性</li>
+</ul>
+<hr>
+<p>##MVVM##</p>
+<ul>
+<li>Model 模型，负责数据的加载和存储。</li>
+<li>View 视图，负责界面的展示。</li>
+<li>ViewModel 控制器，负责逻辑控制。实现ViewModel的关键是DataBinding，把数据和View绑定起来，然后数据改变的时候View会自动刷新。</li>
+</ul>
+<p><img src="https://ranlychan.top/usr/uploads/2021/06/799260656.png" alt="MVVM示例图 *来自第三方博客" loading="lazy"><br>
+###优点：###</p>
+<ul>
+<li>结构清晰，职责划分清晰</li>
+<li>模块间充分解耦</li>
+<li>在 MVP 的基础上，MVVM 把 View 和 ViewModel 也进行了解耦</li>
+</ul>
+<p>###缺点：###</p>
+<ul>
+<li>Debug 困难，由于 View和ViewModel 解耦，导致Debug 时难以一眼看出View的事件传递</li>
+<li>代码复杂性增大</li>
+</ul>
+<hr>
+<p>参考文章：<br>
+[1]Android 开发中常用到的设计模式有哪些？<br>
+https://zhuanlan.zhihu.com/p/83635530<br>
+[2] Android之MVVM开发模式<br>
+https://www.cnblogs.com/loaderman/p/10076529.html</p>
+<p>*<em>文章仅供学习参考，如有侵权请联系删除</em></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/73/">
+              <h3 class="post-title">
+                下一篇：学习笔记 | Android Studio安卓开发入门经验总结 干货
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

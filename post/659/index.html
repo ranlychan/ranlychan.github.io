@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜P4: programming protocol-independent packet processors | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜P4: programming protocol-independent packet processors</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-10-26</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/IakMM5eRHfm/">
+                    网络管理
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info]  Bosshart, Pat, Dan Daly, Glen Gibb, Martin Izzard, Nick McKeown, Jennifer Rexford, Cole Schlesinger, et al. “P4: Programming Protocol-Independent Packet Processors.” ACM SIGCOMM Computer Communication Review 44, no. 3 (July 28, 2014): 87–95. https://doi.org/10.1145/2656877.2656890.<br>
+[/info]</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>OpenFlow采用了固定的包解析方式，只识别预定义的协议标头和固定字段。</li>
+<li>为了支持更多协议，OpenFlow不得不持续扩展支持的字段列表。</li>
+<li>字段数量的增加导致了OpenFlow规范的复杂性持续上升。</li>
+<li>但扩展现有规范仍然无法提供足够的灵活性,无法支持新增的自定义头格式。运营商往往需要采用软交换机来实现新功能。</li>
+<li>OpenFlow对标头的假设限制了其扩展性。控制器无法表达新的包头应该如何被处理。</li>
+<li>固定标头机制与SDN控制交换机转发的初衷不符。控制器应该能定义包的解析方式和处理流程。</li>
+<li>作者认为，未来OpenFlow应该提供灵活的包解析机制，而不是继续扩展固定的字段列表。控制器应通过通用开放接口使用这些能力。</li>
+</ul>
+<!--more-->
+<h2 id="目标">目标</h2>
+<ul>
+<li>可重构性：允许控制器对已部署的交换机进行重构，重新定义数据包解析和处理方式。</li>
+<li>协议独立性：不依赖特定协议，控制器可以指定包解析方式和处理字段。</li>
+<li>目标独立性：可以适配不同软硬件设备，并对上层屏蔽这些差异。</li>
+</ul>
+<h2 id="抽象转发模型">抽象转发模型</h2>
+<p>作者提出了一个包含可编程解析器和多阶段匹配动作的抽象转发模型。解析器可编程可支持新的报头；匹配动作阶段可串联或并联；动作由交换机支持的原语组成。该模型概括了不同的转发设备和技术的packet处理方式。</p>
+<h2 id="p4编程语言">P4编程语言</h2>
+<p>作者设计了P4语言来表达交换机的配置和包处理方式，与Click等过于泛化的语言不同，P4对可表达性和硬件映射进行了平衡。P4包含下面几个关键组成部分:</p>
+<ul>
+<li>报头定义：定义报头序列和每字段的参数</li>
+<li>解析器：定义如何识别和提取报头</li>
+<li>表：匹配动作表执行包处理</li>
+<li>动作：构建复杂动作原语</li>
+<li>控制流程：定义表的执行顺序</li>
+</ul>
+<h2 id="编译">编译</h2>
+<p>编译可将P4的目标无关表示映射到不同的交换机平台。解析器编译为状态机,控制流程先转换为表依赖图然后再映射到不同的交换机硬件。</p>
+<h2 id="个人思考">个人思考</h2>
+<ul>
+<li>
+<p>P4与OpenFlow并不冲突，都负责对网络的进一步抽象化，屏蔽底层复杂性，只是P4这方面做得相对更好。对于底层复杂性的屏蔽有利于意图的实现，使得IBN四环中意图激活的环节可以得到保障，让研究精力可以集中到更为重要的意图分析和翻译上来。也就是说，现在可以认为P4编程语言可以作为意图翻译后的一种中间表示。</p>
+</li>
+<li>
+<p>P4提出的三大目标对于IBN来说至关重要。首先意图发生修改时需要可重构性。其次，意图作为高层抽象完全可能独立于目标设备（当然意图也可以具体化，只要能通过校验）。</p>
+</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/657/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜SIMPLE-fying Middlebox Policy Enforcement Using SDN
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | The Design Philosophy of the DARPA Internet Protocols | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | The Design Philosophy of the DARPA Internet Protocols</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-06-26</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] CLARK D D. The design philosophy of the DARPA Internet Protocols[J/OL]. ACM SIGCOMM Computer Communication Review, 1995: 102-111. http://dx.doi.org/10.1145/205447.205458. DOI:10.1145/205447.205458. [/info]</p>
+<p>这篇文章主要致力于讲清楚TCP/IP协议簇的设计理念和动机，文章对于TCP/IP协议簇的设计和演变有着较为深刻的理解。围绕“为什么这样设计”这一问题，作者从列举因特网架构设计之初的目标出发，论述了这些目标和TCP/IP协议簇的重要特性之间的关系。</p>
+<!--more-->
+<p>文章将因特网架构设计之初的目标分为主要和次要两部分分别展开叙述。其中主要目标就是要有效复用现存的互联网络（电话网络）。通过对实际情况的分析，当时选择了分组转发技术并假设使用网关互联，并得到了因特网的基本架构：通过名为网关的分组通信处理器将很多不同的网络互连并实现存储转发算法，构成一个分组交换通信设施。</p>
+<p>对于主要目标中“有效”一词，作者认为有必要展开叙述，由此引出了以下七个次要目标对因特网的架构中的“有效”进行补充说明。</p>
+<ol>
+<li>即使网络或者网关失效，通信也必须要继续。</li>
+<li>因特网必须能支持多种类型的通信服务。</li>
+<li>因特网架构必须能兼容多种网络。</li>
+<li>因特网架构必须能实现分布式资源管理。</li>
+<li>因特网架构的耗费必须经济有效。</li>
+<li>因特网架构必须降低主机接入成本。</li>
+<li>因特网架构中使用的资源必须是可计量的。</li>
+</ol>
+<p>作者还强调了上述目标的顺序的重要性，其认为这些目标的顺序决定了网络架构。而且此网络当时是军事用途的，所以根据重要程度其鲁棒性位列第一，而有限资源使用被排到最后。这其实就是一个取舍和折中的问题，因为不可能所有目标都能实现，也算是一个多目标优化问题，而作者认为可以通过对目标的优先级排序进行逐个考虑从而解决。</p>
+<p>接着文章对七个次要目标中的前三个进行详细介绍。首先是鲁棒性，也就是即便在网络暂时性故障的情况下传输层两端的通信也能继续，而无需重置高层会话状态。由此假设，传输层应当向上屏蔽故障，除非失去物理传输路径。要实现这点，就必须保护会话状态信息，如分组序号和ack号等。进一步地，如果在中间节点存储状态信息，则不可避免状态信息产生多个副本的空间占用以及分布式环境下确保副本拷贝鲁棒性的算法的复杂性。而此架构选择将状态信息在传输层两端进行收集和存储，并不在中间传输过程确保状态信息安全。作者称此为可靠性意义上的“命运共享”。其影响有二，网关应当是无状态的以及应当在主机端进行数据分发可靠性的保证。</p>
+<p>其次是服务支持通用性。不同服务对通信的速度、时延和可靠性有不同要求，TCP一开始被寄予厚望，希望能足够通用以同时支持大带宽要求的文件传送服务和低时延要求的远程登录服务。而且有的服务对于可靠传输的需要小或是没有，例如远程debugger和实时语音通话。因此传输层进一步细分和丰富，TCP和IP分离为两层，TCP提供可靠有序传输，IP提供服务。此外传输层还多了UDP，如此使得多种不同需求的上层应用可以被支持。总之，网络底层架构设计时应当注重基础性原子性，而非为特定应用而特化，也就是“Less is more”。</p>
+<p>接着是网络互连兼容性。因特网架构的兼容性非常出色，可以灵活接入各类网络。这种灵活性来自于其简单性，即最少的功能假设，只假设了能以可接受的可靠性传输大小合理的分组或数据报。额外的功能则没有进行假设，例如有序传输，多播，分组传输优先级排序，多类型服务支持和对故障、速度或延迟的内部感知。这些额外功能最好在网络接口软件实现，此法感觉不太可取但其实会省事。</p>
+<p>在其它目标方面，文章先提及了分布式管理，指出因特网里具有多个管理机构，对网关进行分别管理，各网关间通过双层路由协议进行路由表交换。另一方面是因特网缺乏足够的分布式管理工具，特别是路由方面的。接着谈到耗费方面，指出其中存在的权衡，讨论了因特网中分组头部占用和重传消耗等问题。然后按顺序谈到主机接入成本，指出因特网的主机接入成本相对其它架构可能要更高，因为主机需要自行实现一些服务，但传输层减少了这种负担。最后是资源可计量，当时是问题，但现在已经可以对分组流量进行计量了。</p>
+<p>文章讨论了因特网的架构设计和工程实现的关系，其认为架构只在逻辑上确保基本目标的正确实现，而具体的性能优化需要在工程实现中进行完成，自由度高但需要更多实现。最后文章对TCP和UDP进行了介绍。</p>
+<p>我们常说要以史为鉴，其实作者提出了一个继承于此的观点，即，因特网架构是不断演进的，但对于其设计的历史过程的理解，可以为当下的扩充设计提供必要的上下文。我想这也许就是计算机网络里的历史学。TCP/IP协议簇作为因特网的实际标准，对其设计理念的准确把握可以为今后设计出具备较高可行性的协议架构。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/587/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | End-To-End Arguments in System Design
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

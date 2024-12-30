@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | AuTO: scaling deep reinforcement learning for datacenter-scale automatic traffic optimization | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | AuTO: scaling deep reinforcement learning for datacenter-scale automatic traffic optimization</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-07-10</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/1UDQKSJcmSC/">
+                    考研
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] Chen L , Lingys J , Chen K ,et al.AuTO: scaling deep reinforcement learning for datacenter-scale automatic traffic optimization[C]//the 2018 Conference of the ACM Special Interest Group.ACM, 2018.DOI:10.1145/3230543.3230551. [/info]</p>
+<h1 id="11-问题背景">1.1 问题背景</h1>
+<p>在数据中心中，网络流量具有高度集中性、长尾分布性、突发性、时空异质性和大规模性等特征，数据中心的流量优化对网络及其承载的应用的性能有着显著的影响。目前，流量优化主要依赖于手工设计的启发式方法，这些方法相对并不完善，而传统的深度强化学习方法则由于较长的处理时间无法用于数据中心规模的在线决策。</p>
+<!--more-->
+<h1 id="12-要解决的问题">1.2 要解决的问题</h1>
+<p>为了提高数据中心的流量优化效果并缩短优化过程的时间，本文致力于研究如何利用深度强化学习（DRL）技术实现自动化的数据中心流量优化，以适应庞大、不确定和多变的数据中心流量，解决时延问题，并达到操作员设定的目标。</p>
+<h1 id="13-现有方法的缺点">1.3 现有方法的缺点</h1>
+<p>主要是针对手工设计的启发式方法其主要问题为：</p>
+<ul>
+<li>线上自动适应不同的流量情况的能力缺失或较差。</li>
+<li>周转时间较长，需要数周的时间进行设计和实施。</li>
+<li>在参数与实际环境不匹配时性能可能会下降。</li>
+</ul>
+<h1 id="14-文章的主要工作">1.4 文章的主要工作</h1>
+<p>本文的主要工作是探索如何应用深度强化学习（DRL）技术解决数据中心流量优化问题。通过开发名为AuTO的两级DRL端到端系统，模仿动物的外周和中枢神经系统，并在外周系统引入多级反馈队列，再利用数据中心流量长尾分布，解决了数据中心流量优化中存在的可扩展性的问题，实现了对数据中心规模的流量级流量调度和负载均衡。文章最后还对AuTO进行了实现和小规模部署验证，并取得了符合预期的成效。</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/07/10/1688982647.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/ranlychan/Githubstatic/GithubFile/2023/07/10/1688982654.png" alt="" loading="lazy"></figure>
+<p>通过本文的研究和实现，研究人员展示了使用深度强化学习技术的自动化数据中心流量优化方法的潜力和效果，为提高数据中心性能和效率提供了新的解决方案。</p>
+<p>#1.5 个人思考</p>
+<ul>
+<li>文章的方法非常巧妙，其中将AuTO分为外周和中枢两级的思想与上一篇阅读的《Interpreting Deep Learning-Based Networking Systems》中的本地和全局系统的划分有异曲同工之处。此文中外周系统运行在所有的端主机，作为local system收集流量信息并决策，同时接受中枢系统做出的全局决策。而中枢系统作为global system聚合全局信息并做出优化决策。但这之外，本文研究者还强调了一个关键点，也即中枢系统做出的全局决策是可以下发到外周系统并生效的。</li>
+<li>在AuTO的外周系统中，流量的控制调度采用了阈值控制的多级反馈队列，似乎和操作系统中的进程调度有些许关联，两者都是根据目标和调整策略进行动态调度调整。但在AuTO中，MLFQ更多根据流量的特征和源目的信息等上下文进行考虑。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/593/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Interpreting Deep Learning-Based Networking Systems
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

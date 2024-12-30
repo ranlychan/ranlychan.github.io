@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>计网 | 腾讯视频点播流量抓包分析与可视化Wireshark | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">计网 | 腾讯视频点播流量抓包分析与可视化Wireshark</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-10-18</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/R7I6ZP_mcxFN/">
+                    机械硬盘
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="介绍">介绍</h1>
+<p>这次抓包实践的目的是搞清楚腾讯视频Windows客户端在点播视频的时候，视频数据是如何传输来到客户端的。</p>
+<p>最终分析得出结论，腾讯视频Windows客户端（具体版本见正文）点播视频时，使用了资源重定向、智能DNS等帮助客户端选择稳定的服务器；视频流采取了“两级分段”进行传输。</p>
+<figure data-type="image" tabindex="1"><img src="https://s2.loli.net/2023/02/26/LcIyTkgAKwtWU6l.png" alt="" loading="lazy"></figure>
+<h1 id="目录">目录</h1>
+<!--index-menu-->
+<!--more-->
+<h1 id="视频点播抓包过程">视频点播抓包过程</h1>
+<h2 id="准备阶段">准备阶段</h2>
+<p>检查网络连接情况，确保网络相对稳定；关闭除腾讯视频以外的其它联网软件和不相关的后台联网程序，减少干扰方便筛查。</p>
+<p><strong>实验软硬件设备与环境情况：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>名称</strong></th>
+<th><strong>值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>Windows 11 家庭中文版22H2 64位</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>16GB</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz   2.20 GHz</td>
+</tr>
+<tr>
+<td>抓包软件</td>
+<td>Wireshark Version 3.6.3</td>
+</tr>
+<tr>
+<td>被测平台</td>
+<td>腾讯视频64位Windows客户端  2022 11.44 （11.44.7076.0）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="正式抓取">正式抓取</h2>
+<ol>
+<li>打开腾讯视频并登录，然后打开Wireshark，选择上网卡，点击录制；接着在腾讯视频精选栏目-&gt;今日热点内点开一个短视频进行播放，视频清晰度默认为720P且不会再变化。</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://s2.loli.net/2023/02/28/S2ObBkJ5pEfKc8o.png" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>等待视频缓冲和播放完成后，在Wireshark停止录制活动。下图为抓取完成后的Wireshark界面截图。</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://s2.loli.net/2023/02/28/r1MLT2RuzyFwvYd.png" alt="" loading="lazy"></figure>
+<h2 id="结果初步统计-整理与分析">结果初步统计、整理与分析</h2>
+<h3 id="基本统计">基本统计</h3>
+<h4 id="协议分级统计">协议分级统计</h4>
+<p>首先在Wireshark的统计菜单中查看协议分级统计，可以看到在物理层和数据链路层，全部都是以太网数据帧，这毋庸置疑。<br>
+而在网络层，按照分组百分比，99.9%的包是基于IPv4的，，只有0.1%的包是基于IPv6的。这说明在抓取期间的只有极少的IPv6通信。<br>
+在会话层，主要是基于IP的UDP、TCP、ICMP协议，其中基于IPv4的TCP协议的数据包在分组百分比和字节百分比占上均非常突出，这说明IPv4的TCP包不仅数量多，而且总的数据载荷（以字节数衡量）也多。而我们在抓取期间主要进行的活动（点播短视频），自然地认为应当有大量视频数据传入本机。结合统计数据，我们初步分析认为，视频数据通过大量的TCP包从网络传输到本机，这也意味着一个完整的视频被拆分开来进行传输。<br>
+在基于IPv的TCP协议下，可以看到分组百分比和字节数百分比占比较大的是HTTP协议，其次是TLS协议。而在HTTP协议下，值得令人注意的是，我们看到了ISO/IEC 13818-1标准，该标准是一种描述多个视频，音频和数据基本码流合成传输码流和节目码流的方式，隶属于MPEG-2标准。结合数据占比，几乎可以说明本次腾讯视频的短视频点播，就是在ISO/IEC 13818-1标准的基础上对音视频进行编码传输的。<br>
+<img src="https://s2.loli.net/2023/02/28/uHi9gWBxEFC2k8m.png" alt="" loading="lazy"><br>
+下面将上图中的协议分组统计中的字节一列单独提出，绘制柱状图如下：<br>
+<img src="https://s2.loli.net/2023/02/28/GQ23kyrjE9mv5NZ.png" alt="" loading="lazy"></p>
+<h4 id="会话统计">会话统计</h4>
+<p>在Wireshark的统计菜单中查看会话统计，可以看到本机与网络主机之间的会话情况。首先查看IPv4下的统计情况，按照传入本机的传输字节总大小，从大到小进行排序，可以看到本机与之进行通信网络主机。<br>
+其中，传输数据量最大的网络主机（120.240.53.147，记为A）和次大的网络主机(120.239.31.119，记为B），其Rel Start（会话开始时间）数字的背后绘制了并表示了其会话的开始和持续时间，也就是会话时间段，可以看到A与B的会话时间段是交错开的，本机一开始先与B进行大量数据传输，短暂时间后再转而与A进行大量数据传输直到结束。这很有可能是因为传输过程中请求的视频数据来源中途被切换到了不同的网络主机，具体是不是下面再仔细分析。<s>其它主机与本机的会话则没有这种现象。</s><br>
+<img src="https://s2.loli.net/2023/02/28/2qDgRuPJn83OXxN.png" alt="" loading="lazy"></p>
+<p>接着再在TCP层面查看会话统计，依旧是按照传入本机的传输字节总大小，从大到小进行排序。再次看到熟悉的主机A（120.240.53.147）和主机B（120.239.31.119）。但我们注意到，两台主机均使用49155端口，但传入本机时，本机使用了多个不同的端口进行接收。<br>
+<img src="https://s2.loli.net/2023/02/28/RvBuIU2zyQ14V68.png" alt="" loading="lazy"><br>
+将会话的双方作为节点并建立边，双方传送字节数作为边的权重，绘制网络关系图。<br>
+<img src="https://s2.loli.net/2023/02/28/PiuKp9WwgyMFLCQ.png" alt="" loading="lazy"></p>
+<h3 id="数据过滤筛选分析">数据过滤筛选分析</h3>
+<h4 id="头部基础分析">头部基础分析</h4>
+<p>根据协议分级统计，我们知道了视频的传输与HTTP协议和MEPG-2标准相关。下面输入条件mpeg进行筛选，得到四个承载MEPG协议的包。后三个Source咋一看主机名竟然是localhost！这可能是Wireshark的解析bug，因为数据包里没有写主机名是localhost。<br>
+<img src="https://s2.loli.net/2023/02/28/6yqFcJVrmT1lNjf.png" alt="" loading="lazy"><br>
+但展开仔细看就知道了，这三个“localhost”都是一个IP（120.240.53.147）。巧了，这四个包正好都是上面统计中提到的，向本机发送了大量数据的主机A和主机B（也有可能是两个经过NAT的私网公有IP，但这里暂且称为两台主机）！这验证了我们上面关于哪些主机可能给本机的腾讯视频客户端提供视频数据的猜想。<br>
+<img src="https://s2.loli.net/2023/02/28/etNmKs5XzHEJl8D.png" alt="" loading="lazy"><br>
+再观察四个包的以太网数据帧，四个包是同一个以太网出口端口，因为四个包的太网（Ethernet）头中的Source的MAC都是一样的（00:08:e3:ff:fd:a8），这是由于本机通过WLAN接入校园网，数据包传进来后Source被修改为了校园网内的一台网络设备的某个端口的MAC，与传来的视频服务器无关。<br>
+<img src="https://s2.loli.net/2023/02/28/D4oh5lL3XxJ6dO1.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="4"><img src="https://s2.loli.net/2023/02/28/jPmTVA12EH7QWNv.png" alt="" loading="lazy"></figure>
+<h4 id="tcp传输基础分析">TCP传输基础分析</h4>
+<p>对第一个包查看时发现，其TCP载荷是由多个帧的载荷片段组成的数据，共1513个TCP片段的载荷，每个数据载荷所在的帧已经由Wireshark列举出来（红框中蓝色字），点击可以跳转查看对应帧。<br>
+这可以说明，序号为10235的第一个TCP包承载的内容较大，所以被拆开来了再进行传送，最后在本机组装成为完整的一个回复。查阅资料可以知道，这种方式叫做TCP数据分段传输。当TCP帧的承载数据大小超过了MSS（Max Segment Size），为了防止IP帧分片（超过MTU），就得将承载数据拆分并封装到多个TCP帧中进行传输。</p>
+<blockquote>
+<p>TCP分段、IP分片和MSS、MTU<br>
+<a href="https://www.jianshu.com/p/01cde9f9b5a5">https://www.jianshu.com/p/01cde9f9b5a5</a></p>
+</blockquote>
+<blockquote>
+<p>TCP数据传输和MSS超出分段<br>
+<a href="https://zhuanlan.zhihu.com/p/228800988">https://zhuanlan.zhihu.com/p/228800988</a></p>
+</blockquote>
+<figure data-type="image" tabindex="5"><img src="https://s2.loli.net/2023/02/28/OzkM4AcIoC3smtb.png" alt="TCP分段传输" loading="lazy"></figure>
+<h4 id="tcp流分析">TCP流分析</h4>
+<p>根据上小节的TCP传输分析，我们得知了TCP数据分段传输的方式。下面我们尝试追踪这一过程。右键第一个MPEG包，选择追踪TCP流。</p>
+<figure data-type="image" tabindex="6"><img src="https://s2.loli.net/2023/02/28/Z98jOLRKbvQJ275.png" alt="追踪TCP流" loading="lazy"></figure>
+<p>如下图，Wireshark自动帮我们筛选出该包所在的TCP流，此时显示的是【查资料看看TCP流是什么】。<br>
+<img src="https://s2.loli.net/2023/02/28/QoGw1R9CxzUkAn4.png" alt="" loading="lazy"></p>
+<p>简单分析发现，该TCP流包含了与目标建立TCP连接、发送HTTP请求、TCP分段传输、得到HTTP回复（就是这个HTTP回复是分段传过来的)以及断开TCP连接的过程。</p>
+<p>将数据区字节流导出后作为视频播放，发现少了3段缓冲，总共应当有至少7段缓冲视频，而通过mpeg筛选出的只有4段。所以下面转而筛选http协议。<br>
+<img src="https://s2.loli.net/2023/02/28/YuGKMnflqJ5tDwI.png" alt="" loading="lazy"></p>
+<p>筛选后发现，在与服务器A和B请求视频之前，是在与另外一台服务器在进行请求通信，以下称其为C（183.240.185.49）。但本机发给C的请求似乎没有看到携带视频数据的HTTP回应，所以对上图中第一个发送给C的请求进行TCP流追踪。如下图，显示出本机发送的请求（朱红色字体）是得到了C的回应的（蓝紫色字体），而且也带有视频数据（红框部分及以下）。通过同样的方法，我们找到了“消失”的3段缓冲视频。其中第1、2段来自C，第4段来自B。</p>
+<figure data-type="image" tabindex="7"><img src="https://s2.loli.net/2023/02/28/leu2SIXPLzo1nZp.png" alt="" loading="lazy"></figure>
+<p>为什么这三段视频的HTTP Response会在Wireshark的mpeg筛选条件下“消失”呢？对第一段视频的传输追踪TCP流后我们发现，传输过程中间及最后存在大量传输问题，如下图是第一段视频（index=0）传输的最后阶段，最右侧导航栏可以看到全过程存储大量黑色部分。这些部分主要是丢包、重复、乱序等问题，说明服务器C与本机的网络不通畅，出现拥塞。<br>
+<img src="https://s2.loli.net/2023/02/28/K4Rhe5OPXor6bqn.png" alt="" loading="lazy"></p>
+<p>因此在第一段视频传输完成以后本机向C发送HTTP请求，期望获取第二段视频（index=1)时，C没有返回视频数据，而是帮本机找到了另外一个适合的服务器，也就是B，并通过一个普通的HTTP Response告诉本机，其状态码为302 Found，表示资源存在，但临时改变了位置。下图蓝色框内容为重定向后的URL。重定向完成后本机便与C结束了本次TCP连接。</p>
+<blockquote>
+<p>HTTP 302 Found状态码<br>
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/302">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/302</a></p>
+</blockquote>
+<p><img src="https://s2.loli.net/2023/02/28/Mtn3zwm6TJF2OVa.png" alt="" loading="lazy"><br>
+<img src="https://s2.loli.net/2023/02/28/n5fz2gv9LA8aTNV.png" alt="" loading="lazy"></p>
+<p>使用追踪TCP流的方法，对重定向后向B发起的请求进行追踪，果然找到了第二段视频。点击任意一个分段TCP后，其TCP帧最下方提示在7310帧进行了组装。找到序号为7310的包，里面的的数据载荷完全就是视频数据，没有HTTP头，导出后可以播放，确实是第二段视频。</p>
+<figure data-type="image" tabindex="8"><img src="https://s2.loli.net/2023/02/28/PaWyVM2EkFjI7Be.png" alt="" loading="lazy"></figure>
+<p>第四段视频（index=3）仍然是向C请求，但请求被重定向到了A。</p>
+<figure data-type="image" tabindex="9"><img src="https://s2.loli.net/2023/02/28/GmkgLJFYrR9EjTC.png" alt="" loading="lazy"></figure>
+<p>同样对请求进行追踪，找到了第四段视频。同样没有HTTP头，只有载荷（视频字节流）。</p>
+<figure data-type="image" tabindex="10"><img src="https://s2.loli.net/2023/02/28/j4EFuWRaGlhmKSw.png" alt="" loading="lazy"></figure>
+<p>至此，所有缓冲的视频片段的来龙去脉以及内容都已经通过TCP流追踪等方法找到。</p>
+<p><strong>建立连接和请求视频数据</strong></p>
+<figure data-type="image" tabindex="11"><img src="https://s2.loli.net/2023/02/28/83xEq2yoUgul4Sv.png" alt="三次握手建立TCP连接" loading="lazy"></figure>
+<p>建立完连接，本机马上向目标发送HTTP GET请求，请求视频数据。完整请求URI如下：<br>
+<a href="http://omts.tc.qq.com/AjDP1wzypfhiUnwxSjLmBob8tHOacZVdbn4hmQ5QdYN0/uwMROfz2r57EIaQXGdGnC2dXOm8nsJgs4vxTmTctHXBObIkV/svp_50069/6NxCWVVtM9bvc_Ug6HLj69fBgxKW1s087Qj7P3PCyhObem4BoRu-JXsMiQQTUoTGlRKCuo6w9ebi40j2jdf44jwx0qjp6kEgh7xuMgErcr0iAFITQFlUP_s_sBO9k-i_pm-qKKpjrxk5pbBCyjJ0fYmiHo7MDAhk6U21VxCxL8pi8akkOWHmKw_SZIaW6Ksh/02_gzc_1000035_0b2ejuabmaaaj4ao4y2ga5qzktodczgqafsa.f306110.1.ts?index=2&amp;start=19480&amp;end=29560&amp;brs=3250332&amp;bre=5335627&amp;ver=4&amp;token=0fc0efc341001f990a33d37ca0ecc04f&amp;cost=low&amp;cip=183.233.227.33&amp;mkey=global_cache&amp;stdfrom=2000&amp;cpro=CN-GD&amp;cisp=cmcc">http://omts.tc.qq.com/AjDP1wzypfhiUnwxSjLmBob8tHOacZVdbn4hmQ5QdYN0/uwMROfz2r57EIaQXGdGnC2dXOm8nsJgs4vxTmTctHXBObIkV/svp_50069/6NxCWVVtM9bvc_Ug6HLj69fBgxKW1s087Qj7P3PCyhObem4BoRu-JXsMiQQTUoTGlRKCuo6w9ebi40j2jdf44jwx0qjp6kEgh7xuMgErcr0iAFITQFlUP_s_sBO9k-i_pm-qKKpjrxk5pbBCyjJ0fYmiHo7MDAhk6U21VxCxL8pi8akkOWHmKw_SZIaW6Ksh/02_gzc_1000035_0b2ejuabmaaaj4ao4y2ga5qzktodczgqafsa.f306110.1.ts?index=2&amp;start=19480&amp;end=29560&amp;brs=3250332&amp;bre=5335627&amp;ver=4&amp;token=0fc0efc341001f990a33d37ca0ecc04f&amp;cost=low&amp;cip=183.233.227.33&amp;mkey=global_cache&amp;stdfrom=2000&amp;cpro=CN-GD&amp;cisp=cmcc</a><br>
+URI中可以看到路径被加密了，但文件名和请求参数依旧是明文。文件名通过后缀可以知道是一个ts视频文件；参数主要为请求视频的参数和请求的合法性校验等。详细解析放在下一节解析进行，本小节主要描述TCP流。</p>
+<figure data-type="image" tabindex="12"><img src="https://s2.loli.net/2023/02/28/cOygspnFWZCwuUI.png" alt="HTTP GET请求视频数据&amp;width=1536 &quot;HTTP GET请求视频数据" loading="lazy"></figure>
+<p><strong>传送视频数据</strong><br>
+在本机发送完请求后，目标主机收到请求，返回一个Ack=1（红色框）表示收到接着就开始用TCP分段传输（蓝色框及下面的内容）的方式返回HTTP Response。其中服务器发给本机的第一个分段TCP数据包的TCP头部中，ACK和PUSH标志位同时为1，表示该帧为开始。后面的分段TCP帧头部则只有ACK标志位为1。</p>
+<figure data-type="image" tabindex="13"><img src="https://s2.loli.net/2023/02/28/FPbh8OawsKjB7yd.png" alt="" loading="lazy"></figure>
+<p>可以看到传输过程中，不是服务器发一个TCP，本机就进行一次应答表示收到，那样效率太低。而是本机收到多个TCP包后才进行一次应答表示收到并期待下一个帧。【这种方式课上有讲过，可以补充进去】</p>
+<p><strong>传输完毕并组装TCP载荷</strong></p>
+<figure data-type="image" tabindex="14"><img src="https://s2.loli.net/2023/02/28/A2C7LPG3XmJhMzs.png" alt="" loading="lazy"></figure>
+<p>TCP分段地将HTTP Response传输完毕，本机发送完最后一个应答后，服务器收到应答，返回一个空载荷的TCP帧（Wireshark中序号为10235，上图红框标注），但该帧的TCP头的标志位中，PUSH和ACK再次同时为1，标志着本次TCP数据分段传输的结束。本机自动将之前分段接收到的TCP帧的数据载荷进行组装，作为10235号TCP帧的载荷。【这块有可能是重点内容，请查阅资料补充：客户端如何知道要组装哪些帧？有没有别的值得注意的细节？】然后Wireshark就解析出来这个载荷是一个HTTP的载荷，该HTTP载荷作为本机一开始发送的HTTP请求的Response。<br>
+组装出来的HTTP Response同样也有载荷，被Wireshark识别为MPEG TS。关于HTTP Response的数据载荷的详细分析仍然放入下一节进行。</p>
+<p><strong>断开连接</strong><br>
+本来应该是四次挥手断开TCP连接，这次的抓取比较特殊，少了从本机发往服务器的FIN=1。【补充一下为什么少了，为什么可以少】</p>
+<figure data-type="image" tabindex="15"><img src="https://s2.loli.net/2023/02/28/ePFUE5bV8DJahIo.png" alt="" loading="lazy"></figure>
+<h1 id="详细结果分析">详细结果分析</h1>
+<h2 id="点播全流程分析">点播全流程分析</h2>
+<p>在结果的初步分析中，我们通过筛选MEPEG协议成功找到了四段缓冲视频，也通过TCP流追踪追查到这四段视频的传输过程。但分析这四个视频的HTTP请求发现，其视频index（下标从0开始）分别为2、4、5和6，同时转存HTTP载荷为视频并播放后验证，四个视频确实分别为缓冲视频的第3,5,6,和7段，其中第7段为最后一段。这意味着通过mpeg筛选的结果少了index为0、1和3的三段视频。由于抓包时确实播放完成了，所以这三段视频肯定是接收到了的，只是出现了别的问题。所以下面转而筛选HTTP协议。</p>
+<figure data-type="image" tabindex="16"><img src="https://s2.loli.net/2023/02/28/adq8s9NSfm6hpCg.png" alt="" loading="lazy"></figure>
+<p>筛选后发现，本机在与服务器A和B请求视频之前，是在与另外一台服务器在进行请求通信，以下称其为C（183.240.185.49）。但本机发给C的请求似乎没有看到携带视频数据的HTTP回应，所以对上图中第一个发送给C的请求进行TCP流追踪。如下图，显示出本机发送的请求（朱红色字体）是得到了C的回应的（蓝紫色字体），而且也带有视频数据（红框部分及以下）。通过同样的方法，我们找到了“消失”的3段缓冲视频。其中第1、2段来自C，第4段来自B。</p>
+<figure data-type="image" tabindex="17"><img src="https://s2.loli.net/2023/02/28/9HpNVkoF186Uinl.png" alt="" loading="lazy"></figure>
+<p>至于为什么这三段视频的HTTP Response会在Wireshark的MPEG筛选条件下“消失”，在对第一段视频的传输追踪TCP流后我们发现，传输过程中间及最后存在大量传输问题，如下图是第一段视频（index=0）传输的最后阶段，最右侧导航栏可以看到全过程存在大量黑色部分。这些部分主要是丢包、重复、乱序等问题，说明服务器C与本机的网络不通畅，出现拥塞。</p>
+<figure data-type="image" tabindex="18"><img src="https://s2.loli.net/2023/02/28/W8N7SmBrDPjgcLK.png" alt="" loading="lazy"></figure>
+<p>因此在第一段视频传输完成以后本机向C发送HTTP请求，期望获取第二段视频（index=1）时，C没有返回视频数据，而是帮本机找到了另外一个适合的服务器，也就是B，并通过一个普通的HTTP Response告诉本机，其状态码为302 Found，表示资源存在，但临时改变了位置。下图蓝色框内容为重定向后的URL。重定向完成后本机便与C结束了本次TCP连接。<br>
+<img src="https://s2.loli.net/2023/02/28/t6gih13BuImQSeK.png" alt="" loading="lazy"></p>
+<p><img src="https://s2.loli.net/2023/02/28/eEpyAs4JIkviK6U.png" alt="" loading="lazy"><br>
+使用追踪TCP流的方法，对重定向后向B发起的请求进行追踪，果然找到了第二段视频。点击任意一个分段TCP后，其TCP帧最下方提示在7310帧进行了组装。找到序号为7310的包，里面的的数据载荷完全就是视频数据，没有HTTP头，导出后可以播放，确实是第二段视频。<br>
+<img src="https://s2.loli.net/2023/02/28/R4HfNp9Yr1MzcDL.png" alt="" loading="lazy"><br>
+第四段视频（index=3）仍然是向C请求，但请求被重定向到了A。<br>
+<img src="https://s2.loli.net/2023/02/28/NEDlZVXsWo1CaAt.png" alt="" loading="lazy"></p>
+<p>同样对请求进行追踪，找到了第四段视频。同样没有HTTP头，只有载荷（视频字节流）。<br>
+<img src="https://s2.loli.net/2023/02/28/4nFzM6pb8iTv3lk.png" alt="" loading="lazy"><br>
+至此，所有缓冲的视频片段的来龙去脉以及内容都已经通过TCP流追踪等方法找到，期间涉及3台服务器，本机共获取了7段缓冲视频片段。下面对此过程进行总结整理。本次抓包时播放的视频长度为1分18秒，分为7段进行缓冲和播放。<br>
+<img src="https://s2.loli.net/2023/02/28/JmpZCTQW1aqFSKH.png" alt="" loading="lazy"></p>
+<p>表x 本机请求视频缓冲片段在应用层的http会话情况</p>
+<table>
+<thead>
+<tr>
+<th><strong>视频缓冲片段index</strong></th>
+<th><strong>请求服务器</strong></th>
+<th><strong>最终视频来源服务器</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>183.240.185.49（C）</td>
+<td>183.240.185.49（C）</td>
+<td>成功传输，但较为拥塞</td>
+</tr>
+<tr>
+<td>1</td>
+<td>183.240.185.49（C）</td>
+<td>120.239.31.119（B）</td>
+<td>302 Found重定向，自C至B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>183.240.185.49（C）</td>
+<td>120.239.31.119（B）</td>
+<td>302 Found重定向，自C至B</td>
+</tr>
+<tr>
+<td>3</td>
+<td>183.240.185.49（C）</td>
+<td>120.240.53.147（A）</td>
+<td>302 Found重定向，自C至A</td>
+</tr>
+<tr>
+<td>4</td>
+<td>183.240.185.49（C）</td>
+<td>120.240.53.147（A）</td>
+<td>302 Found重定向，自C至A</td>
+</tr>
+<tr>
+<td>5</td>
+<td>183.240.185.49（C）</td>
+<td>120.240.53.147（A）</td>
+<td>302 Found重定向，自C至A</td>
+</tr>
+<tr>
+<td>6</td>
+<td>183.240.185.49（C）</td>
+<td>120.240.53.147（A）</td>
+<td>302 Found重定向，自C至A</td>
+</tr>
+</tbody>
+</table>
+<figure data-type="image" tabindex="19"><img src="https://s2.loli.net/2023/02/28/kMU7ceWlErNTxfA.png" alt="客户端在应用层获取所有视频缓冲段的全过程" loading="lazy"></figure>
+<figure data-type="image" tabindex="20"><img src="https://s2.loli.net/2023/02/28/cdIoKBqymJnMtNg.png" alt="客户端获取第二段缓冲视频数据的详细过程" loading="lazy"></figure>
+<h2 id="点播请求头">点播请求头</h2>
+<p><strong>请求地址：</strong><br>
+http://omts.tc.qq.com/AjDP1wzypfhiUnwxSjLmBob8tHOacZVdbn4hmQ5QdYN0/uwMROfz2r57EIaQXGdGnC2dXOm8nsJgs4vxTmTctHXBObIkV/svp_50069/6NxCWVVtM9bvc_Ug6HLj69fBgxKW1s087Qj7P3PCyhObem4BoRu-JXsMiQQTUoTGlRKCuo6w9ebi40j2jdf44jwx0qjp6kEgh7xuMgErcr0iAFITQFlUP_s_sBO9k-i_pm-qKKpjrxk5pbBCyjJ0fYmiHo7MDAhk6U21VxCxL8pi8akkOWHmKw_SZIaW6Ksh/02_gzc_1000035_0b2ejuabmaaaj4ao4y2ga5qzktodczgqafsa.f306110.1.ts?index=2&amp;start=19480&amp;end=29560&amp;brs=3250332&amp;bre=5335627&amp;ver=4&amp;token=0fc0efc341001f990a33d37ca0ecc04f&amp;cost=low&amp;cip=183.233.227.33&amp;mkey=global_cache&amp;stdfrom=2000&amp;cpro=CN-GD&amp;cisp=cmcc<br>
+**方式：**HTTP GET</p>
+<p>注意，其中：<br>
+蓝色部分是加密过的路径，在请求同一个视频的多段时是不会变化的。<br>
+紫色部分是点播m3u8结构的一个地址，但是加上了token、cost和客户端网络位置信息等选项<br>
+绿色部分和客户端网络位置信息等相关，很有可能用于智能DNS，通过综合客户端的IP、所在省份和互联网服务提供商等信息，为客户端解析适合的服务器IP以提供优质的视频点播服务。</p>
+<p>表x GET请求的参数信息表</p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>释义</strong></th>
+<th><strong>功能、作用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index</td>
+<td>视频片段索引</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>start</td>
+<td>视频起始时间（ms）</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>end</td>
+<td>视频结束时间（ms）</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>brs</td>
+<td>视频起始帧数</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>pre</td>
+<td>视频结束帧数</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>token</td>
+<td>用户令牌</td>
+<td>请求合法性校验</td>
+</tr>
+<tr>
+<td>cost</td>
+<td>传输开销</td>
+<td>控制传输内容</td>
+</tr>
+<tr>
+<td>cip</td>
+<td>Client IP，客户端IP</td>
+<td>智能DNS</td>
+</tr>
+<tr>
+<td>cpro</td>
+<td>CLient Province，客户端所在省份</td>
+<td>智能DNS</td>
+</tr>
+<tr>
+<td>cisp</td>
+<td>Client Information Service Provider，客户端的ISP</td>
+<td>智能DNS</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>点播型m3u8，可以往这方面多看看<br>
+<a href="https://blog.csdn.net/hejjunlin/article/details/75305299">https://blog.csdn.net/hejjunlin/article/details/75305299</a></p>
+</blockquote>
+<p>start和end是请求的视频片段的时间起止，单位为毫秒（ms），可以直接修改end为大于视频长度的时间，返回的为完整的视频。<br>
+brs和pre是请求的视频片段的帧数起止，同样可以直接修改pre为大于视频帧长度的数量，返回的为完整的视频。</p>
+<p>智能DNS<br>
+cip(Client IP):客户端的IP<br>
+cpro(CLient Province):客户端所在的省份<br>
+cisp(Client Information Service Provider):客户端网络的ISP</p>
+<hr>
+<p>为了检验该GET请求是否可以脱离腾讯视频客户端成功请求和得到返回视频，下面用Postman软件来进行测试。将上面点播视频的请求地址放到Postman里，其自动解析出GET请求参数，点击send后，返回200 OK，返回的Body显示是乱码，但其实是视频的字节流，点击Save Response后可以正常播放。</p>
+<figure data-type="image" tabindex="21"><img src="https://s2.loli.net/2023/02/28/4CqDYxhXH3Be96V.png" alt="" loading="lazy"></figure>
+<hr>
+<h3 id="token存活时间长度检测实验">token存活时间长度检测实验</h3>
+<p>通过客户端播放视频抓包获取一个token，记录下获取时间和token值，以及GET请求地址。然后用postman软件使用该token发送GET请求，若成功返回的视频则token标记为可用状态，若提示403 Forbiden则认为token失效。</p>
+<h4 id="实验1">实验1</h4>
+<p>token获取时间：May 11, 2022 23:27:24.882626000 中国标准时间<br>
+token值：d1cff9e262acfef8fe0e5ac94a136c41</p>
+<table>
+<thead>
+<tr>
+<th><strong>测试序号</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>token状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Wed, 11 May 2022 15:53:55 GMT</td>
+<td>可用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Thu,  12 May 2022 00:18:37 GMT</td>
+<td>失效</td>
+</tr>
+</tbody>
+</table>
+<h4 id="实验2">实验2</h4>
+<p>token获取时间：May 12, 2022 08:21:41.813782000 中国标准时间<br>
+token值：49fec6af5a10daf74f5174e70f6baca2</p>
+<table>
+<thead>
+<tr>
+<th><strong>测试序号</strong></th>
+<th><strong>时间</strong></th>
+<th><strong>token状态</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Thu, 12 May 2022 00:24:07 GMT</td>
+<td>可用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Thu, 12 May 2022 01:59:21 GMT</td>
+<td>可用</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Thu, 12 May 2022 06:32:12 GMT</td>
+<td>失效</td>
+</tr>
+</tbody>
+</table>
+<p>可见token存活时间不超过6小时。</p>
+<h2 id="点播请求回复">点播请求回复</h2>
+<p>前一节的抓包过程解释了点播请求的HTTP Response是如何传输到本机的。如下图，</p>
+<p>将HTTP Response中的HTTP数据载荷（File Data）导出为字节流后，是一个TS视频文件，可以正常播放。</p>
+<figure data-type="image" tabindex="22"><img src="https://s2.loli.net/2023/02/28/16gS3LstOdnyxkv.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="23"><img src="https://s2.loli.net/2023/02/28/yJ3XZmHWIY8x2Or.png" alt="字节流导出HTTP中的数据载荷后作为视频文件播放" loading="lazy"></figure>
+<p>该视频只有10秒，可以很容易想到这是由于腾讯视频点播视频时，每次只会缓冲视频的一段。如下图，红框内的红色圆圈为当前视频帧所处位置，而浅灰色段表示已经缓冲的视频段，浅灰色段后面则还未缓冲。</p>
+<figure data-type="image" tabindex="24"><img src="https://s2.loli.net/2023/02/28/zU8nPs47wWLlod9.png" alt="缓冲示例视频，不是抓包的视频" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/494/">
+              <h3 class="post-title">
+                下一篇：笔记 | Vercel部署RSSHub及其文档页面
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

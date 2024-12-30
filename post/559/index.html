@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Typecho | 博客结构与插件开发笔记：插件行为触发器拦截 | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">Typecho | 博客结构与插件开发笔记：插件行为触发器拦截</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-03-03</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/CRuobGcuyyO/">
+                    Typecho
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ranlychan.github.io/tag/p9gC82KJCvTZ/">
+                    开发日志
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h1 id="概要">概要</h1>
+<p>最近在学习Typecho插件开发，对于图床类插件有了基本的了解。本文将介绍今天通过对原生上传组件<code>Widget_Upload</code>学习到的，关于Typecho博客中附件的上传、修改、删除、查询和获取的基本过程。</p>
+<!--more-->
+<h1 id="上传组件">上传组件</h1>
+<p>仍然是在Typecho 1.1中，作者对于附件的各种管理定义了一个<code>Widget_Upload</code>类，位于<code>var/Widget/Upload.php</code>。其中最为主要的类函数方法如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>权限</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uploadHandle</td>
+<td>public</td>
+<td>上传附件时会调用该方法进行处理，返回一个包含存储位置等信息的array</td>
+</tr>
+<tr>
+<td>modifyHandle</td>
+<td>public</td>
+<td>在管理附件中修改文件时会调用该方法进行处理，返回一个修改完后的信息的array</td>
+</tr>
+<tr>
+<td>deleteHandle</td>
+<td>public</td>
+<td>删除附件时调用，返回删除成功或失败</td>
+</tr>
+<tr>
+<td>attachmentHandle</td>
+<td>public</td>
+<td>获取附件的绝对访问路径</td>
+</tr>
+<tr>
+<td>attachmentDataHandle</td>
+<td>public</td>
+<td>获取附件的实际数据，下载时需要使用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="方法拦截">方法拦截</h2>
+<p>这5个方法在正式执行前，都通过一句相似的代码插入了trigger，也就是为插件作者提供了对原生方法的拦截。以<code>Widget_Upload</code>中的原生上传函数<code>uploadHandle($file)</code>为例，其最开始执行的代码如下：</p>
+<pre><code class="language-php">public static function uploadHandle($file)
+{
+	if (empty($file['name'])) {
+		return false;
+	}
+
+	$result = Typecho_Plugin::factory('Widget_Upload')-&gt;trigger($hasUploaded)-&gt;uploadHandle($file);
+	if ($hasUploaded) {
+		return $result;
+	}
+	// ....其它代码
+}
+</code></pre>
+<p>可以看到其中执行了一句<code>Typecho_Plugin::factory('Widget_Upload')-&gt;trigger($hasUploaded)-&gt;uploadHandle($file);</code>并根据<code>$hasUploaded</code>的值来决定是否要执行后续的文件上传代码，实际上起到一个拦截的作用。</p>
+<p>联系到上一篇博文中对插件开发的基本学习中，在<code>Plugin.php</code>的<code>activate()</code>方法内对上传、修改、删除等等方法的注册行为，可以知道，作者设置的这个拦截会去尝试寻找第三方注册上传方法进行文件上传处理，如果没有找到并执行，<code>$hasUploaded</code>为false，继续执行原生的上传代码；若成功找到第三方注册上传方法并执行，则<code>$hasUploaded</code>为true，不再执行后续原生上传代码。</p>
+<h1 id="总结思考">总结思考</h1>
+<p>Typecho博客程序作者所思考的对第三方插件的支持方案，在1.1版本里相对来说是有一定局限的。作者默认了附件只上传到一个地方，要么就全上传到本机，要么就全上传到外部存储位置（例如图床）。然而附件类型多样，<strong>只有受支持的图片类型才允许被上传到图床，其它正常的附件则在默认情况下应该正常上传至本机</strong>。这点虽然可以被插件作者实现，但似乎需要将原生的本地上传组件的代码重新复制一遍，而无法直接调用已有的原生方法。因为如果在插件中调用原生方法，就会由于原生方法中的拦截导致循环调用。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/552/">
+              <h3 class="post-title">
+                下一篇：Typecho | smms图床插件：NewSmmsForTypecho发布
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

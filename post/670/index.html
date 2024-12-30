@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>讲座思考 |  颠覆传统摄像方式乃至计算机视觉的“脉冲视觉” | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://s2.loli.net/2023/12/09/q1RzjVv4cfJA6GO.png')">
+            </div>
+          
+          <h2 class="post-title">讲座思考 |  颠覆传统摄像方式乃至计算机视觉的“脉冲视觉”</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-12-09</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/Mbmi_jGlthi/">
+                    Transformer
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>传统相机拍摄视频时其实是以一定帧率进行采样，视频其实还是一串图片的集合，因此低帧率时会觉得视频卡，拍摄高速运动物体时会有运动模糊等等问题。然而你能想象这一切都可以被“脉冲视觉”这一前沿技术改变吗？</p>
+<!-- ![](https://s2.loli.net/2023/12/09/q1RzjVv4cfJA6GO.png) -->
+<!--more-->
+<p>今天下午听了北京大学黄铁军教授的演讲，颇感震撼。黄教授团队的“脉冲视觉”研究从基础理论方面突破，变革了已经沿用两个世纪的传统感光方式，使得每个新型感光元器件可以每个像素单独对光子进行捕获，并可以重现拍摄时任意时刻的清晰图像。也就是说，有了脉冲相机，也许以后都不会再谈帧率了，因为拍摄到的信息将无限接近现实的光的运动，其时域采样率为4万赫兹，这是以前所有动辄上百万的高帧率相机都无法比拟的。此外，脉冲相机的感光元件可以利用现有的CMOS制造技术上进行制造，使得成本可以控制得比较低。这项技术可以说意义非凡，前景广泛。</p>
+<p>接着，黄教授还介绍了脉冲相机在高铁检修、涡轮停机检修等方面的应用。我比较感兴趣的是基于脉冲的视觉任务。传统计算机视觉基于的图像、视频等基本是用传统相机拍摄的（当然也不排除用特殊成像方式的），在计算机中图像通常以像素矩阵存储，而脉冲相机拍摄的脉冲序列我认为其实可以看做光子的到达时间序列，提供了更接近物理现实的记录。在脉冲序列上黄教授团队也做了一系列研究，将光流与深度估计、检测跟踪、目标识别等视觉任务基于脉冲序列进行了实现，得到了成倍的速度提升与SOTA的效果。我觉得在脉冲相机的基础上未来可以实现更类脑的神经网络并实现更接近人类视觉能力的方法。</p>
+<p>基于脉冲的视觉任务方面，黄教授团队设计并开源了SpikeCV，即在OpenCV的基础上，针对脉冲序列进行了设计，还额外提供了脉冲相机的接口和已经拍摄好的数据集。地址：https://openi.pcl.ac.cn/Cordium/SpikeCV</p>
+<p>有同学问了两个比较关心的问题，即脉冲相机的功耗会不会由于高速采样而很高？以及，脉冲相机拍摄的视频占用存储空间会不会很大？黄教授的回答基本上是，首先功耗确实会比正常大，但可以接受。其次存储由于对脉冲进行了编码，其占用带宽在Gbps，存储空间需求虽然大但也可以在现有硬件上可以得到满足。</p>
+<p>总之，黄教授的这次演讲干货满满，相信不久的将来可以从前沿研究真正上到我们手机上。研究项目地址：https://spikecv.github.io/</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/667/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | Privacy vs. Efficiency: Achieving Both Through Adaptive Hierarchical Federated Learning
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

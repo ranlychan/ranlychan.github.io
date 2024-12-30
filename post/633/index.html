@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记｜Random sketch learning for deep neural networks in edge computing | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记｜Random sketch learning for deep neural networks in edge computing</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-08-03</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/nV5WC7Xwi-/">
+                    计算机网络
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] B. Li et al., “Random sketch learning for deep neural networks in edge computing,” Nat Comput Sci, vol. 1, no. 3, pp. 221–228, Mar. 2021, doi: 10.1038/s43588-021-00039-6. [/info]</p>
+<h1 id="11-背景">1.1 背景</h1>
+<p>深度神经网络对计算和存储资源需求巨大，这给它们在边缘设备上的部署带来困难。最近，轻量级深度学习受到了极大关注，其目的是通过网络剪枝、低秩近似(LRA)、权重量化和网络架构转换(NAT)等压缩大型DNN模型。有工作基于矩阵逼近理论近似相对更低秩和稀疏的DNN模型的权重矩阵，从而得到一个轻量的紧凑模型。</p>
+<!--more-->
+<h1 id="12-待解决问题">1.2 待解决问题</h1>
+<ul>
+<li>如何打破当前模型压缩的极限，最大程度减少存储和计算需求?</li>
+<li>如何在无需预训练的情况下直接学习紧凑模型，使其适用于边缘设备的联合学习?</li>
+</ul>
+<h1 id="13-现有方法的缺点">1.3 现有方法的缺点</h1>
+<ul>
+<li>大多数轻量级深度学习方法遵循高维预训练后压缩框架，压缩比受限于预训练模型。</li>
+<li>最新的剪枝方法如LTH和SNIP训练复杂度较高。</li>
+<li>对权重矩阵的低秩分解仍然需要预训练，然而预训练和微调计算成本高，不适合边缘设备。</li>
+</ul>
+<h1 id="14-文章的主要贡献">1.4 文章的主要贡献</h1>
+<ol>
+<li>提出随机草图学习(Rosler)框架，直接学习紧凑模型，无需预训练和后压缩。</li>
+<li>设计近似秩约束反向传播（aRes-BP）算法，实现对MLP和CNN等基础模型的通用的，无需预训练的在线训练。</li>
+<li>通过蝶形网络结构(BUFF)展开，使用多个草图层表示每个大层，显著降低模型复杂度。</li>
+<li>与全连接DNN相比，Rosler大幅减小模型大小(减小50-90倍)，加速计算(180倍)，降低能耗(10倍)，适用于边缘设备。</li>
+<li>在多个数据集上验证了Rosler的有效性。</li>
+</ol>
+<h1 id="15-个人思考">1.5 个人思考</h1>
+<ul>
+<li>本文的方案与之前阅读的有很大不同，aRes-BP算法允许直接在训练阶段花费更少的资源学习一个更轻量的草图模型，使得初步阶段的训练可以直接在边缘进行，原始数据直接在边缘进行训练而无需上传云端，解决隐私问题的同时减少了数据通信量。</li>
+<li>不同压缩方法的结合：本文除了在模型权重矩阵进行了压缩，还提到了对于神经网络架构的变换（NAT），即展开原来的L层肥胖DNN为3L层细长DNN（BUFF展开）。这样的趋势提示，在模型压缩任务中，不仅可以在单种模型压缩方法上进行研究改进和探索，还可以多种方法结合来实现更优的压缩效</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/627/">
+              <h3 class="post-title">
+                下一篇：阅读笔记｜Towards Edge Computing Using Early-Exit Convolutional Neural Networks
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

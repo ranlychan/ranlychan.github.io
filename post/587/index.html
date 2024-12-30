@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阅读笔记 | End-To-End Arguments in System Design | 蓝里小窝 | ranlychan&#39;s blog</title>
+<meta name="description" content="笔耕不辍，汇涓成河。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ranlychan.github.io/favicon.ico?v=1735555799576">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ranlychan.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ranlychan.github.io">
+        <img class="avatar" src="https://ranlychan.github.io/images/avatar.png?v=1735555799576" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ranlychan.github.io">
+        <h1 class="site-title">蓝里小窝 | ranlychan&#39;s blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阅读笔记 | End-To-End Arguments in System Design</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-06-26</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ranlychan.github.io/tag/MyY69e23JERj/">
+                    RSSHub
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>[info] J. Saltzer,D. Reed,D. Clark. End-to-end Arguments in System Design[J]. Acm Transactions on Computer Systems (tocs), 1984, 2(4): 195-206. DOI:10.1145/357401.357402. [/info]</p>
+<p>这篇文章主要论证了一个用于指导分布式系统的模块中功能划分的设计准则：端到端准则。这一准则在分布式系统设计中被广泛使用且具有很高的知名度，对于计算机网络的分层模型发展有很大影响。</p>
+<!--more-->
+<p>文中首先提到了端到端观点的核心论断，我理解是系统底层应当注重简单、效率和全局通用性，而一些较为特殊的功能则放到高层进行实现，甚至是让应用层去实现，有时候这样能提升性能。也就是说，越底层越注重效率。文章主要在分布式通信系统的语境下讨论这一论断，但作者也认为其可应用于在分布式计算机系统和分布式文件系统等更广的语境中。</p>
+<p>文章主体主要举了一些例子来检验文章的核心论断。首先是无损文件传输语境下的例子。作者假设了两台主机通过网络传送文件的场景，并从文件传输的开始进行推演，列举出了这一场景下针对文件完整性设计者需要担心的几个问题：源主机文件读取出错、文件数据拷贝或缓冲出错、通信系统产生比特缺失或改变以及分组重复、两端主机可能中途挂掉。针对这些问题，有重复传输、超时重传、冗余校验、宕机恢复等。这些功能可以在底层全部实现，使得网络传输非常可靠，但代价是上层的文件传输的性能损失，因此作者引出了性能和可靠的权衡问题。而工程中的解决指导思想就是以总体性能为指标，而非单一的可靠性和正确率，底层可以不需要完美的可靠性。此外，作者还写了一个MIT的真实案例，开发者们注意到了比特错并用校验和进行应对，但却忽略了分组在网关进行转发时可能存在的问题，果然网关缓冲时产生了频率为百万分之一的字节对换，以致文件不断重传然后还是产生了文件错误，最后不得不人工对比查错。</p>
+<p>接下来作者分别对下列几个功能在分布式系统里的低层进行实现的必要性进行了讨论，发现都没必要，高层的端到端的实现方案要更好。</p>
+<ol>
+<li>
+<p>传送过程的可靠保证功能：在高层通过RFNM（请求下一消息）机制（其实就是ack）等能实现对数据的可靠性保证。</p>
+</li>
+<li>
+<p>数据的安全传送过程的加密与解密功能：通信系统本身无须为所有的流量进行自动加密，这些操作可在高层完成。</p>
+</li>
+<li>
+<p>重复信息的抑制功能：由于提供重复信息后还可能收到以前的请求数据，有的重复对低层来说是不可发现的，例如短时间重复进行相同登录请求，因此高层实现更有效。</p>
+</li>
+<li>
+<p>保证先进先出的传送顺序：信息通过不同的链路到达后顺序可能被打乱，可以在高层进行顺序排序。</p>
+</li>
+<li>
+<p>传送管理功能：以SWALLOW分布式数据存储系统为例，说明底层的核心功能应该尽量简易，以确保系统性能。</p>
+</li>
+</ol>
+<p>然后文章举了一个特殊情况来说明网络低层无需完美可靠性的例子，也即即时语音通话这类无需完美可靠性而追求实时性的应用场景，进一步论证了端到端准则。</p>
+<p>文章结尾时提到了“奥卡姆剃刀”原则，也就是“如非必要，勿添实体”，来形容端到端准则在通信系统的功能设计上的应用。对于作者所说的，设计者总想“帮”用户添加很多非必要的功能，这点我也有所体会。在进行一些网络请求接口设计的时候，我以及共事的同学就会有这样的感触，总因为一些零零散散的需求而想给一个简单的接口加上越来越多内容，从而背离了其最原本的功能，各个子系统的职责边际也因此变得模糊不清。最后我认为，端到端准则的精髓，要在有机会接触到分布式系统的设计，例如网络协议的设计的时候，进一步体会总结和应用，以设计出精简而高性能的系统。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ranlychan.github.io/post/586/">
+              <h3 class="post-title">
+                下一篇：阅读笔记 | An Introduction to Network Architectures and Protocols
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">笔耕不辍，汇涓成河。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ranlychan.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
